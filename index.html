@@ -154,6 +154,13 @@ details.more summary::-webkit-details-marker{display:none}
 details.more summary span{font-size:13px;color:var(--muted)}
 details.more ul{margin:10px 0 0;padding-left:18px}
 details.more li{margin:6px 0;font-size:14px}
+.vidbuild{border-top:1px solid var(--rule);margin-top:14px;padding-top:12px}
+.vidbuild h4{font:600 17px/1.3 var(--sans);margin:0 0 6px}
+.vidbuild p{margin:0 0 8px}
+#vTube{height:min(64vh,440px)}
+.tag.opt{border:1px dashed #c98a2b;color:#c98a2b;background:transparent}
+tr.grp td{font-size:13px;padding-top:12px}
+tr.later td{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -228,6 +235,40 @@ details.more li{margin:6px 0;font-size:14px}
   <li>It uses the same black-background display page you'd build for the fan, so a fan can still plug in later.</li>
   <li>Plain clear acrylic reflects only about 8% of the light (my estimate), so test two-way mirror acrylic too.</li></ul>
   <a class="btn" href="https://www.arzopa.com/collections/portable-monitors">See the Arzopa monitors</a>
+
+  <div class="vidbuild" id="o-holo-parts">
+  <h4>Components from the video build</h4>
+  <p>Matched to the tube "hologram" in <a href="https://youtu.be/WgqDaqqto90">DD ElectroTech's video</a>: a glowing car on a pure-black OLED screen, a two-way mirror in front of it and a soft LED half-ring behind it, all inside a clear tube. It's a one-car prop for the front of the table. The box parts further down are unchanged.</p>
+  <p><b>For the pitch, build the version that doesn't turn.</b> The turning parts are marked <span class="tag opt">later</span>.</p>
+  <div class="viewer" id="vTube"><div class="vtag">Tube build, drag to turn</div><div class="fallback">The 3D view didn't load on this device. Every part is in the list below.</div></div>
+  <div class="slider"><span>Together</span><input type="range" id="tslider" min="0" max="1" step="0.01" value="0.75" aria-label="Pull the tube build apart"><span>Apart</span></div>
+  <div class="tools"><button class="tbtn on" type="button" id="tlater" aria-pressed="true">Hide later parts</button></div>
+  <p class="cap">My own model of what he shows, not his design files. Amber parts are only for the turning version. The car on the screen is a mock-up.</p>
+  <div class="tablewrap"><table>
+  <thead><tr><th>#</th><th>Part</th><th>Its job</th><th>Cost</th></tr></thead>
+  <tbody>
+  <tr class="grp"><td colspan="4"><b>Pitch build, recommended:</b> doesn't turn, runs off your laptop</td></tr>
+  <tr><td>1</td><td>Clear acrylic tube, 4" outside, 3.75" inside (US Plastic)</td><td>The case that makes it look like something lives inside <a class="src" href="https://youtu.be/WgqDaqqto90?t=187">3:07</a>. Sold only in 6-foot lengths.</td><td>$78.42, checked Oct 31</td></tr>
+  <tr><td>2</td><td>5.5" HDMI AMOLED screen, 1080×1920 (Waveshare)</td><td>Shows the car on pure black. OLED black is fully off, so there's no glowing rectangle <a class="src" href="https://youtu.be/WgqDaqqto90?t=153">2:33</a>. Plugs into your laptop by HDMI <a class="src" href="https://youtu.be/WgqDaqqto90?t=182">3:02</a>.</td><td>$46.00 to $129.99, not checked</td></tr>
+  <tr><td>3</td><td>Two-way mirror acrylic (Canal Plastics)</td><td>Sits on the screen. Black areas look like a plain mirror and the bright car shows through <a class="src" href="https://youtu.be/WgqDaqqto90?t=159">2:39</a>. Hold it with clips or the frame, not glue.</td><td>$12.50, check in store</td></tr>
+  <tr><td>4</td><td>Glowing car on pure black</td><td>Your display page: the car, its row and "last seen" on a black background. It's software, not a part <a class="src" href="https://youtu.be/WgqDaqqto90?t=129">2:09</a>.</td><td>$0, your app</td></tr>
+  <tr><td>5</td><td>LED half-ring: Adafruit NeoPixel strip, 30 LEDs, 1 m, plus a diffuser</td><td>The soft glowing band behind the screen <a class="src" href="https://youtu.be/WgqDaqqto90?t=174">2:54</a>. The diffuser (frosted acrylic or a white print) turns the dots into a smooth glow.</td><td>$16.95, checked Oct 31. Diffuser not priced</td></tr>
+  <tr><td>6</td><td>LED controller: Adafruit QT Py RP2040</td><td>Tells the LEDs what to do, plugged into your laptop by USB. Stands in for his custom boards.</td><td>$9.95, not checked</td></tr>
+  <tr><td>7</td><td>3D-printed base and screen frame</td><td>Holds the screen, mirror and lights in place. He measured the screw holes, then printed it <a class="src" href="https://youtu.be/WgqDaqqto90?t=167">2:47</a>. The screen has M2.5 holes.</td><td>Not priced</td></tr>
+  <tr><td>8</td><td>Laptop, HDMI and USB cables, 5-volt power</td><td>Your laptop runs the display page, so the pitch build needs no computer in the base. Not drawn in the 3D view.</td><td>Laptop: you have it. Cables not priced</td></tr>
+  <tr class="grp"><td colspan="4"><b>Turning version, optional, later</b> <span class="tag opt">later</span> none of these are priced</td></tr>
+  <tr class="later"><td>9</td><td>Geared motor, gear, five bearings, angle sensor</td><td>Turns the screen to face you. One bearing wasn't smooth enough, so he redesigned it with five <a class="src" href="https://youtu.be/WgqDaqqto90?t=239">3:59</a>. A potentiometer on a gear reads the exact angle <a class="src" href="https://youtu.be/WgqDaqqto90?t=256">4:16</a>.</td><td>Not priced</td></tr>
+  <tr class="later"><td>10</td><td>Small USB camera</td><td>Finds your face so the motor knows where to turn <a class="src" href="https://youtu.be/WgqDaqqto90?t=219">3:39</a>.</td><td>Not priced</td></tr>
+  <tr class="later"><td>11</td><td>Single-board computer (Orange Pi 4) in the base</td><td>Runs the camera and his AI <a class="src" href="https://youtu.be/WgqDaqqto90?t=276">4:36</a>. In the pitch build your laptop does this job.</td><td>Not priced</td></tr>
+  <tr class="later"><td>12</td><td>Speaker and volume knob</td><td>Gives his character a voice. One of his three custom circuit boards drives the speaker <a class="src" href="https://youtu.be/WgqDaqqto90?t=369">6:09</a>.</td><td>Not priced</td></tr>
+  </tbody></table></div>
+  <p class="cap">Pitch build parts 1, 2, 3, 5 and 6: about $163.82 to $247.81. The range is the screen. Not included: 3D printing, the diffuser, cables and power. He says the turning version took him 7 months <a class="src" href="https://youtu.be/WgqDaqqto90?t=474">7:54</a>. Full list and build steps: <a href="https://synclot-hologram-plan.vercel.app/">your hologram plan</a>.</p>
+  <ul>
+  <li><b>Check the mirror price:</b> confirm the $12.50 at Canal Plastics before you buy. It wasn't re-checked.</li>
+  <li><b>Check the fit:</b> make sure the screen's circuit board fits through the tube's 3.75" opening. If it doesn't, you'll need a 6" tube, which isn't priced.</li>
+  <li><b>Front view only:</b> without turning, from the side "the character starts to look completely flat" <a class="src" href="https://youtu.be/WgqDaqqto90?t=203">3:23</a>.</li>
+  </ul>
+  </div>
 </div>
 <div class="card" id="o-fan">
   <h3><a href="https://www.superbholo.com/3d-hologram-fan-sh-65/">SuperbHolo SH-F65 fan</a></h3>
@@ -981,7 +1022,94 @@ function initPhases(){
   document.addEventListener('unpack', e => { unpacked = e.detail; });
 }
 
-try { initPreview(); initDemo(); initExplode(); initPhases(); loop(); }
+
+// ---------- 5. tube build from the video (DD ElectroTech): small, about 40 meshes ----------
+function tubeScreenTex(){
+  const c = document.createElement('canvas'); c.width = 256; c.height = 448; const x = c.getContext('2d');
+  x.fillStyle = '#000'; x.fillRect(0,0,256,448);
+  x.save(); x.shadowColor = '#5fd3ff'; x.shadowBlur = 18; x.fillStyle = '#bfefff';
+  x.beginPath(); x.moveTo(40,206); x.lineTo(66,176); x.lineTo(150,168); x.lineTo(192,192); x.lineTo(216,198); x.lineTo(216,226); x.lineTo(40,226); x.closePath(); x.fill();
+  x.fillStyle = '#000'; x.shadowBlur = 0; [78,180].forEach(cx => { x.beginPath(); x.arc(cx,228,18,0,Math.PI*2); x.fill(); });
+  x.shadowBlur = 12; x.strokeStyle = '#bfefff'; x.lineWidth = 5; [78,180].forEach(cx => { x.beginPath(); x.arc(cx,228,12,0,Math.PI*2); x.stroke(); });
+  x.restore();
+  x.textAlign = 'center'; x.fillStyle = '#e8f7ff'; x.font = '600 30px ui-sans-serif,system-ui,sans-serif'; x.fillText('BMW X5', 128, 296);
+  x.fillStyle = '#ff4d55'; x.font = '600 26px ui-sans-serif,system-ui,sans-serif'; x.fillText('Row C4', 128, 334);
+  x.fillStyle = '#8fa3ad'; x.font = '400 19px ui-sans-serif,system-ui,sans-serif'; x.fillText('Last seen 7:42 AM', 128, 366); x.fillText('mock-up', 128, 410);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+function initTube(){
+  const v = mkView('vTube', {cam:[.5,.42,.78], target:[0,.13,0], min:.18, max:1.8}); if(!v) return;
+  v.scene.add(new THREE.GridHelper(1, 20, 0x2a2a2a, 0x1a1a1a));
+  const P = {}, G = n => { const g = new THREE.Group(); P[n] = g; return g; };
+  const BH = .04, R = .051, TH = .2, SY = .116;
+  const later = () => new THREE.MeshStandardMaterial({color:0xc98a2b, roughness:.5, metalness:.3});
+  const base = G('base');
+  const bm = new THREE.Mesh(new THREE.CylinderGeometry(.066,.07,BH,40), M.dark()); bm.position.y = BH/2;
+  base.add(bm, box(.08,.138,.006,M.dark(),0,SY,-.007));
+  const tube = G('tube');
+  const tm = new THREE.Mesh(new THREE.CylinderGeometry(R,R,TH,40,1,true), M.glass(.1)); tm.position.y = BH+TH/2; tube.add(tm);
+  [BH+.002, BH+TH].forEach(y => { const rg = new THREE.Mesh(new THREE.TorusGeometry(R,.0012,6,40), new THREE.MeshBasicMaterial({color:0x9c9994, transparent:true, opacity:.6})); rg.rotation.x = Math.PI/2; rg.position.y = y; tube.add(rg); });
+  const screen = G('screen'); screen.add(box(.072,.128,.004,M.screen(),0,SY,-.002));
+  const glow = G('glow');
+  const gp = new THREE.Mesh(new THREE.PlaneGeometry(.066,.116), new THREE.MeshBasicMaterial({map:tubeScreenTex(), transparent:true, blending:THREE.AdditiveBlending, depthWrite:false}));
+  gp.position.set(0,SY,.0006); glow.add(gp);
+  const mirror = G('mirror');
+  const mm = new THREE.Mesh(new THREE.PlaneGeometry(.074,.13), new THREE.MeshPhysicalMaterial({color:0xaab2ba, transparent:true, opacity:.25, metalness:.6, roughness:.05, depthWrite:false, side:THREE.DoubleSide}));
+  mm.position.set(0,SY,.003); mirror.add(mm, edges(mm,0xcfcac2,.8));
+  const ring = G('ring');
+  const df = new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,.124,24,1,true,Math.PI/2,Math.PI), new THREE.MeshStandardMaterial({color:0xe8f4ff, emissive:0x2f6f8f, emissiveIntensity:.7, transparent:true, opacity:.3, side:THREE.DoubleSide, depthWrite:false}));
+  df.position.y = SY; ring.add(df);
+  const sg = new THREE.SphereGeometry(.0032,8,6), la = new THREE.MeshBasicMaterial({color:0x7fdcff}), lb = new THREE.MeshBasicMaterial({color:0xb48cff});
+  [SY-.052, SY+.052].forEach(y => { for(let k=0;k<9;k++){ const a = Math.PI/2 + Math.PI*(k+.5)/9; const s = new THREE.Mesh(sg, k%2 ? lb : la); s.position.set(.041*Math.sin(a), y, .041*Math.cos(a)); ring.add(s); } });
+  const ctrl = G('ctrl'); ctrl.add(box(.022,.004,.018,new THREE.MeshStandardMaterial({color:0x1f4a2e, roughness:.6}),.035,.03,.025));
+  const motor = G('motor'), lm = later();
+  const mo = new THREE.Mesh(new THREE.CylinderGeometry(.011,.011,.024,16), lm); mo.position.set(-.028,.016,-.012);
+  const gear = new THREE.Mesh(new THREE.CylinderGeometry(.028,.028,.004,24), lm); gear.position.y = .036;
+  motor.add(mo, gear);
+  for(let k=0;k<5;k++){ const a = k/5*Math.PI*2; const b = new THREE.Mesh(new THREE.TorusGeometry(.005,.0018,6,12), lm); b.rotation.x = Math.PI/2; b.position.set(.02*Math.cos(a), .032, .02*Math.sin(a)); motor.add(b); }
+  const cam = G('cam'), cm = later();
+  const lens = new THREE.Mesh(new THREE.CylinderGeometry(.004,.004,.006,12), M.black()); lens.rotation.x = Math.PI/2; lens.position.set(0,.022,.075);
+  cam.add(box(.02,.014,.01,cm,0,.022,.068), lens);
+  const sbc = G('sbc'); sbc.add(box(.056,.005,.04,later(),0,.01,-.012));
+  const spk = G('spk'), sm = later();
+  const sp = new THREE.Mesh(new THREE.CylinderGeometry(.013,.013,.008,20), sm); sp.position.set(-.03,.012,.032);
+  const kn = new THREE.Mesh(new THREE.CylinderGeometry(.005,.005,.008,12), sm); kn.rotation.z = Math.PI/2; kn.position.set(-.068,.022,.02);
+  spk.add(sp, kn);
+  // name, how far it moves when pulled apart, label, label anchor (null = top of the part), later part
+  const TUBE = [
+    ['tube',   [0,.19,0],        '1 Clear tube $78.42',       [0,.255,0]],
+    ['screen', [0,0,0],          '2 5.5" OLED $46-130',       [-.07,.07,0]],
+    ['mirror', [0,0,.11],        '3 Two-way mirror $12.50',   [0,.2,0]],
+    ['glow',   [0,0,.055],       '4 Car on black: your app',  [.075,.15,0]],
+    ['ring',   [0,0,-.09],       '5 LED half-ring $16.95',    [0,.2,-.03]],
+    ['ctrl',   [.11,-.05,.05],   '6 LED controller $9.95',    null],
+    ['base',   [0,-.09,0],       '7 Printed base + frame',    [0,0,.07]],
+    ['motor',  [-.12,-.07,-.02], '9 Later: motor, gear, bearings', null, 1],
+    ['cam',    [0,-.04,.13],     '10 Later: USB camera',      null, 1],
+    ['sbc',    [.12,-.12,-.05],  '11 Later: Orange Pi 4',     null, 1],
+    ['spk',    [-.1,-.13,.08],   '12 Later: speaker + knob',  null, 1]
+  ];
+  const items = TUBE.map(([n, off, txt, anc, lat]) => {
+    const o = P[n]; v.scene.add(o);
+    let a; if(anc) a = new THREE.Vector3(...anc); else { const bb = new THREE.Box3().setFromObject(o); a = bb.getCenter(new THREE.Vector3()); a.y = bb.max.y + .012; }
+    const lab = label(txt, lat ? '#d9a04a' : '#cfcac2'); lab.scale.multiplyScalar(.34); v.scene.add(lab);
+    return {o, lab, a, off:new THREE.Vector3(...off), lat:!!lat};
+  });
+  let k = .75, showLater = true;
+  const sl = $('tslider'), bt = $('tlater');
+  function place(){
+    items.forEach(it => {
+      it.o.position.copy(it.off).multiplyScalar(k);
+      it.lab.position.copy(it.a).addScaledVector(it.off, k);
+      const on = !it.lat || showLater; it.o.visible = on; it.lab.visible = on && k > .3;
+    });
+  }
+  if(sl) sl.addEventListener('input', () => { k = +sl.value; place(); });
+  if(bt) bt.addEventListener('click', () => { showLater = !showLater; bt.classList.toggle('on', showLater); bt.setAttribute('aria-pressed', String(showLater)); bt.textContent = showLater ? 'Hide later parts' : 'Show later parts'; place(); });
+  place();
+}
+
+try { initPreview(); initDemo(); initExplode(); initPhases(); try { initTube(); } catch(e){ console.error(e); const f = document.querySelector('#vTube .fallback'); if(f) f.classList.add('on'); } loop(); }
 catch(e){ console.error(e); fail(); }
 
 </script>
