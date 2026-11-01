@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sync Lot: two buildings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{--ground:#F1F0EE;--card:#FFFFFF;--ink:#141414;--muted:#6E6C68;--rule:#DCDAD5;
+--serif:"Source Serif 4",Georgia,serif;--sans:"ABC Diatype",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"ABC Diatype Semi-Mono",ui-monospace,Menlo,monospace}
+@font-face{font-family:"ABC Diatype";src:url(https://www.sesame.com/fonts/diatype/ABCDiatypeVariable.woff2) format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:"ABC Diatype Semi-Mono";src:url(https://www.sesame.com/fonts/diatype/ABCDiatypeSemi-Mono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@media (prefers-color-scheme:dark){:root{--ground:#0F0F0F;--card:#1B1B1B;--ink:#F1F0EE;--muted:#9C9994;--rule:#2C2C2C;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.5 var(--sans);padding:0 16px 64px}
+.wrap{max-width:680px;margin:0 auto}
+.masthead{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.masthead::before{content:"";display:block;width:74px;height:12px;background:var(--ink);-webkit-mask:url(https://app.sesame.com/brand/sesame-wordmark.svg) left center/contain no-repeat;mask:url(https://app.sesame.com/brand/sesame-wordmark.svg) left center/contain no-repeat}
+h1{font:400 clamp(34px,8vw,48px)/1.05 var(--serif);letter-spacing:-.01em;margin:28px 0 8px}
+h1,h2,h3,p,li{text-wrap:pretty}
+h2{font:400 26px/1.15 var(--serif);margin:36px 0 10px}
+h3{font:600 17px/1.3 var(--sans);margin:0 0 5px}
+.kicker{font:13px/1.4 var(--sans);color:var(--muted);margin:0 0 2px}
+.updated{font:11px/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:6px 0 14px}
+.lede{font:400 21px/1.35 var(--sans);margin:22px 0 26px}
+html{scroll-behavior:smooth}
+p{margin:0 0 10px}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+.src{font:11px/1 var(--mono);padding:2px 6px;border:1px solid var(--muted);border-radius:999px;white-space:nowrap;text-decoration:none;margin-left:4px}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:14px 16px 18px;margin:10px 0;display:grid;gap:4px}
+.card .fact{font-size:14px;color:var(--muted)}
+.card .fact b{color:var(--ink);font-weight:500}
+.card .fact .lab{display:inline-block;min-width:4.6em;margin-right:6px;font:500 11px/1.6 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.btn{display:block;text-align:center;background:var(--ink);color:var(--ground);border-radius:999px;padding:12px 18px;font:500 14px/1 var(--sans);text-decoration:none;margin:8px 0 2px}
+ol.takeaways{counter-reset:k;list-style:none;padding:0;margin:0 0 30px}
+ol.takeaways>li{counter-increment:k;display:grid;grid-template-columns:30px minmax(0,1fr);padding:16px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.5;color:var(--muted)}
+ol.takeaways>li::before{content:counter(k);font:400 20px/1.2 var(--serif);color:var(--ink)}
+ol.takeaways b{display:block;font:600 17px/1.35 var(--sans);color:var(--ink);margin-bottom:3px}
+ol.takeaways small{display:block;grid-column:2;margin-top:4px;font:12px/1.4 var(--mono);color:var(--muted)}
+.tablewrap{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font:500 11px/1.4 var(--mono);letter-spacing:.04em;color:var(--muted);padding:6px 10px 6px 0;border-bottom:1px solid var(--ink)}
+td{padding:9px 10px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+ul{padding-left:18px;margin:0 0 10px}li{margin:0 0 6px}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:32px minmax(0,1fr);gap:0 10px;padding:12px 0}
+ol.steps>li::before{content:counter(s);font:14px/1.6 var(--mono);color:var(--muted)}
+ol.steps>li>div{border-bottom:1px solid var(--rule);padding-bottom:12px;min-width:0}
+ol.steps .fact{font-size:14px;color:var(--muted);margin:2px 0}
+ol.steps .fact b{color:var(--ink);font-weight:500}
+.sources{margin-top:40px;padding-top:14px;border-top:1px solid var(--rule);font-size:13px;color:var(--muted)}
+.sources li{margin:0 0 4px}
+nav.jump{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 26px}
+nav.jump a{font:13px/1 var(--sans);text-decoration:none;background:var(--card);border:1px solid var(--rule);border-radius:999px;padding:9px 13px}
+.options{display:grid;gap:6px;margin:22px 0 28px}
+a.opt{position:relative;display:block;min-height:88px;text-decoration:none;background:var(--card);border:1px solid var(--rule);border-radius:8px;overflow:hidden;padding:8px 26px 8px 98px;color:var(--ink)}
+a.opt img{position:absolute;left:0;top:0;bottom:0;width:86px;height:100%;object-fit:cover}
+a.opt::after{content:"";position:absolute;right:12px;top:50%;width:6px;height:6px;border-right:1.5px solid var(--muted);border-top:1.5px solid var(--muted);transform:translateY(-50%) rotate(45deg)}
+a.opt b{display:block;font:600 15px/1.25 var(--sans)}a.opt .facts{display:block;font-size:13px;line-height:1.35;margin:1px 0 2px}
+a.opt .plus,a.opt .catch{display:block;font-size:13px;line-height:1.35;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+a.opt .lab{display:inline-block;min-width:4.4em;font:500 9.5px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+a.opt.pick{border-color:var(--ink)}a.opt em{font:normal 9.5px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:3px;color:var(--muted)}
+.others{display:flex;align-items:center;gap:10px;margin:16px 0 0;font:11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.others::after{content:"";flex:1;height:1px;background:var(--rule)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.tbtn{font:13px/1 var(--sans);border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 13px;cursor:pointer}
+.tbtn.on{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.viewer{position:relative;background:#0b0b0b;border:1px solid var(--rule);border-radius:8px;overflow:hidden;height:min(68vh,470px);margin:10px 0 6px}
+.viewer canvas{display:block;width:100%;height:100%;touch-action:none}
+.vtag{position:absolute;left:12px;top:10px;font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:#9c9994;pointer-events:none}
+.hud{position:absolute;left:12px;right:12px;bottom:10px;font:11px/1.45 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:#cfcac2;pointer-events:none}
+.hud .alert{color:#ff5a5f}
+.deck{display:grid;grid-auto-flow:column;grid-auto-columns:92%;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.deck::-webkit-scrollbar{display:none}
+.deck>.card{scroll-snap-align:start;align-content:start;margin:4px 0}
+.deck .num{font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.deck .pitch{font:400 19px/1.3 var(--serif);margin:2px 0 8px}
+.deck .move{font-size:14px;margin-top:6px;padding-top:8px;border-top:1px solid var(--rule)}
+a.opt svg{position:absolute;left:0;top:0;bottom:0;width:86px;height:100%}
+.viewer.bright{background:#dedbd5}
+.viewer.bright .hud{color:#2a2a2a}.viewer.bright .vtag{color:#555}
+.viewer.bright .hud .alert{color:#c4161d}
+pre.code{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;font:12px/1.55 var(--mono);overflow-x:auto;white-space:pre;margin:8px 0 14px}
+.diagram{background:#0b0b0b;border:1px solid var(--rule);border-radius:8px;margin:10px 0 6px;overflow:hidden}
+.diagram svg,.diagram canvas{display:block;width:100%;height:auto}
+.cap{font-size:13px;color:var(--muted);margin:4px 0 14px}
+.group{font:500 11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:22px 0 4px}
+.est{font:11px/1 var(--mono);color:var(--muted)}
+.steps .when{font:12px/1.4 var(--mono);color:var(--muted);margin:2px 0 4px}
+.viewer{height:min(74vh,540px)}
+.viewer .hud{bottom:70px}
+.ghostbtn{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:#141414;color:#f1f0ee;border:1.5px solid #e0262e;border-radius:14px;padding:13px 30px;font:500 13px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 16px rgba(224,38,46,.55),inset 0 0 10px rgba(224,38,46,.22);white-space:nowrap}
+.ghostbtn.on{background:#2a0b0d;color:#ff5a5f;box-shadow:0 0 24px rgba(224,38,46,.85),inset 0 0 14px rgba(224,38,46,.4)}
+.crit{position:absolute;left:12px;top:30px;display:none;align-items:center;gap:8px;font:500 10.5px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#ff5a5f;pointer-events:none}
+.crit::before{content:"";width:22px;height:1.5px;background:#e0262e;box-shadow:0 0 6px #e0262e}
+.crit.on{display:flex}
+.crit span{color:#9c9994;letter-spacing:.06em}
+.panel{display:grid;gap:8px;margin:10px 0}
+.panel .card h3 span{font:500 10.5px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.panel .worry{font-size:14px;margin-top:6px;padding-top:8px;border-top:1px solid var(--rule)}
+.verdict{border-left:2px solid #e0262e;padding:2px 0 2px 12px;margin:14px 0}
+.yes{color:var(--ink);font-weight:600}.no{color:#c4161d;font-weight:600}
+@media (prefers-color-scheme:dark){.no{color:#ff5a5f}}
+
+:root{--ground:#0F0F0F;--card:#171717;--ink:#F1F0EE;--muted:#9C9994;--rule:#2A2A2A;color-scheme:dark}
+.no{color:#ff5a5f}
+.phone{max-width:400px;margin:14px auto 8px;border:1px solid #2c2c2c;border-radius:34px;padding:12px;background:#111;box-shadow:0 0 0 6px #080808,0 20px 50px rgba(0,0,0,.5)}
+.phonebar{display:flex;justify-content:space-between;font:11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:6px 10px 10px}
+.phone .viewer{height:min(60vh,420px);margin:0;border-radius:20px;border-color:#222}
+.phone .viewer .hud{bottom:10px}
+.pctl{display:grid;gap:8px;padding:12px 2px 4px}
+.pctl label{font:500 10.5px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.pctl select{width:100%;background:#1b1b1b;color:var(--ink);border:1px solid var(--rule);border-radius:12px;padding:12px;font:14px/1.2 var(--sans)}
+.findbtn{width:100%;min-height:60px;background:#141414;color:#f1f0ee;border:1.5px solid #e0262e;border-radius:16px;font:600 15px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;cursor:pointer;box-shadow:0 0 16px rgba(224,38,46,.45),inset 0 0 10px rgba(224,38,46,.2)}
+.findbtn.on{background:#2a0b0d;color:#ff5a5f;box-shadow:0 0 26px rgba(224,38,46,.8),inset 0 0 14px rgba(224,38,46,.4)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.row2 .tbtn{min-height:46px;border-radius:12px}
+.chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.chips::-webkit-scrollbar{display:none}
+.chips .tbtn{flex:none;min-width:46px;min-height:42px;padding:10px 12px}
+.fanbox{margin:18px 0 6px;background:#050505;border:1px solid var(--rule);border-radius:8px;padding:12px}
+.fanhead{display:flex;justify-content:space-between;gap:10px;font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+#linkstate.lost{color:#ff5a5f}
+.fans{position:relative;margin:10px 0 4px}
+#fans{display:block;width:100%;aspect-ratio:2/1;height:auto;-webkit-mask:radial-gradient(circle closest-side,#000 96%,transparent 97.5%) 0 0/50% 100% repeat-x;mask:radial-gradient(circle closest-side,#000 96%,transparent 97.5%) 0 0/50% 100% repeat-x}
+.fans .hub{position:absolute;top:0;width:50%;height:100%;pointer-events:none;background:radial-gradient(circle closest-side,#000 0 4%,transparent 4.6%),repeating-conic-gradient(rgba(255,255,255,.035) 0 .5deg,transparent .5deg 90deg);-webkit-mask:radial-gradient(circle closest-side,#000 96%,transparent 97.5%);mask:radial-gradient(circle closest-side,#000 96%,transparent 97.5%)}
+.fans .hub.l{left:0}.fans .hub.r{left:50%}
+.fanlabels{display:grid;grid-template-columns:1fr 1fr;text-align:center;font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);gap:8px}
+.fancrit{display:none;text-align:center;font:500 11px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#ff5a5f;margin:6px 0 0}
+.fancrit.on{display:block}
+.log{background:#050505;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;font:11px/1.6 var(--mono);color:#7d7a75;min-height:11.5em;overflow:hidden;white-space:pre-wrap;word-break:break-word;margin:10px 0 6px}
+.log .ph{color:#d8d3cb}.log .bad{color:#ff5a5f}
+.fallback{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:24px;text-align:center;color:#9c9994;font-size:14px;line-height:1.5}
+.fallback.on{display:flex}
+.assetnote{font:11px/1.5 var(--mono);color:var(--muted);border:1px dashed var(--rule);border-radius:8px;padding:8px 10px;margin:8px 0}
+.tag{display:inline-block;font:500 10px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;border:1px solid var(--rule);border-radius:999px;padding:1px 7px;color:var(--muted);vertical-align:2px;margin-left:4px}
+.tag.v{border-color:#5d5a55;color:#cfcac2}
+.tag.r{border-color:#e0262e;color:#ff5a5f}
+
+.viewer{height:min(64vh,460px)}
+.viewer .hud{bottom:10px}
+.slider{display:flex;align-items:center;gap:10px;font:11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:4px 0 14px}
+.slider input{flex:1;accent-color:#cfcac2;height:30px}
+.stepper{margin:10px 0 4px}
+.phase{display:none}
+.phase.on{display:block}
+.phase .num{font:11px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.phase h3{margin:4px 0 8px}
+.phase ol{margin:0 0 10px;padding-left:20px}
+.phase li{margin:4px 0}
+.gate{font-size:14px;border-top:1px solid var(--rule);padding-top:8px;margin:8px 0}
+.gate .no{color:#cfcac2}
+.phase #unpack{margin-top:6px}
+.noscript-phases .phase{display:block}
+details.more{border:1px solid var(--rule);border-radius:8px;padding:12px 14px;margin:14px 0;background:var(--card)}
+details.more summary{cursor:pointer;list-style:none;display:grid;gap:2px}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary span{font-size:13px;color:var(--muted)}
+details.more ul{margin:10px 0 0;padding-left:18px}
+details.more li{margin:6px 0;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="masthead" aria-label="Sesame"></div>
+<h1>Sync Lot display: two buildings, one portable box</h1>
+<p class="kicker">Pitch deck, Sync Lot Tech tabletop display, W 62nd St and W 57th St</p>
+<p class="updated">Updated Oct 7, 2026, 12:52pm</p>
+<p class="lede">Build one portable Holo Box with a split screen, W 62nd on the left and W 57th on the right, for about $260 to $315 est.</p>
+<ul>
+<li>I've assumed both buildings have the same seven floors (L4, L3, L2, LL, B1, B2, B3). Stall counts are made up. <a href="#two">Two buildings</a></li>
+<li>Nothing has been tried on real hardware, and the panel is simulated. "Est." means my estimate; other prices are listed prices already in this deck.</li>
+</ul>
+<nav class="jump"><a href="#pitch">Pitch</a><a href="#options">Options</a><a href="#pick">Final pick</a><a href="#two">Two buildings</a><a href="#demo">Demo</a><a href="#parts">Deconstruction</a><a href="#phases">Phases</a><a href="#carry">Portability</a><a href="#next">Next steps</a></nav>
+<h2 id="pitch">The pitch</h2>
+<p class="cap">Swipe sideways through the four slides.</p>
+<div class="deck">
+  <div class="card"><span class="num">1 / 4, the problem</span>
+    <p class="pitch">Runners lose cars across two buildings and 14 floors.</p>
+    <p>W 62nd St and W 57th St, seven floors each: Level 4, Level 3, Level 2, Low Level, B1, B2 and B3. A car logged in the wrong building or on the wrong floor means walking floor after floor.</p>
+    <p class="move">Every wrong guess means a customer kept waiting and a runner off the queue.</p></div>
+  <div class="card"><span class="num">2 / 4, the solution</span>
+    <p class="pitch">Sync Lot: search the car and it shows you the building, the floor and the stall.</p>
+    <p>Type or say the car. The app picks W62 or W57, shows the floor, lights the stall in red and gives the runner one Up Next card. The dispatcher moves cars, and the map updates for everyone.</p>
+    <p class="move">The app is what you're selling. Everything below is how you show it in a room.</p></div>
+  <div class="card"><span class="num">3 / 4, why a display</span>
+    <p class="pitch">The display is for the room. It isn't the product.</p>
+    <p>A phone screen is too small for a table of five people. A physical display shows both buildings at once, so everyone watches the search land in the right one, from across the table.</p>
+    <p class="move">If the display fails, the pitch still works: you hand them the phone.</p></div>
+  <div class="card"><span class="num">4 / 4, the one rule</span>
+    <p class="pitch">Red means found. Everything else stays quiet.</p>
+    <p>Dark floors, dark cars, no neon. When you tap Find Your Car, one stall turns red. That's the moment the room remembers.</p>
+    <p class="move">Whatever display you build, it has to make that red stall readable from 2 metres away.</p></div>
+</div>
+<h2 id="options">The fan against three cheaper builds</h2>
+<p>I checked the hologram companies first. Their real 3D screens are either too small to see across a table or over budget, so the three alternatives below are cheap builds that run your app live. With two buildings, the box still wins. <a href="#companies">What the companies sell</a></p>
+<div class="options">
+  <a class="opt pick" href="#o-holo"><svg viewBox="0 0 86 88"><rect width="86" height="88" fill="#111"/><rect x="18" y="22" width="50" height="44" fill="none" stroke="#6e6c68" stroke-width="2"/><line x1="18" y1="66" x2="68" y2="22" stroke="#cfcac2" stroke-width="1.5"/><rect x="22" y="62" width="42" height="4" fill="#3a3d42"/><circle cx="43" cy="40" r="3.5" fill="#e0262e"/></svg><em>The pick</em><b>Holo Box (Pepper's Ghost)</b><span class="facts">About $260 to $315 est., both buildings on one screen</span><span class="plus"><span class="lab">Plus</span>Floats like a hologram, one bag, one cable</span><span class="catch"><span class="lab">Catch</span>Front view only, brightness needs testing</span></a>
+  <p class="others">Other options</p>
+  <a class="opt" href="#o-fan"><svg viewBox="0 0 86 88"><rect width="86" height="88" fill="#111"/><circle cx="43" cy="40" r="24" fill="none" stroke="#6e6c68" stroke-width="2"/><line x1="19" y1="40" x2="67" y2="40" stroke="#cfcac2" stroke-width="1.5"/><line x1="43" y1="16" x2="43" y2="64" stroke="#cfcac2" stroke-width="1.5"/><line x1="43" y1="64" x2="43" y2="76" stroke="#6e6c68" stroke-width="2"/></svg><b>SuperbHolo SH-F65 fan</b><span class="facts">$400 fan, about $600 to $800 all in est.</span><span class="plus"><span class="lab">Plus</span>Biggest wow: a 65 cm spinning picture</span><span class="catch"><span class="lab">Catch</span>One building at a time; casting "not perfect"</span></a>
+  <a class="opt" href="#o-ar"><svg viewBox="0 0 86 88"><rect width="86" height="88" fill="#111"/><rect x="16" y="58" width="54" height="8" fill="#3a3d42"/><rect x="22" y="52" width="42" height="6" fill="#55595f"/><rect x="30" y="16" width="26" height="30" rx="3" fill="none" stroke="#cfcac2" stroke-width="1.5"/><circle cx="43" cy="31" r="3" fill="#e0262e"/></svg><b>AR window over a printed model</b><span class="facts">About $0 to $100 est., your phone or iPad</span><span class="plus"><span class="lab">Plus</span>Nearly free, lightest to carry, always works</span><span class="catch"><span class="lab">Catch</span>Looks least like a hologram, one viewer at a time</span></a>
+  <a class="opt" href="#o-proj"><svg viewBox="0 0 86 88"><rect width="86" height="88" fill="#111"/><rect x="36" y="12" width="14" height="9" fill="#55595f"/><path d="M43 21 L22 60 L64 60 Z" fill="#cfcac2" opacity=".12"/><rect x="20" y="60" width="46" height="7" fill="#cfcac2"/><circle cx="50" cy="63.5" r="2.5" fill="#e0262e"/></svg><b>Mini projector onto a white model</b><span class="facts">About $420 to $500 est., Nebula Capsule 3</span><span class="plus"><span class="lab">Plus</span>Very physical: light paints a real model</span><span class="catch"><span class="lab">Catch</span>Two white models to carry and realign</span></a>
+</div>
+
+<h3>See each one in 3D</h3>
+<div class="tools">
+  <button class="tbtn on" type="button" data-opt="holo" data-cap="Holo Box: the monitor lies face up, and the tilted sheet floats both buildings inside the black box.">Holo Box</button>
+  <button class="tbtn" type="button" data-opt="fan" data-cap="SH-F65 fan: 65 cm of spinning LED blades behind a clear cover, showing one floor.">Fan</button>
+  <button class="tbtn" type="button" data-opt="ar" data-cap="AR window: the tablet sees the printed model and draws the live floor and red stall on top of it.">AR window</button>
+  <button class="tbtn" type="button" data-opt="proj" data-cap="Projector: light from above paints the floor and the red stall onto a white stepped model.">Projector</button>
+</div>
+<div class="viewer" id="vOpts"><div class="vtag">Simple previews, drag to turn</div><div class="fallback">The 3D view didn't load on this device. The text and table on this page still cover every option.</div></div>
+<p class="cap" id="optcap">Holo Box: the monitor lies face up, and the tilted sheet floats both buildings inside the black box.</p>
+
+<h3>Side by side</h3>
+<div class="tablewrap"><table>
+<thead><tr><th>Option</th><th>Cost</th><th>Live from app</th><th>Setup</th><th>Biggest risk</th></tr></thead>
+<tbody>
+<tr><td><a href="#o-holo">Holo Box</a></td><td>$260-315 est.</td><td>Yes, plain HDMI</td><td>~10 min est.</td><td>Brightness</td></tr>
+<tr><td><a href="#o-fan">SH-F65 fan</a></td><td>$400; $600-800 est. all in</td><td>Casting, "not perfect"</td><td>Cover, stand, Windows</td><td>Casting drops out</td></tr>
+<tr><td><a href="#o-ar">AR window</a></td><td>$0-100 est.</td><td>Yes, it is your app</td><td>~2 min est.</td><td>Tracking jitter</td></tr>
+<tr><td><a href="#o-proj">Projector</a></td><td>$420-500 est.</td><td>Yes, HDMI not confirmed</td><td>15-20 min est.</td><td>Bright rooms</td></tr>
+</tbody></table></div>
+
+<h3>In detail</h3>
+<div class="card" id="o-holo">
+  <h3><a href="https://www.arzopa.com/collections/portable-monitors">Holo Box (Pepper's Ghost)</a> <span class="tag v">Pick</span></h3>
+  <div class="fact"><span class="lab">Cost</span><b>About $260 to $315 est.</b>, 17.3" monitor $139.99</div>
+  <div class="fact"><span class="lab">Live</span><b>Yes</b>, it's an ordinary HDMI or USB-C screen</div>
+  <div class="fact"><span class="lab">Carry</span><b>About 3.5 to 4.5 kg est.</b>, flat-packs</div>
+  <ul><li>A GM sees W62 and W57 floating side by side, and one stall turns red in the right building when you tap your phone.</li>
+  <li>It uses the same black-background display page you'd build for the fan, so a fan can still plug in later.</li>
+  <li>Plain clear acrylic reflects only about 8% of the light (my estimate), so test two-way mirror acrylic too.</li></ul>
+  <a class="btn" href="https://www.arzopa.com/collections/portable-monitors">See the Arzopa monitors</a>
+</div>
+<div class="card" id="o-fan">
+  <h3><a href="https://www.superbholo.com/3d-hologram-fan-sh-65/">SuperbHolo SH-F65 fan</a></h3>
+  <div class="fact"><span class="lab">Cost</span><b>$400</b>, about $600 to $800 with cover, case, stand est.</div>
+  <div class="fact"><span class="lab">Live</span><b>Screen casting</b> from Windows or Android</div>
+  <div class="fact"><span class="lab">Carry</span><b>65 cm blade</b>, needs a cover and a case</div>
+  <ul><li>768 × 768 and 2,500 nits: one floor reads fine, but 14 floors across two buildings don't fit on one fan (simulated panel).</li>
+  <li>The maker's page warns: "This feature is not perfect. Prolonged use will cause flash retreat."</li>
+  <li>Proper HDMI fans start at <a href="https://missyou.net/products/fan-hologram-3d-ologramma-3d-hdmi-input-computer-interactive-wifi-fan-hologram-3d-hologram-fan-180cm">$1,215</a> (Missyou) and <a href="https://holofanco.com/collections/holofan/products/holofan-hdmi">$1,699</a> (HOLOFAN).</li></ul>
+  <a class="btn" href="https://www.superbholo.com/3d-hologram-fan-sh-65/">See the SH-F65</a>
+</div>
+<div class="card" id="o-ar">
+  <h3><a href="https://hiukim.github.io/mind-ar-js-doc/">AR window over a printed model</a></h3>
+  <div class="fact"><span class="lab">Cost</span><b>About $0 to $100 est.</b>, mat or stacked model</div>
+  <div class="fact"><span class="lab">Live</span><b>Yes</b>, MindAR is free and works with three.js</div>
+  <div class="fact"><span class="lab">Carry</span><b>A folder and your phone</b>, about 2 min est.</div>
+  <ul><li>Two printed mats, one per building, cost about $10 to $20 est. each. A laser-cut stacked model is about $40 to $80 est. each.</li>
+  <li>iPhone Safari doesn't do WebXR AR (from search results), so use MindAR's camera tracking there.</li>
+  <li>Only the person holding the device sees it, unless you mirror it to a TV. Keep it as the backup in your bag.</li></ul>
+  <a class="btn" href="https://hiukim.github.io/mind-ar-js-doc/">Open the MindAR docs</a>
+</div>
+<div class="card" id="o-proj">
+  <h3><a href="https://www.soundcore.com/collections/capsule-series">Mini projector onto a white model</a></h3>
+  <div class="fact"><span class="lab">Cost</span><b>About $420 to $500 est.</b>, projector $359.97 on sale</div>
+  <div class="fact"><span class="lab">Live</span><b>Yes</b>, a top-down view from the laptop</div>
+  <div class="fact"><span class="lab">Carry</span><b>Portable</b>, 15 to 20 min setup est.</div>
+  <ul><li>White model about $30 to $80 est., and an overhead arm about $25 to $50 est.</li>
+  <li>Light from above only reaches the top plate, so use stepped plates, and you'd need one model per building.</li>
+  <li>I didn't confirm its lumens or HDMI input. Expect it to wash out in a bright showroom (my estimate).</li></ul>
+  <a class="btn" href="https://www.soundcore.com/collections/capsule-series">See the Capsule 3</a>
+</div>
+
+<details class="more" id="companies"><summary><b>What the hologram companies sell</b><span>Real 3D screens are either too small for a table or far over budget.</span></summary><ul>
+<li><a href="https://checkout.lookingglassfactory.com/products/looking-glass-go">Looking Glass Go</a>: $199 on sale, 6 inches, 257 g, real 3D but too small to see across a table. Bigger Looking Glass screens are listed at $1,500 to $10,000 in a search summary.</li>
+<li>Proto M ($5,900) and the Leia Lume Pad 2 tablet ($1,099), both from search results and press coverage: over budget, and Leia runs its own apps rather than your page.</li>
+<li>A JamiePro 15.6-inch transparent LCD box is €700 and plays saved videos only. Tablet pyramids are toys that need four copies of the view.</li>
+</ul></details>
+
+<h2 id="pick">Final pick: the Holo Box</h2>
+<ol class="takeaways">
+<li><div><b>It's the only one that does all four.</b>It looks like a hologram, runs live, costs under $320 est. for both buildings, and its own dark box protects the picture in a bright room.</div></li>
+<li><div><b>Nothing proprietary to break.</b>It's a standard monitor fed by your laptop. The fan depends on the maker's casting software, and the maker admits that's fragile. <a class="src" href="https://www.superbholo.com/3d-hologram-fan-sh-65/">superbholo.com</a></div></li>
+<li><div><b>No work is wasted.</b>The black-background display page and the phone-to-laptop link are the same ones a fan needs, so the fan becomes an upgrade later, not a must-have now.</div></li>
+<li><div><b>What you give up.</b>No 360° view: it reads from the front, and the picture is flat but floating.<small>Brightness is unconfirmed. Test it first.</small></div></li>
+</ol>
+<p class="group">Simulated expert panel (not real people)</p>
+<div class="panel">
+  <div class="card"><h3><span>Display and optics</span>Best floating look per dollar.</h3><p class="worry">Test two-way mirror against clear acrylic, and check the red stall still reads at half the screen width.</p></div>
+  <div class="card"><h3><span>Exhibit design</span>A GM remembers a car lighting up on a real-looking object.</h3><p class="worry">Two buildings side by side tell the two-site story at a glance. Projection looks great but needs a dim corner.</p></div>
+  <div class="card"><h3><span>Embedded</span>Fewest things that can break.</h3><p class="worry">It's a standard HDMI monitor, with no casting software. The fan's casting is the weakest link.</p></div>
+  <div class="card"><h3><span>Sales and demo producer</span>Lead with the box.</h3><p class="worry">Keep the AR model in your bag as the backup that costs nothing and always works.</p></div>
+</div>
+<p class="verdict"><b>Verdict:</b> go with the Holo Box. Skip the fan for now and revisit it once the app is winning meetings.</p>
+<h2 id="two">Two buildings in one bag</h2>
+<p>Three ways to show W 62nd St and W 57th St and still carry it alone. One box with a split screen wins: both buildings stay on view, and you carry one monitor, one cable and one bag.</p>
+<div class="tablewrap"><table>
+<thead><tr><th>Layout</th><th>Cost</th><th>Weight</th><th>Setup</th><th>Catch</th></tr></thead>
+<tbody>
+<tr><td><b>One box, split screen</b> (pick)</td><td>$260-315 est.</td><td>3.5-4.5 kg est.</td><td>~10 min est.</td><td>Each building gets half the screen</td></tr>
+<tr><td>One box, building toggle</td><td>$200-290 est.</td><td>3-4 kg est.</td><td>~10 min est.</td><td>The room never sees both at once</td></tr>
+<tr><td>Two compact boxes</td><td>$330-430 est.</td><td>6-8 kg est.</td><td>~20 min est.</td><td>Two bags, two outputs from one laptop</td></tr>
+</tbody></table></div>
+<details class="more"><summary><b>One box, split screen: the pick</b><span>A 17.3" monitor shows W62 on the left and W57 on the right.</span></summary><ul>
+<li>When a search lands, that building takes about 60% of the screen and the other dims, so the red stall stays big.</li>
+<li>The 17.3" <a href="https://www.arzopa.com/collections/portable-monitors">Arzopa A1M</a> ($139.99) gives each building more width than the 16.1" Z1C. The box grows to about 20" wide.</li>
+<li>One HDMI or USB-C cable, so you don't need to test two video outputs on your laptop.</li></ul></details>
+<details class="more"><summary><b>One box, building toggle</b><span>The same box as before, showing one building full screen.</span></summary><ul>
+<li>Cheapest: the 16.1" <a href="https://www.arzopa.com/collections/portable-monitors">Arzopa Z1C</a> ($99.99) and the original box.</li>
+<li>The two-site story hides behind a tap. Keep it as the fallback if the split screen fails Phase 2.</li></ul></details>
+<details class="more"><summary><b>Two compact boxes</b><span>One box per building, each with a 15.6" monitor.</span></summary><ul>
+<li>Two <a href="https://www.arzopa.com/collections/portable-monitors">Arzopa A1</a> monitors ($79.99 each), two reflectors, two boxes, two cables: about $330 to $430 est.</li>
+<li>The most physical look, but double the weight and setup, and your laptop must drive two screens with different pictures.</li></ul></details>
+<p class="verdict"><b>Verdict:</b> one box, split screen. If Phase 2 shows the red stall is too small at half width, switch the same box to the building toggle.</p>
+
+<h2 id="demo">How it looks in the demo</h2>
+<p>The box sits on the table, open at the front. You hold the phone. The laptop sits beside it and draws both buildings. Pick a car, tap Find Your Car, and the right building slides its floor forward with one stall in red.</p>
+<div class="viewer" id="vDemo"><div class="vtag">The tabletop, drag to turn, pinch to zoom</div><div class="hud" id="hudDemo">Showing W 62nd St, B3.</div><div class="fallback">The 3D view didn't load on this device. The parts list and phases below still cover the whole build.</div></div>
+<div class="phone">
+  <div class="phonebar"><span>Sync Lot</span><span>Remote</span></div>
+  <div class="pctl">
+    <label for="car">Car</label>
+    <select id="car"><option value="0">X5 · Carbon Black · W62</option><option value="1">330i · Tanzanite Blue · W57</option><option value="2">X3 · Dravit Grey · W62</option><option value="3">i4 · Black Sapphire · W57</option><option value="4">X7 · Carbon Black · W57</option><option value="5">M340i · Portimao Blue · W62</option></select>
+    <button class="findbtn" id="findbtn" type="button">Find Your Car</button>
+    <label>Building</label>
+    <div class="row2" id="bldgs"><button class="tbtn on" type="button" data-b="0">W 62nd St</button><button class="tbtn" type="button" data-b="1">W 57th St</button></div>
+    <label>Floor</label>
+    <div class="chips" id="floors"><button class="tbtn" type="button" data-f="0">L4</button><button class="tbtn" type="button" data-f="1">L3</button><button class="tbtn" type="button" data-f="2">L2</button><button class="tbtn" type="button" data-f="3">LL</button><button class="tbtn" type="button" data-f="4">B1</button><button class="tbtn" type="button" data-f="5">B2</button><button class="tbtn" type="button" data-f="6">B3</button></div>
+    <div class="row2"><button class="tbtn" id="clearbtn" type="button">Clear</button><button class="tbtn" id="insidebtn" type="button">Look inside</button></div>
+  </div>
+</div>
+<p class="assetnote">Cars are dark BMW-style stand-ins I built in code. They aren't official BMW models. Both buildings use the same seven floors and 16 made-up stalls per floor, and the phone-to-box link is simulated on this page.</p>
+<p class="cap">In real life the floating buildings are the monitor's split-screen picture reflected in the sheet. They look like they're standing in the box, but the picture is flat and reads best from the front.</p>
+<p class="group">What the monitor shows</p>
+<div class="diagram" id="screenwrap"></div>
+<p class="cap">The display page on the monitor: both buildings, a floor ladder for each, and the found building enlarged. It updates with the phone above.</p>
+
+<h2 id="parts">Deconstruction</h2>
+<p>Drag the slider to pull the box apart. Numbers match the list below. It's the same box as before, a little wider for the 17.3" monitor.</p>
+<div class="viewer" id="vExplode"><div class="vtag">Exploded view</div><div class="fallback">The 3D view didn't load on this device. Every part is in the list below.</div></div>
+<div class="slider"><span>Together</span><input type="range" id="xslider" min="0" max="1" step="0.01" value="0.75" aria-label="Explode the box"><span>Apart</span></div>
+<div class="tablewrap"><table>
+<thead><tr><th>#</th><th>Part</th><th>Its job</th><th>Cost</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><a href="https://www.arzopa.com/collections/portable-monitors">Arzopa A1M 17.3" monitor</a></td><td>Shows both buildings side by side. Lies face up on the floor of the box.</td><td>$139.99</td></tr>
+<tr><td>2</td><td><a href="https://www.ttplasticland.com/products/custom-see-thru-2-way-mirror-acrylic-sheet">Reflector, 1/8" acrylic, ~12×24"</a></td><td>Bounces the picture toward the audience so it floats. 24" covers the wider screen.</td><td>~$35-45 est.</td></tr>
+<tr><td>3</td><td>Two 45° rails or printed brackets</td><td>Hold the reflector at exactly 45°.</td><td>~$10 est.</td></tr>
+<tr><td>4</td><td>Box: black 5 mm foam board or 1/4" plywood, velvet lined, ~20×14×14"</td><td>Base, back, sides and lid block room light. Slot joints, so no tools.</td><td>~$35-65 est.</td></tr>
+<tr><td>5</td><td>Front lip (offcut)</td><td>Hides the monitor's edge from the audience.</td><td>From the box board</td></tr>
+<tr><td>6</td><td>Optional W62 and W57 name plates, small clear acrylic</td><td>Sit under each half so the room knows which building is which.</td><td>~$10-20 est.</td></tr>
+<tr><td>7</td><td>USB-C or HDMI cable, power</td><td>Carries the laptop picture to the monitor. One cable for both buildings.</td><td>~$10-15 est.</td></tr>
+<tr><td>8</td><td>Laptop</td><td>Runs the display page and draws both buildings every frame.</td><td>Have it</td></tr>
+<tr><td>9</td><td>Phone</td><td>The remote: sends the building, floor and stall. Never video.</td><td>Have it</td></tr>
+<tr><td>10</td><td>Padded flat-pack bag, ~22×16"</td><td>Panels, monitor and reflector lie flat in one bag.</td><td>~$30-40 est.</td></tr>
+</tbody></table></div>
+<p class="cap">All in: about $260 to $315 est., plus $10 to $20 est. for the optional name plates. A 12×12" two-way mirror test piece is $21. The 16.1" Z1C ($99.99) still works for the building toggle fallback.</p>
+
+<h2 id="phases">The build in phases</h2>
+<p>Tap a phase to watch that step in 3D. Don't start a phase until the one before it passes its gate.</p>
+<div class="chips stepper" id="stepper">
+<button class="tbtn on" type="button" data-p="0">1 Gather</button><button class="tbtn" type="button" data-p="1">2 Ugly rig</button><button class="tbtn" type="button" data-p="2">3 Case</button><button class="tbtn" type="button" data-p="3">4 Link</button><button class="tbtn" type="button" data-p="4">5 Finish</button><button class="tbtn" type="button" data-p="5">6 Demo day</button>
+</div>
+<div class="viewer" id="vPhases"><div class="vtag" id="phasetag">Phase 1 of 6</div><div class="fallback">The 3D view didn't load on this device. Each phase's checklist is below.</div></div>
+<div class="phases">
+<div class="card phase on" data-p="0"><span class="num">Phase 1, gather parts</span><h3>Get only what the free test can't answer.</h3>
+<ol><li>Order the 17.3" Arzopa A1M ($139.99).</li><li>Order the $21 two-way mirror test piece first. Buy the 12×24" sheet after the test.</li><li>Get black foam board or plywood for a box about 20×14×14", black velvet and two rails.</li><li>Get the USB-C or HDMI cable your laptop needs, and a flat padded bag about 22×16".</li></ol>
+<p class="gate"><b>Go</b> when the monitor shows your laptop over one cable and the panels fit flat in the bag.</p></div>
+<div class="card phase" data-p="1"><span class="num">Phase 2, the ugly test rig</span><h3>Books, a sheet of acrylic and the monitor on a table.</h3>
+<ol><li>Dark room, monitor flat and face up.</li><li>Prop the sheet on books at 45°, top edge toward you.</li><li>Play the split view: W62 left, W57 right, one red stall.</li><li>Swap clear acrylic for two-way mirror and compare.</li></ol>
+<p class="gate"><b>Go</b> if a stranger names the building and finds the red stall in about 3 seconds from 2 metres, lights on. <b class="no">No-go:</b> try the building toggle, then the AR window.</p></div>
+<div class="card phase" data-p="2"><span class="num">Phase 3, frame and case</span><h3>Build the black box around it.</h3>
+<ol><li>Cut a base, back, two sides and a lid: about 20" wide, 14" deep, 14" tall.</li><li>Use slot joints or tape hinges so it builds with no tools.</li><li>Line the inside with black velvet. Fix the rails at 45° and check with a square.</li><li>Slide in the reflector, top edge at the front.</li></ol>
+<p class="gate"><b>Go</b> when the reflector sits at 45° without wobbling, no room light hits the screen, and it folds flat again.</p></div>
+<div class="card phase" data-p="3"><span class="num">Phase 4, electronics and software link</span><h3>Phone picks, laptop draws, box shows.</h3>
+<ol><li>Build the display page: both buildings on black, W62 left, W57 right, no buttons.</li><li>Have the phone send the building, floor and stall, for example W62, B2, B-06. A local WebSocket will likely feel quicker than a cloud round trip.</li><li>Make the found building grow to about 60% of the screen and dim the other.</li><li>Laptop to monitor, full screen, camera tilted slightly from above.</li></ol>
+<p class="gate"><b>Go</b> if tap-to-red feels live and the right building lights every time. Switch buildings 10 times fast; aim for about 150 ms (a rule of thumb, not a measured figure).</p></div>
+<div class="card phase" data-p="4"><span class="num">Phase 5, finish and hide the electronics</span><h3>Nothing but the two floating buildings.</h3>
+<ol><li>Add the front lip over the monitor's edge.</li><li>Run the one cable through a hole in the back.</li><li>Move the laptop behind the box.</li><li>Optional: set the W62 and W57 name plates under each half.</li></ol>
+<p class="gate"><b>Go</b> when nobody can see a cable, a screen edge or the laptop from the front.</p></div>
+<div class="card phase" data-p="5"><span class="num">Phase 6, demo day</span><h3>Pack flat, unpack in about 10 minutes (est.).</h3>
+<ol><li>Panels, monitor and reflector (in its film) go flat into one padded bag.</li><li>Unpack: base, walls, lid, rails, reflector, monitor, cable.</li><li>Laptop on, display page full screen, phone connected.</li><li>Run Find Your Car three times, in both buildings, before anyone sits down.</li></ol>
+<p class="gate"><b>Go</b> when a search lands in each building. Time your setup at home first. Backup: the app on your phone and the two AR mats.</p>
+<button class="tbtn" id="unpack" type="button">Show it unpacked</button></div>
+</div>
+
+<h2 id="carry">Portability</h2>
+<div class="card">
+  <div class="fact"><span class="lab">Weight</span><b>About 3.5 to 4.5 kg est.</b>, one padded bag, one hand</div>
+  <div class="fact"><span class="lab">Setup</span><b>About 10 minutes est.</b>, no tools with slot joints</div>
+  <div class="fact"><span class="lab">Room</span><b>Any light</b>: the box makes its own dark</div>
+  <ul><li>Both buildings ride in one box, so it's one bag, one monitor and one cable. Two boxes would double the weight and setup.</li>
+  <li>The bag is about 22×16" (est.): flat panels, the monitor in its sleeve and the reflector in its film. The laptop goes in your own bag.</li>
+  <li>The AR backup is two printed plans in a folder, one per building.</li></ul>
+</div>
+
+<h2 id="next">Next steps, free tests first</h2>
+<ol class="steps">
+<li><div><h3>Tonight, free: the picture-frame test</h3><p class="fact">Lay your laptop flat in a dark room. Prop picture-frame glass over it at 45°. Play a split render, two buildings on black, one red stall.</p></div></li>
+<li><div><h3>Free: build the display page and the phone link</h3><p class="fact">Both buildings on black, driven from your phone with building, floor and stall. Test it on any screen.</p></div></li>
+<li><div><h3>$21: <a href="https://www.ttplasticland.com/products/custom-see-thru-2-way-mirror-acrylic-sheet">two-way mirror test piece</a></h3><p class="fact">Compare it with clear acrylic for brightness. Keep the winner.</p></div></li>
+<li><div><h3>$139.99: <a href="https://www.arzopa.com/collections/portable-monitors">Arzopa A1M 17.3" monitor</a></h3><p class="fact">Run the ugly rig with the split view in a bright room. Phase 2's gate decides split screen, toggle or AR.</p></div></li>
+<li><div><h3>About $35 to $65 est.: build the box</h3><p class="fact">Phases 3 to 5. Then pack it in the bag and time the setup.</p></div></li>
+<li><div><h3>Free backup: <a href="https://hiukim.github.io/mind-ar-js-doc/">AR on two printed plans</a></h3><p class="fact">Print one plan for W62 and one for W57, use each as a MindAR target and pin a red stall. They go in the bag.</p></div></li>
+<li><div><h3>Later: the fan</h3><p class="fact">Only once the app is winning meetings. It plugs into the same display page.</p></div></li>
+</ol>
+
+<div class="sources"><b>Sources and where to verify</b><ul>
+<li><a href="https://www.arzopa.com/collections/portable-monitors">Arzopa portable monitors</a>, sale prices checked Oct 7, 2026</li>
+<li><a href="https://www.ttplasticland.com/products/custom-see-thru-2-way-mirror-acrylic-sheet">T&amp;T Plastic Land, two-way mirror acrylic</a></li>
+<li><a href="https://www.superbholo.com/3d-hologram-fan-sh-65/">SuperbHolo SH-F65 fan</a></li>
+<li><a href="https://missyou.net/products/fan-hologram-3d-ologramma-3d-hdmi-input-computer-interactive-wifi-fan-hologram-3d-hologram-fan-180cm">Missyou HDMI fan</a> and <a href="https://holofanco.com/collections/holofan/products/holofan-hdmi">HOLOFAN HDMI fan</a></li>
+<li><a href="https://checkout.lookingglassfactory.com/products/looking-glass-go">Looking Glass Go</a></li>
+<li><a href="https://hiukim.github.io/mind-ar-js-doc/">MindAR documentation</a></li>
+<li><a href="https://www.soundcore.com/collections/capsule-series">Soundcore Nebula Capsule series</a></li>
+</ul></div>
+</div>
+<script>
+(function(){
+  var steps = document.querySelectorAll('#stepper [data-p]'), cards = document.querySelectorAll('.phase'), tag = document.getElementById('phasetag');
+  function go(i){
+    steps.forEach(function(b){ b.classList.toggle('on', +b.dataset.p === i); });
+    cards.forEach(function(c){ c.classList.toggle('on', +c.dataset.p === i); });
+    if(tag) tag.textContent = 'Phase ' + (i+1) + ' of 6';
+    var u = document.getElementById('unpack'); if(u){ u.classList.remove('on'); u.textContent = 'Show it unpacked'; }
+    document.dispatchEvent(new CustomEvent('phase', {detail:i}));
+  }
+  steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.p); }); });
+  var u = document.getElementById('unpack');
+  if(u) u.addEventListener('click', function(){ var on = !u.classList.contains('on'); u.classList.toggle('on', on); u.textContent = on ? 'Show it packed' : 'Show it unpacked'; document.dispatchEvent(new CustomEvent('unpack', {detail:on})); });
+  setTimeout(function(){ if(window.__3d !== 'ok') document.querySelectorAll('.fallback').forEach(function(f){ f.classList.add('on'); }); }, 9000);
+})();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+const $ = id => document.getElementById(id);
+
+// ---------- views: one WebGL canvas per viewer, rendered only while on screen ----------
+const VIEWS = [];
+function mkView(id, {cam=[0.9,0.7,1.1], target=[0,0.25,0], fov=38, min=0.25, max=4} = {}){
+  const el = $(id); if(!el) return null;
+  let r;
+  try { r = new THREE.WebGLRenderer({antialias:true}); } catch(e){ fail(); throw e; }
+  window.__3d = 'ok';
+  r.setPixelRatio(Math.min(devicePixelRatio, 2));
+  r.outputColorSpace = THREE.SRGBColorSpace; r.toneMapping = THREE.ACESFilmicToneMapping; r.toneMappingExposure = 1.05;
+  el.prepend(r.domElement);
+  const scene = new THREE.Scene(); scene.background = new THREE.Color(0x0b0b0b);
+  scene.environment = new THREE.PMREMGenerator(r).fromScene(new RoomEnvironment(), .04).texture;
+  scene.add(new THREE.HemisphereLight(0xdfe6ff, 0x1a1712, .5));
+  const sun = new THREE.DirectionalLight(0xffffff, 1.0); sun.position.set(2,4,3); scene.add(sun);
+  const camera = new THREE.PerspectiveCamera(fov, 1, .01, 100); camera.position.set(...cam);
+  const ctl = new OrbitControls(camera, r.domElement); ctl.target.set(...target);
+  ctl.enableDamping = true; ctl.enablePan = false; ctl.minDistance = min; ctl.maxDistance = max; ctl.maxPolarAngle = Math.PI*0.49;
+  const v = {el, r, scene, camera, ctl, tick:[], visible:true, w:0, h:0};
+  new IntersectionObserver(e => { v.visible = e[0].isIntersecting; }).observe(el);
+  VIEWS.push(v); return v;
+}
+function fail(){ document.querySelectorAll('.fallback').forEach(f => f.classList.add('on')); window.__3d = 'fail'; }
+const clock = new THREE.Clock();
+function loop(){
+  requestAnimationFrame(loop);
+  const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
+  for(const v of VIEWS){
+    if(!v.visible) continue;
+    const w = v.el.clientWidth, h = v.el.clientHeight;
+    if(w !== v.w || h !== v.h){ v.w = w; v.h = h; v.r.setSize(w, h, false); v.camera.aspect = w/h; v.camera.updateProjectionMatrix(); }
+    v.tick.forEach(f => f(t, dt)); v.ctl.update(); v.r.render(v.scene, v.camera);
+  }
+}
+
+// ---------- helpers ----------
+const M = {
+  black: () => new THREE.MeshStandardMaterial({color:0x0a0a0a, roughness:.95}),
+  dark: () => new THREE.MeshStandardMaterial({color:0x1c1c1e, roughness:.6, metalness:.2}),
+  alu: () => new THREE.MeshStandardMaterial({color:0x55585d, metalness:.75, roughness:.35}),
+  wood: () => new THREE.MeshStandardMaterial({color:0x2a2622, roughness:.8}),
+  glass: (op=.12) => new THREE.MeshPhysicalMaterial({color:0xffffff, transparent:true, opacity:op, roughness:.04, metalness:0, depthWrite:false, side:THREE.DoubleSide}),
+  screen: () => new THREE.MeshStandardMaterial({color:0x050608, emissive:0x0d1015, roughness:.25}),
+  red: () => new THREE.MeshStandardMaterial({color:0xe0262e, emissive:0xe0262e, emissiveIntensity:1.4})
+};
+function box(w,h,d,mat,x=0,y=0,z=0){ const m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat); m.position.set(x,y,z); return m; }
+function edges(mesh, color=0x9c9994, op=.6){ const e = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry), new THREE.LineBasicMaterial({color, transparent:true, opacity:op})); e.position.copy(mesh.position); e.rotation.copy(mesh.rotation); return e; }
+function glassBox(w,h,d,x,y,z,op=.08){ const g = new THREE.Group(); const m = box(w,h,d,M.glass(op),x,y,z); g.add(m, edges(m,0x9c9994,.5)); return g; }
+function label(text, color='#cfcac2', size=28){
+  const c = document.createElement('canvas'); const ctx = c.getContext('2d'); ctx.font = `500 ${size}px ui-monospace,Menlo,monospace`;
+  c.width = Math.ceil(ctx.measureText(text).width) + 16; c.height = size + 16;
+  ctx.font = `500 ${size}px ui-monospace,Menlo,monospace`; ctx.fillStyle = color; ctx.textBaseline = 'middle'; ctx.fillText(text, 8, c.height/2);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace;
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({map:t, transparent:true, depthWrite:false, depthTest:false}));
+  s.scale.set(c.width/c.height*.045, .045, 1); s.renderOrder = 10; return s;
+}
+
+// ---------- BMW-style stand-in car (built in code, not an official BMW model) ----------
+function prep(g){ g = g.index ? g.toNonIndexed() : g; for(const k of Object.keys(g.attributes)) if(k!=='position' && k!=='normal') g.deleteAttribute(k); return g; }
+function ext(pts, width, bevel=.05){
+  const s = new THREE.Shape(); pts.forEach((p,i) => i ? s.lineTo(p[0],p[1]) : s.moveTo(p[0],p[1]));
+  const g = new THREE.ExtrudeGeometry(s, {depth:width-2*bevel, bevelEnabled:true, bevelThickness:bevel, bevelSize:bevel, bevelSegments:2, curveSegments:4});
+  g.translate(0,0,-(width-2*bevel)/2); return prep(g);
+}
+function bx(w,h,d,x,y,z){ const g = new THREE.BoxGeometry(w,h,d); g.translate(x,y,z); return prep(g); }
+function wheels(w, xs, zs, y, rad){ const o=[]; for(const x of xs) for(const z of zs){ const g = new THREE.CylinderGeometry(rad,rad,w,16); g.rotateX(Math.PI/2); g.translate(x,y,z); o.push(prep(g)); } return mergeGeometries(o); }
+function carGeo(type){
+  const sedan = type === 'sedan', L = sedan?4.7:4.95, Wd = sedan?1.82:1.95, hx = L/2, k = sedan?1:1.06;
+  const body = sedan
+    ? [[-hx+.02,.32],[hx-.05,.32],[hx+.01,.5],[hx-.02,.7],[hx-.35,.8],[1.05,.92],[-1.7,.98],[-hx+.05,.99],[-hx-.01,.75]]
+    : [[-hx+.02,.42],[hx-.05,.42],[hx+.01,.62],[hx-.02,.86],[hx-.32,.98],[1.15,1.1],[-2.05,1.16],[-hx+.05,1.15],[-hx-.01,.9]];
+  const green = sedan ? [[1.05,.9],[.36,1.38],[-.95,1.41],[-1.74,.96]] : [[1.15,1.08],[.5,1.6],[-2.0,1.63],[-2.32,1.13]];
+  const roof = sedan ? bx(1.15,.05,1.36,-.3,1.42,0) : bx(2.3,.05,1.52,-.75,1.645,0);
+  const gy = sedan?.6:.74, gh = sedan?.24:.32;
+  const p = {
+    body: mergeGeometries([ext(body,Wd), roof]),
+    glass: ext(green, Wd-.24, .03),
+    grille: mergeGeometries([bx(.06,gh,.3,hx+.02,gy,.19), bx(.06,gh,.3,hx+.02,gy,-.19)]),
+    head: mergeGeometries([bx(.05,.07,.42,hx-.02,sedan?.7:.86,.6), bx(.05,.07,.42,hx-.02,sedan?.7:.86,-.6)]),
+    tail: mergeGeometries([bx(.05,.09,.48,-hx-.01,sedan?.84:1.0,.62), bx(.05,.09,.48,-hx-.01,sedan?.84:1.0,-.62)]),
+    tire: wheels(.25, [-1.42*k,1.42*k], [-.8*k,.8*k], sedan?.34:.39, sedan?.34:.39)
+  };
+  for(const n in p) p[n].rotateY(-Math.PI/2);
+  return p;
+}
+const GEO = {sedan: carGeo('sedan'), sav: carGeo('sav')};
+const PAINT = [0x0e131c, 0x0b0c10, 0x1a2340, 0x57534d, 0x3b3f44, 0x1d3a66, 0x14202b];
+const CM = {
+  glass: new THREE.MeshStandardMaterial({color:0x080b10, metalness:.3, roughness:.08}),
+  grille: new THREE.MeshStandardMaterial({color:0x030303, roughness:.55}),
+  head: new THREE.MeshBasicMaterial({color:0xd6e0f0}),
+  tail: new THREE.MeshBasicMaterial({color:0x4a0a0d}),
+  tire: new THREE.MeshStandardMaterial({color:0x0d0d0d, roughness:.85}),
+  paints: PAINT.map(c => new THREE.MeshPhysicalMaterial({color:c, metalness:.6, roughness:.32, clearcoat:1, clearcoatRoughness:.1})),
+  found: new THREE.MeshPhysicalMaterial({color:0xe0262e, emissive:0x8a0f14, emissiveIntensity:.9, metalness:.4, roughness:.3, clearcoat:1})
+};
+function makeCar(type, paint){
+  const g = new THREE.Group(), geo = GEO[type];
+  for(const n of ['body','glass','grille','head','tail','tire']){
+    const m = new THREE.Mesh(geo[n], n==='body' ? CM.paints[paint] : CM[n]); m.userData.part = n; g.add(m);
+  }
+  g.userData.paint = paint; return g;
+}
+function paintCar(car, found){ car.children.forEach(m => { if(m.userData.part==='body') m.material = found ? CM.found : CM.paints[car.userData.paint]; }); }
+
+// ---------- one parking floor (the picture the display shows) ----------
+// built in car units (1 = 1 m), 2 rows x 8 stalls, then scaled by the caller
+const FLOORS = ['L4','L3','L2','LL','B1','B2','B3'];
+const FNAME = {L4:'Level 4',L3:'Level 3',L2:'Level 2',LL:'Low Level',B1:'B1',B2:'B2',B3:'B3'};
+const SW = 2.6, NPER = 8, ROWZ = [-4.2, 4.2];
+function makeLot(){
+  const g = new THREE.Group(), W = NPER*SW;
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(W+3, .4, 15.5), new THREE.MeshStandardMaterial({color:0x232427, roughness:.92}));
+  plate.position.y = -.2; g.add(plate, edges(plate, 0x3a3d42, 1));
+  const lp = [];
+  ROWZ.forEach(z => { for(let i=0;i<=NPER;i++){ const x = -W/2 + i*SW; lp.push(x,.02,z-2.7, x,.02,z+2.7); } });
+  const lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.Float32BufferAttribute(lp,3));
+  g.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({color:0x8a877f, transparent:true, opacity:.6})));
+  const pad = new THREE.Mesh(new THREE.PlaneGeometry(SW-.2, 5.2), new THREE.MeshBasicMaterial({color:0xe0262e, transparent:true, opacity:0}));
+  pad.rotation.x = -Math.PI/2; pad.position.y = .03; g.add(pad);
+  const beam = new THREE.Mesh(new THREE.CylinderGeometry(.5,.9,9,20,1,true), new THREE.MeshBasicMaterial({color:0xff3b41, transparent:true, opacity:0, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide}));
+  beam.position.y = 4.5; g.add(beam);
+  const slots = [];
+  ROWZ.forEach((z, r) => { for(let i=0;i<NPER;i++){
+    const x = -W/2 + SW/2 + i*SW, cars = {sedan: makeCar('sedan',0), sav: makeCar('sav',0)};
+    for(const c of Object.values(cars)){ c.position.set(x,0,z); c.rotation.y = r ? Math.PI : 0; c.visible = false; g.add(c); }
+    slots.push({x, z, cars, label: (r?'B':'A') + '-' + String(i+1).padStart(2,'0')});
+  }});
+  let found = -1;
+  function show(fi, foundSlot=-1, bi=0){
+    let s = 11 + fi*37 + bi*101; const rnd = () => (s = (s*16807) % 2147483647) / 2147483647;
+    slots.forEach((sl, i) => {
+      const occ = i === foundSlot || rnd() < .78, type = rnd() < .45 ? 'sav' : 'sedan', paint = Math.floor(rnd()*PAINT.length);
+      for(const [t, c] of Object.entries(sl.cars)){ c.visible = occ && t === type; c.userData.paint = paint; paintCar(c, i === foundSlot); }
+    });
+    found = foundSlot;
+    if(found >= 0){ pad.position.x = beam.position.x = slots[found].x; pad.position.z = beam.position.z = slots[found].z; }
+    pad.material.opacity = found >= 0 ? .55 : 0; beam.material.opacity = 0;
+  }
+  function tick(t){ if(found >= 0){ const p = .5 + .5*Math.sin(t*4); pad.material.opacity = .35 + .35*p; beam.material.opacity = .08 + .1*p; } }
+  show(6);
+  return {group:g, show, tick, slots, width:W+3, depth:15.5};
+}
+
+// demo cars people can search for
+const DEMO = [
+  {label:'X5 · Carbon Black', b:0, f:5, slot:13},
+  {label:'330i · Tanzanite Blue', b:1, f:1, slot:4},
+  {label:'X3 · Dravit Grey', b:0, f:6, slot:10},
+  {label:'i4 · Black Sapphire', b:1, f:3, slot:2},
+  {label:'X7 · Carbon Black', b:1, f:4, slot:9},
+  {label:'M340i · Portimao Blue', b:0, f:2, slot:6}
+];
+const BNAME = ['W 62nd St', 'W 57th St'], BSHORT = ['W62', 'W57'];
+const stallLabel = i => (i < 8 ? 'A-' : 'B-') + String(i%8+1).padStart(2,'0');
+
+const PCSS = ['#2c3340','#26282e','#2f3a5c','#6d6963','#55595f','#2f528a','#2a3746'];
+// ---------- 2D picture of one floor, for screens and the fan face ----------
+function lotCanvas(size=512, round=false){
+  const c = document.createElement('canvas'); c.width = c.height = size;
+  const draw = (fi=6, found=-1) => {
+    const x = c.getContext('2d'), s = size/512;
+    x.setTransform(1,0,0,1,0,0); x.fillStyle = '#000'; x.fillRect(0,0,size,size);
+    x.save(); x.scale(s,s);
+    if(round){ x.beginPath(); x.arc(256,256,250,0,7); x.clip(); }
+    x.fillStyle = '#16171a'; x.fillRect(46,120,420,272);
+    x.font = '500 26px ui-monospace,Menlo,monospace'; x.textAlign = 'center'; x.fillStyle = found>=0 ? '#ff5a5f' : '#bdb8b0';
+    x.fillText(FNAME[FLOORS[fi]], 256, 98);
+    let sd = 11 + fi*37; const rnd = () => (sd = (sd*16807) % 2147483647) / 2147483647;
+    for(let i=0;i<16;i++){
+      const r = i < 8 ? 0 : 1, col = i % 8, cx = 76 + col*51, cy = r ? 320 : 192;
+      x.strokeStyle = '#4a4844'; x.lineWidth = 2; x.strokeRect(cx-24, cy-52, 48, 104);
+      const occ = i === found || rnd() < .78; rnd(); const p = Math.floor(rnd()*PAINT.length);
+      if(!occ) continue;
+      if(i === found){ x.shadowColor = '#e0262e'; x.shadowBlur = 28; x.fillStyle = '#e0262e'; }
+      else x.fillStyle = PCSS[p];
+      x.beginPath(); x.roundRect(cx-17, cy-42, 34, 84, 8); x.fill(); x.shadowBlur = 0;
+      x.fillStyle = i === found ? '#8e1218' : '#0a0b0d'; x.beginPath(); x.roundRect(cx-13, cy-(r?6:22), 26, 28, 4); x.fill();
+    }
+    if(found >= 0){ x.fillStyle = '#ff5a5f'; x.font = '500 22px ui-monospace,Menlo,monospace'; x.fillText('FOUND · STALL ' + (found<8?'A-':'B-') + String(found%8+1).padStart(2,'0'), 256, 432); }
+    else { x.fillStyle = '#6e6c68'; x.font = '18px ui-monospace,Menlo,monospace'; x.fillText('WAITING FOR A SEARCH', 256, 432); }
+    x.restore();
+  };
+  draw();
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  return {c, tex, draw: (fi, f) => { draw(fi, f); tex.needsUpdate = true; }};
+}
+
+// ---------- the display page picture: both buildings side by side (16:9, like the monitor) ----------
+function twinCanvas(){
+  const c = document.createElement('canvas'); c.width = 1024; c.height = 576;
+  const draw = (active=0, focus=[6,6], found=null) => {
+    const x = c.getContext('2d');
+    x.setTransform(1,0,0,1,0,0); x.globalAlpha = 1; x.fillStyle = '#000'; x.fillRect(0,0,1024,576);
+    const big = found ? found.bi : -1, w0 = big < 0 ? 476 : (big === 0 ? 590 : 362);
+    const panels = [[24, w0], [24 + w0 + 28, 1024 - 48 - w0 - 28]];
+    x.strokeStyle = '#2a2a2a'; x.lineWidth = 2; x.beginPath(); x.moveTo(24 + w0 + 14, 36); x.lineTo(24 + w0 + 14, 478); x.stroke();
+    panels.forEach(([x0, w], bi) => {
+      const hit = !!found && found.bi === bi, fi = hit ? found.fi : focus[bi];
+      x.globalAlpha = (found && !hit) ? .4 : (!found && bi !== active ? .6 : 1);
+      x.textAlign = 'left'; x.font = '500 26px ui-monospace,Menlo,monospace';
+      x.fillStyle = hit ? '#ff5a5f' : '#e8e4dc'; x.fillText(BNAME[bi].toUpperCase(), x0, 60);
+      x.font = '16px ui-monospace,Menlo,monospace'; x.fillStyle = '#8a877f'; x.fillText(FNAME[FLOORS[fi]].toUpperCase(), x0, 88);
+      const ly = 112, lh = 52;
+      FLOORS.forEach((f, k) => {
+        const y = ly + k*lh, on = k === fi;
+        x.fillStyle = on ? (hit ? '#3a0d10' : '#232427') : '#111214'; x.fillRect(x0, y, 56, lh - 8);
+        x.font = '500 17px ui-monospace,Menlo,monospace'; x.textAlign = 'center';
+        x.fillStyle = on ? (hit ? '#ff5a5f' : '#f1f0ee') : '#6e6c68'; x.fillText(f, x0 + 28, y + lh/2 + 2);
+      });
+      const px = x0 + 72, pw = w - 72, py = 112, ph = 7*lh - 8;
+      x.fillStyle = '#16171a'; x.fillRect(px, py, pw, ph);
+      const cw = (pw - 20)/8, chh = Math.min((ph - 40)/2, cw*2.3), sw = cw*.66, sh = chh*.8;
+      let sd = 11 + fi*37 + bi*101; const rnd = () => (sd = (sd*16807) % 2147483647) / 2147483647;
+      for(let i=0;i<16;i++){
+        const r = i < 8 ? 0 : 1, col = i % 8, cx = px + 10 + cw*col + cw/2, cy = r ? py + ph - 14 - chh/2 : py + 14 + chh/2;
+        x.strokeStyle = '#4a4844'; x.lineWidth = 2; x.strokeRect(cx - cw/2 + 3, cy - chh/2, cw - 6, chh);
+        const me = hit && i === found.slot, occ = me || rnd() < .78; rnd(); const p = Math.floor(rnd()*PAINT.length);
+        if(!occ) continue;
+        if(me){ x.shadowColor = '#e0262e'; x.shadowBlur = 30; x.fillStyle = '#e0262e'; } else x.fillStyle = PCSS[p];
+        x.beginPath(); x.roundRect(cx - sw/2, cy - sh/2, sw, sh, 7); x.fill(); x.shadowBlur = 0;
+        x.fillStyle = me ? '#8e1218' : '#0a0b0d'; x.beginPath(); x.roundRect(cx - sw*.38, cy + (r ? -sh*.06 : -sh*.27), sw*.76, sh*.33, 4); x.fill();
+      }
+    });
+    x.globalAlpha = 1; x.textAlign = 'center';
+    if(found){ x.fillStyle = '#ff5a5f'; x.font = '500 24px ui-monospace,Menlo,monospace'; x.fillText('FOUND \u00b7 ' + BSHORT[found.bi] + ' \u00b7 ' + FLOORS[found.fi] + ' \u00b7 STALL ' + stallLabel(found.slot), 512, 536); }
+    else { x.fillStyle = '#6e6c68'; x.font = '18px ui-monospace,Menlo,monospace'; x.fillText('WAITING FOR A SEARCH', 512, 536); }
+  };
+  draw();
+  const tex = new THREE.CanvasTexture(c); tex.colorSpace = THREE.SRGBColorSpace;
+  return {c, tex, draw: (a, f, fd) => { draw(a, f, fd); tex.needsUpdate = true; }};
+}
+
+// ---------- two buildings in 3D: 7 floors each, simple block cars, the focus floor slides out ----------
+const LITE = {plate: new THREE.MeshStandardMaterial({color:0x232427, roughness:.92}), car: new THREE.BoxGeometry(1.85, 1.25, 4.6), lines: null};
+LITE.car.translate(0, .62, 0);
+function liteFloor(bi, fi){
+  const g = new THREE.Group(), Wd = NPER*SW;
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(Wd+3, .4, 15.5), LITE.plate); plate.position.y = -.2; g.add(plate, edges(plate, 0x3a3d42, 1));
+  if(!LITE.lines){ const lp = []; ROWZ.forEach(z => { for(let i=0;i<=NPER;i++){ const x = -Wd/2 + i*SW; lp.push(x,.02,z-2.7, x,.02,z+2.7); } }); LITE.lines = new THREE.BufferGeometry(); LITE.lines.setAttribute('position', new THREE.Float32BufferAttribute(lp,3)); }
+  g.add(new THREE.LineSegments(LITE.lines, new THREE.LineBasicMaterial({color:0x8a877f, transparent:true, opacity:.5})));
+  const pad = new THREE.Mesh(new THREE.PlaneGeometry(SW-.2, 5.2), new THREE.MeshBasicMaterial({color:0xe0262e, transparent:true, opacity:.6}));
+  pad.rotation.x = -Math.PI/2; pad.position.y = .03; pad.visible = false; g.add(pad);
+  const cars = [];
+  ROWZ.forEach(z => { for(let i=0;i<NPER;i++){ const m = new THREE.Mesh(LITE.car, CM.paints[0]); m.position.set(-Wd/2 + SW/2 + i*SW, 0, z); g.add(m); cars.push(m); } });
+  function show(found=-1){
+    let s = 11 + fi*37 + bi*101; const rnd = () => (s = (s*16807) % 2147483647) / 2147483647;
+    cars.forEach((m, i) => { const occ = i === found || rnd() < .78; rnd(); const p = Math.floor(rnd()*PAINT.length); m.visible = occ; m.material = i === found ? CM.found : CM.paints[p]; });
+    pad.visible = found >= 0; if(found >= 0) pad.position.set(cars[found].position.x, .03, cars[found].position.z);
+  }
+  return {group:g, show, pad};
+}
+function makeTwin({full=true} = {}){
+  const g = new THREE.Group(), S = .0068, GAP = .026, XS = [-.12, .12], SLIDE = .055;
+  const B = [0,1].map(bi => {
+    const tw = new THREE.Group(); tw.position.x = XS[bi]; g.add(tw);
+    const floors = FLOORS.map((_, fi) => {
+      const lf = liteFloor(bi, fi), h = new THREE.Group(); h.scale.setScalar(S); h.position.y = (6-fi)*GAP; h.add(lf.group); tw.add(h); lf.show(-1);
+      return {lf, h, z:0};
+    });
+    const det = full ? makeLot() : null; if(det) det.group.visible = false;
+    [-1,1].forEach(s => { const p = new THREE.Mesh(new THREE.CylinderGeometry(.0025, .0025, 6*GAP+.02, 8), M.alu()); p.position.set(s*.078, 3*GAP, -.056); tw.add(p); });
+    const labs = ['#6e6c68', '#f1f0ee', '#ff5a5f'].map(col => { const l = label(BNAME[bi].toUpperCase(), col); l.scale.multiplyScalar(.42); l.material.depthTest = true; l.position.set(0, 6*GAP + .03, 0); l.visible = false; tw.add(l); return l; });
+    return {floors, det, labs};
+  });
+  function set(active, focus, found){
+    const act = found ? found.bi : active;
+    B.forEach((b, bi) => {
+      const hit = !!found && found.bi === bi, fi = hit ? found.fi : focus[bi], isAct = bi === act;
+      b.floors.forEach((f, k) => { f.lf.show(hit && k === fi ? found.slot : -1); f.lf.group.visible = true; f.z = isAct && k === fi ? SLIDE : 0; });
+      if(b.det){
+        if(isAct){ b.floors[fi].h.add(b.det.group); b.det.group.visible = true; b.floors[fi].lf.group.visible = false; b.det.show(fi, hit ? found.slot : -1, bi); }
+        else b.det.group.visible = false;
+      }
+      b.labs.forEach((l, i) => { l.visible = i === (hit ? 2 : isAct ? 1 : 0); });
+    });
+  }
+  function tick(t, dt=.016){
+    const k = Math.min(1, dt*5), p = .5 + .5*Math.sin(t*4);
+    B.forEach(b => {
+      b.floors.forEach(f => { f.h.position.z += (f.z - f.h.position.z) * k; if(f.lf.pad.visible) f.lf.pad.material.opacity = .35 + .4*p; });
+      if(b.det && b.det.group.visible) b.det.tick(t);
+    });
+  }
+  set(0, [6,6], null);
+  return {group:g, set, tick};
+}
+
+// ---------- option models (metres, table top at y = 0) ----------
+function tableTop(w=1.1, d=.7){ const g = new THREE.Group(); const t = box(w,.03,d,M.wood(),0,-.015,0); g.add(t); return g; }
+
+function buildFan(pic){
+  const g = new THREE.Group(), y = .62;
+  g.add(box(.3,.015,.3,M.dark(),0,.008,0));
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,y,12), M.alu()); pole.position.y = y/2; g.add(pole);
+  const motor = new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.07,20), M.dark()); motor.rotation.x = Math.PI/2; motor.position.set(0,y,-.03); g.add(motor);
+  const face = new THREE.Mesh(new THREE.CircleGeometry(.325,64), new THREE.MeshBasicMaterial({map:pic.tex, transparent:true}));
+  face.position.set(0,y,.012); g.add(face);
+  const blades = new THREE.Group(); blades.position.set(0,y,.006);
+  for(let k=0;k<4;k++){ const h = new THREE.Group(); h.rotation.z = k*Math.PI/2; h.add(box(.31,.02,.005,new THREE.MeshStandardMaterial({color:0x2a2a2a,transparent:true,opacity:.45}),.165,0,0)); blades.add(h); }
+  g.add(blades);
+  const cover = new THREE.Mesh(new THREE.CylinderGeometry(.36,.36,.14,48,1,true), M.glass(.08)); cover.rotation.x = Math.PI/2; cover.position.set(0,y,0); g.add(cover);
+  const lid = new THREE.Mesh(new THREE.CircleGeometry(.36,48), M.glass(.06)); lid.position.set(0,y,.07); g.add(lid);
+  g.userData.tick = (t, dt) => { blades.rotation.z -= dt*40; };
+  return g;
+}
+
+function buildGhostBox(pic, {w=.42, d=.27, h=.30} = {}){
+  // portable monitor lies face up in a black box; clear acrylic at 45 degrees reflects it toward the audience
+  const g = new THREE.Group();
+  g.add(box(w,.04,d,M.black(),0,.02,0));
+  const scr = new THREE.Mesh(new THREE.PlaneGeometry(w-.04, d-.04), new THREE.MeshBasicMaterial({map:pic.tex}));
+  scr.rotation.x = -Math.PI/2; scr.position.y = .041; g.add(scr);
+  g.add(box(w,h,.008,M.black(),0,.04+h/2,-d/2));
+  [-1,1].forEach(s => g.add(box(.008,h,d,M.black(),s*w/2,.04+h/2,0)));
+  g.add(box(w,.008,d,M.black(),0,.04+h,0));
+  const len = Math.hypot(d, h-.02);
+  const sheet = new THREE.Mesh(new THREE.PlaneGeometry(w-.02, len), M.glass(.1));
+  sheet.position.set(0,.04+(h-.02)/2,0); sheet.rotation.x = -Math.atan2(h-.02, d) ; g.add(sheet, edges(sheet,0x9c9994,.5));
+  const ghost = new THREE.Mesh(new THREE.PlaneGeometry(w-.06, d-.06), new THREE.MeshBasicMaterial({map:pic.tex, transparent:true, opacity:.85, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide}));
+  ghost.position.set(0,.04+h/2,-.02); g.add(ghost);
+  g.userData.parts = {scr, sheet, ghost};
+  return g;
+}
+
+function buildLookingGlass(pic){
+  const g = new THREE.Group();
+  const body = box(.17,.11,.035,M.dark(),0,.075,0); body.rotation.x = -.2; g.add(body);
+  const scr = new THREE.Mesh(new THREE.PlaneGeometry(.15,.095), new THREE.MeshBasicMaterial({map:pic.tex}));
+  scr.position.set(0,.078,.019); scr.rotation.x = -.2; g.add(scr);
+  g.add(box(.17,.012,.07,M.dark(),0,.006,-.01));
+  return g;
+}
+
+function buildTower(){
+  const g = new THREE.Group(), lights = [];
+  for(let i=0;i<7;i++){
+    const y = .05 + i*.07;
+    g.add(glassBox(.36,.006,.24,0,y,0,.1));
+    for(let k=0;k<6;k++){ const d = new THREE.Mesh(new THREE.SphereGeometry(.006,8,8), new THREE.MeshBasicMaterial({color:0x3a3a3a})); d.position.set(-.13+k*.052, y+.007, .06*(k%2?1:-1)); g.add(d); lights.push(d); }
+  }
+  [[-.17,-.11],[.17,-.11],[-.17,.11],[.17,.11]].forEach(([x,z]) => { const p = new THREE.Mesh(new THREE.CylinderGeometry(.005,.005,.5,8), M.alu()); p.position.set(x,.25,z); g.add(p); });
+  g.add(box(.4,.03,.28,M.dark(),0,.015,0));
+  g.userData.lights = lights; return g;
+}
+
+// ---------- the Holo Box (Pepper's Ghost): every part is a group placed at its assembled spot ----------
+const W = .50, D = .34, H = .34, T = .02, ANG = Math.atan2(H-T, D), LEN = Math.hypot(D, H-T);
+function grp(x,y,z, rx=0, ry=0, rz=0){ const g = new THREE.Group(); g.position.set(x,y,z); g.rotation.set(rx,ry,rz); return g; }
+function tube(pts, r=.004){ return new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(...p))), 40, r, 8), new THREE.MeshStandardMaterial({color:0x202020, roughness:.7})); }
+function holoParts(pic, twin){
+  const P = {};
+  P.base = grp(0,T/2,0); P.base.add(box(W,T,D,M.black()));
+  P.monitor = grp(0,T+.006,.05);
+  P.monitor.add(box(.40,.012,.235,M.dark()));
+  const scrMat = new THREE.MeshBasicMaterial({map:pic.tex});
+  const scr = new THREE.Mesh(new THREE.PlaneGeometry(.385,.215), scrMat); scr.rotation.x = -Math.PI/2; scr.position.y = .0065; P.monitor.add(scr);
+  P.monitor.userData.screen = scrMat;
+  P.reflector = grp(0, T+(H-T)/2, 0, ANG);
+  const sheet = new THREE.Mesh(new THREE.PlaneGeometry(W-.02, LEN), new THREE.MeshPhysicalMaterial({color:0xb8bec4, transparent:true, opacity:.16, roughness:.03, metalness:.2, depthWrite:false, side:THREE.DoubleSide}));
+  P.reflector.add(sheet, edges(sheet, 0xb8b4ac, .7));
+  P.rails = grp(0, T+(H-T)/2, 0, ANG);
+  [-1,1].forEach(s => P.rails.add(box(.012, LEN, .012, M.alu(), s*(W/2-.014), 0, -.008)));
+  P.wallB = grp(0, T+H/2, -D/2); P.wallB.add(box(W, H, .008, M.black()));
+  P.wallL = grp(-W/2, T+H/2, 0); P.wallL.add(box(.008, H, D, M.black()));
+  P.wallR = grp(W/2, T+H/2, 0); P.wallR.add(box(.008, H, D, M.black()));
+  P.lid = grp(0, T+H, 0); P.lid.add(box(W, .008, D, M.black()));
+  P.lip = grp(0, T+.025, D/2); P.lip.add(box(W, .05, .008, M.black()));
+  P.plates = grp(0, T+.004, -.135); [-.12, .12].forEach(x => P.plates.add(glassBox(.16, .006, .045, x, 0, 0, .14)));
+  P.lot = grp(0, T+.045, -.07, .1); P.lot.add(twin.group);
+  P.laptop = grp(.52, 0, -.06, 0, -.5);
+  P.laptop.add(box(.32,.015,.22,M.alu(),0,.0075,0));
+  const ls = box(.32,.21,.008,new THREE.MeshStandardMaterial({color:0x111214, emissive:0x1a1e24, roughness:.3}),0,.115,-.115); ls.rotation.x = -.2; P.laptop.add(ls);
+  P.phone = grp(.3, .005, .24, 0, -.3);
+  P.phone.add(box(.075,.008,.155,new THREE.MeshStandardMaterial({color:0x0e0e0e, roughness:.3})));
+  const pscr = new THREE.Mesh(new THREE.PlaneGeometry(.066,.14), new THREE.MeshBasicMaterial({color:0x1b1d21})); pscr.rotation.x = -Math.PI/2; pscr.position.y = .0045; P.phone.add(pscr);
+  const fb = new THREE.Mesh(new THREE.PlaneGeometry(.05,.016), M.red()); fb.rotation.x = -Math.PI/2; fb.position.set(0,.005,.045); P.phone.add(fb);
+  P.cable = grp(0,0,0); P.cable.add(tube([[.4,.01,-.12],[.3,.01,-.2],[.12,.01,-.2],[.1,.03,-.168]]));
+  P.cable2 = grp(0,0,0); P.cable2.add(tube([[0,.03,-.168],[0,.01,-.22],[0,.01,-.33]]));
+  P.test = grp(0,0,0);
+  const tg = new THREE.Mesh(new THREE.PlaneGeometry(.34, LEN*.9), M.glass(.16)); tg.position.set(0, .006+(H-T)*.45, 0); tg.rotation.x = ANG; P.test.add(tg, edges(tg, 0xcfcac2, .8));
+  [-1,1].forEach(s => { P.test.add(box(.07,.05,.24,M.wood(),s*.25,.025,-.02)); P.test.add(box(.07,.05,.24,new THREE.MeshStandardMaterial({color:0x3a2f28, roughness:.9}),s*.25,.075,-.06)); P.test.add(box(.05,.06,.18,new THREE.MeshStandardMaterial({color:0x2f3338, roughness:.9}),s*.25,.13,-.1)); });
+  P.bag = grp(-.1, .06, .05);
+  const bagm = box(.62,.12,.48,new THREE.MeshStandardMaterial({color:0x22201e, transparent:true, opacity:.28, roughness:1, depthWrite:false}));
+  P.bag.add(bagm, edges(bagm, 0x9c9994, .6));
+  // the link line from phone to laptop is redrawn every frame
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]);
+  P.link = new THREE.Line(lineGeo, new THREE.LineDashedMaterial({color:0xcfcac2, dashSize:.015, gapSize:.012, transparent:true, opacity:.8}));
+  P.link.frustumCulled = false;
+  const a = new THREE.Vector3(), b = new THREE.Vector3();
+  P.link.userData.update = t => {
+    P.phone.getWorldPosition(a); P.laptop.getWorldPosition(b); a.y += .02; b.y += .12;
+    const m = a.clone().lerp(b, .5); m.y += .12;
+    lineGeo.setFromPoints([a, m, b]); P.link.computeLineDistances(); P.link.material.dashOffset = -t*.05;
+    P.link.visible = P.phone.visible && P.laptop.visible && P.link.userData.on !== false;
+  };
+  ['base','wallB','wallL','wallR','lid','lip','monitor'].forEach(n => { const m = P[n].children[0]; P[n].add(edges(m, 0x4a4c50, .9)); });
+  for(const n in P){ const o = P[n]; o.userData.home = {p:o.position.clone(), r:o.rotation.clone()}; }
+  return P;
+}
+function screenOn(P, on){ P.monitor.userData.screen.color.setHex(on ? 0xffffff : 0x161616); }
+
+// ---------- 1. options preview: four setups in one viewer ----------
+function initPreview(){
+  const v = mkView('vOpts', {cam:[.75,.6,1.15], target:[0,.22,0], max:3}); if(!v) return;
+  const groups = {};
+  // fan
+  { const pic = lotCanvas(512, true); pic.draw(5, 13); const g = new THREE.Group(); g.add(tableTop(1,.6)); const f = buildFan(pic); f.position.z = -.05; g.add(f); v.tick.push((t,dt) => f.userData.tick(t,dt)); groups.fan = g; }
+  // holo box
+  { const pic = twinCanvas(), twin = makeTwin({full:false}), fd = {bi:0, fi:5, slot:13}; twin.set(0, [5,6], fd); pic.draw(0, [5,6], fd); const P = holoParts(pic, twin); const g = new THREE.Group(); g.add(tableTop(1,.6));
+    ['base','monitor','reflector','rails','wallB','wallL','wallR','lid','lip','lot'].forEach(n => g.add(P[n])); v.tick.push((t, dt) => twin.tick(t, dt)); groups.holo = g; }
+  // AR window
+  { const pic = lotCanvas(); pic.draw(5, 13); const g = new THREE.Group(); g.add(tableTop(1,.6));
+    const mat = new THREE.Mesh(new THREE.PlaneGeometry(.5,.34), new THREE.MeshStandardMaterial({color:0xd8d4cc, roughness:.9})); mat.rotation.x = -Math.PI/2; mat.position.y = .001; g.add(mat);
+    for(let i=0;i<3;i++) g.add(box(.3,.012,.18,new THREE.MeshStandardMaterial({color:0xe9e6e0, roughness:.8}),0,.02+i*.035,-.02));
+    const tab = grp(0,.3,.3,-.75); tab.add(box(.25,.17,.008,M.dark()));
+    const ts = new THREE.Mesh(new THREE.PlaneGeometry(.235,.155), new THREE.MeshBasicMaterial({map:pic.tex})); ts.position.z = .0045; tab.add(ts); g.add(tab);
+    const hint = new THREE.Mesh(new THREE.PlaneGeometry(.3,.18), new THREE.MeshBasicMaterial({map:pic.tex, transparent:true, opacity:.35, blending:THREE.AdditiveBlending, depthWrite:false})); hint.rotation.x = -Math.PI/2; hint.position.set(0,.092,-.02); g.add(hint);
+    groups.ar = g; }
+  // projector
+  { const pic = lotCanvas(); pic.draw(5, 13); const g = new THREE.Group(); g.add(tableTop(1,.6));
+    [[.0,.36,.24,0],[.0,.32,.2,.045],[.0,.28,.16,.09]].forEach(([x,w,d,y],i) => g.add(box(w,.03,d,new THREE.MeshStandardMaterial({color:0xefece6, roughness:.85}),x,y+.015,-.02-i*.03)));
+    const top = new THREE.Mesh(new THREE.PlaneGeometry(.28,.16), new THREE.MeshBasicMaterial({map:pic.tex, transparent:true, opacity:.9})); top.rotation.x = -Math.PI/2; top.position.set(0,.1215,-.08); g.add(top);
+    const pole = new THREE.Mesh(new THREE.CylinderGeometry(.01,.01,.7,10), M.alu()); pole.position.set(.32,.35,-.2); g.add(pole);
+    g.add(box(.34,.012,.012,M.alu(),.16,.7,-.2), box(.08,.06,.08,M.dark(),0,.67,-.12));
+    const cone = new THREE.Mesh(new THREE.ConeGeometry(.17,.55,4,1,true), new THREE.MeshBasicMaterial({color:0xfff6e0, transparent:true, opacity:.06, blending:THREE.AdditiveBlending, depthWrite:false, side:THREE.DoubleSide}));
+    cone.position.set(0,.39,-.1); cone.rotation.y = Math.PI/4; g.add(cone);
+    groups.proj = g; }
+  for(const k in groups){ groups[k].visible = k === 'holo'; v.scene.add(groups[k]); }
+  document.querySelectorAll('[data-opt]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-opt]').forEach(x => x.classList.toggle('on', x === b));
+    for(const k in groups) groups[k].visible = k === b.dataset.opt;
+    const c = document.getElementById('optcap'); if(c) c.textContent = b.dataset.cap;
+  }));
+}
+
+// ---------- 2. the demo: the assembled tabletop, phone as the remote ----------
+function initDemo(){
+  const v = mkView('vDemo', {cam:[.22,.42,.95], target:[.05,.16,0], max:2.6}); if(!v) return;
+  const pic = twinCanvas(), twin = makeTwin(), P = holoParts(pic, twin);
+  const sw = document.getElementById('screenwrap'); if(sw) sw.appendChild(pic.c);
+  v.scene.add(tableTop(1.4,.8));
+  ['base','monitor','reflector','rails','wallB','wallL','wallR','lid','lip','plates','lot','laptop','phone','cable','link'].forEach(n => v.scene.add(P[n]));
+  const goal = {p:null, t:null}, home = {p:v.camera.position.clone(), t:v.ctl.target.clone()};
+  v.tick.push((t, dt) => {
+    twin.tick(t, dt); P.link.userData.update(t);
+    if(goal.p){ const k = Math.min(1, dt*4); v.camera.position.lerp(goal.p, k); v.ctl.target.lerp(goal.t, k); if(v.camera.position.distanceTo(goal.p) < .003) goal.p = null; }
+  });
+  const hud = document.getElementById('hudDemo');
+  const sel = document.getElementById('car'), btn = document.getElementById('findbtn'), chips = document.getElementById('floors'), bl = document.getElementById('bldgs');
+  let bi = 0; const fi = [6, 6];
+  function render(found){
+    twin.set(bi, fi, found); pic.draw(bi, fi, found); btn.classList.toggle('on', !!found);
+    chips.querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.f === fi[bi]));
+    bl.querySelectorAll('button').forEach(b => b.classList.toggle('on', +b.dataset.b === bi));
+  }
+  function idle(){ render(null); hud.innerHTML = 'Showing ' + BNAME[bi] + ', ' + FNAME[FLOORS[fi[bi]]] + '. Pick a car and tap Find Your Car.'; }
+  btn.addEventListener('click', () => {
+    const c = DEMO[+sel.value]; bi = c.b; fi[bi] = c.f; render({bi:c.b, fi:c.f, slot:c.slot});
+    hud.innerHTML = '<span class="alert">Found: ' + c.label + ', ' + BNAME[c.b] + ', ' + FNAME[FLOORS[c.f]] + ', stall ' + stallLabel(c.slot) + '</span>';
+  });
+  chips.addEventListener('click', e => { const b = e.target.closest('button'); if(b){ fi[bi] = +b.dataset.f; idle(); } });
+  bl.addEventListener('click', e => { const b = e.target.closest('button'); if(b){ bi = +b.dataset.b; idle(); } });
+  document.getElementById('clearbtn').addEventListener('click', idle);
+  const ib = document.getElementById('insidebtn'); let inside = false;
+  ib.addEventListener('click', () => {
+    inside = !inside; ib.classList.toggle('on', inside); ib.textContent = inside ? 'Show the table' : 'Look inside';
+    goal.p = inside ? new THREE.Vector3(0, .24, .46) : home.p.clone(); goal.t = inside ? new THREE.Vector3(0, .14, -.07) : home.t.clone();
+  });
+  idle();
+}
+
+// ---------- 3. deconstruction: exploded view with a slider ----------
+const XPLODE = [
+  ['monitor', [0,-.04,.3], '1 Monitor 17.3" · $139.99'],
+  ['reflector', [0,.08,.42], '2 Reflector · ~$35-45'],
+  ['rails', [0,.02,.2], '3 45° rails · ~$10'],
+  ['wallL', [-.3,0,0], '4 Box sides · ~$35-65 all'],
+  ['wallR', [.3,0,0], ''],
+  ['wallB', [0,.02,-.3], '4 Back wall'],
+  ['lid', [0,.3,0], '4 Lid'],
+  ['base', [0,-.16,0], '4 Base'],
+  ['lip', [0,-.06,.5], '5 Front lip'],
+  ['plates', [0,.14,-.1], '6 W62/W57 plates · ~$10-20'],
+  ['cable', [.12,-.04,-.1], '7 Cable · ~$10-15'],
+  ['laptop', [.22,0,-.05], '8 Laptop · have it'],
+  ['phone', [.12,.04,.18], '9 Phone · have it']
+];
+function initExplode(){
+  const v = mkView('vExplode', {cam:[.95,.75,1.25], target:[.08,.12,0], max:3.2}); if(!v) return;
+  const pic = twinCanvas(), twin = makeTwin({full:false}), fd = {bi:0, fi:5, slot:13}; twin.set(0, [5,6], fd); pic.draw(0, [5,6], fd);
+  const P = holoParts(pic, twin), items = [];
+  const grid = new THREE.GridHelper(2, 20, 0x2a2a2a, 0x1c1c1c); grid.position.y = -.2; v.scene.add(grid);
+  XPLODE.forEach(([n, off, txt]) => {
+    const o = P[n]; v.scene.add(o); const it = {o, off:new THREE.Vector3(...off)};
+    if(txt){ it.lab = label(txt); const bb = new THREE.Box3().setFromObject(o); it.c = bb.getCenter(new THREE.Vector3()); it.c.y = bb.max.y + .03; v.scene.add(it.lab); }
+    items.push(it);
+  });
+  const sl = document.getElementById('xslider'); let k = 0, tgt = +sl.value;
+  sl.addEventListener('input', () => { tgt = +sl.value; });
+  v.tick.push((t, dt) => {
+    k += (tgt - k) * Math.min(1, dt*6);
+    items.forEach(it => {
+      it.o.position.copy(it.o.userData.home.p).addScaledVector(it.off, k);
+      if(it.lab){ it.lab.position.copy(it.c).addScaledVector(it.off, k); it.lab.material.opacity = Math.max(0, (k-.35)/.4); it.lab.visible = k > .36; }
+    });
+  });
+}
+
+// ---------- 4. phases: the build, step by step ----------
+const HP = -Math.PI/2;
+const PH = [
+  // 1 gather: everything flat on the table
+  {base:{p:[-.42,.01,.2]}, wallB:{p:[-.42,.004,-.2], r:[HP,0,0]}, wallL:{p:[-.05,.004,-.22], r:[0,0,Math.PI/2]}, wallR:{p:[.12,.004,.0], r:[0,0,Math.PI/2]}, lid:{p:[.42,.004,-.22]},
+   monitor:{p:[-.02,.006,.28]}, reflector:{p:[.44,.005,.2], r:[HP,0,0]}, rails:{p:[-.38,.008,.0], r:[HP,0,Math.PI/2]}, plates:{p:[.2,.004,.36]}, laptop:{p:[.56,0,-.02], r:[0,-.2,0]}, phone:{p:[.24,.005,.22]}, _screen:false},
+  // 2 ugly rig: monitor on the table, clear sheet propped on books
+  {monitor:{p:[0,.006,0]}, test:{}, laptop:{}, phone:{}, cable:{}, link:{}, lot:{p:[0,.13,-.07]}, _screen:true},
+  // 3 frame and case
+  {base:{}, wallB:{}, wallL:{}, wallR:{}, lid:{}, rails:{}, reflector:{}, monitor:{}, _screen:false},
+  // 4 electronics and software link
+  {base:{}, wallB:{}, wallL:{}, wallR:{}, lid:{}, rails:{}, reflector:{}, monitor:{}, laptop:{}, phone:{}, cable:{}, link:{}, lot:{}, _screen:true},
+  // 5 finish: hide the electronics
+  {base:{}, wallB:{}, wallL:{}, wallR:{}, lid:{}, rails:{}, reflector:{}, monitor:{}, lip:{}, plates:{}, lot:{}, phone:{}, link:{}, cable2:{}, laptop:{p:[0,0,-.46], r:[0,0,0]}, _screen:true},
+  // 6 demo day: flat-packed in the bag
+  {bag:{}, base:{p:[-.1,.012,.05]}, wallB:{p:[-.1,.03,.05], r:[HP,0,0]}, wallL:{p:[-.18,.04,.05], r:[0,0,Math.PI/2]}, wallR:{p:[-.02,.04,.05], r:[0,0,Math.PI/2]},
+   lid:{p:[-.1,.052,.05]}, lip:{p:[-.1,.06,.2], r:[HP,0,0]}, monitor:{p:[-.1,.064,.05]}, reflector:{p:[-.1,.074,.05], r:[HP,0,0]}, rails:{p:[-.1,.084,.05], r:[HP,0,0]}, plates:{p:[-.1,.094,.05]},
+   laptop:{p:[.48,0,.12], r:[0,-.2,0]}, phone:{p:[.3,.005,.3]}, _screen:false}
+];
+function initPhases(){
+  const v = mkView('vPhases', {cam:[.7,.75,1.15], target:[0,.1,0], max:3}); if(!v) return;
+  const pic = twinCanvas(), twin = makeTwin({full:false}), fd = {bi:0, fi:5, slot:13}; twin.set(0, [5,6], fd); pic.draw(0, [5,6], fd);
+  const P = holoParts(pic, twin);
+  v.scene.add(tableTop(1.5,1));
+  for(const n in P){ v.scene.add(P[n]); P[n].scale.setScalar(0); P[n].visible = false; }
+  let cur = PH[0], unpacked = false;
+  const ease = (a, b, k) => a + (b - a) * k;
+  v.tick.push((t, dt) => {
+    const k = Math.min(1, dt*4.5);
+    const state = (unpacked && cur === PH[5]) ? PH[4] : cur;
+    for(const n in P){
+      if(n === 'link') continue;
+      const o = P[n], s = state[n], h = o.userData.home;
+      const tp = s && s.p ? s.p : [h.p.x, h.p.y, h.p.z], tr = s && s.r ? s.r : [h.r.x, h.r.y, h.r.z], ts = s ? 1 : 0;
+      o.position.set(ease(o.position.x,tp[0],k), ease(o.position.y,tp[1],k), ease(o.position.z,tp[2],k));
+      o.rotation.set(ease(o.rotation.x,tr[0],k), ease(o.rotation.y,tr[1],k), ease(o.rotation.z,tr[2],k));
+      const sc = ease(o.scale.x, ts, k); o.scale.setScalar(sc); o.visible = sc > .01;
+    }
+    P.link.userData.on = !!state.link; P.link.userData.update(t);
+    screenOn(P, state._screen); twin.tick(t, .016);
+  });
+  document.addEventListener('phase', e => { cur = PH[e.detail]; unpacked = false; });
+  document.addEventListener('unpack', e => { unpacked = e.detail; });
+}
+
+try { initPreview(); initDemo(); initExplode(); initPhases(); loop(); }
+catch(e){ console.error(e); fail(); }
+
+</script>
+</body>
+</html>
