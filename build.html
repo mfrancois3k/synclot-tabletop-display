@@ -70,7 +70,7 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
 .b3 button:disabled{opacity:.45;cursor:default}
 #b3steps button{padding:0;font-family:var(--mono)}
 #b3cap{min-height:3.1em;margin:0}
-#full3d{height:min(78vh,600px)}
+.fxstage{height:min(78vh,600px)}
 .fxslide{display:flex;align-items:center;gap:10px;font:11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 .fxslide input{flex:1;accent-color:#cfcac2;height:30px}
 .fxinfo{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;display:grid;gap:6px;min-height:8.5em}
@@ -102,7 +102,7 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
   <span><span class="tag est">Estimate</span> my judgement</span>
   <span><span class="tag unk">Unknown</span> I couldn't find it</span>
 </div>
-<nav class="jump"><a href="./">Back to the deck</a><a href="#watch">3D build</a><a href="#full">Full tube</a><a href="#changes">Five changes</a><a href="#risks">Risks</a><a href="#box">Box</a><a href="#tube">Tube</a><a href="#wiring">Wiring</a><a href="#screens">Screens</a><a href="#order">Build order</a></nav>
+<nav class="jump"><a href="./">Back to the deck</a><a href="#watch">3D build</a><a href="#full">Full tube</a><a href="#fullbox">Full box</a><a href="#board">Custom board</a><a href="#changes">Five changes</a><a href="#risks">Risks</a><a href="#box">Box</a><a href="#tube">Tube</a><a href="#wiring">Wiring</a><a href="#screens">Screens</a><a href="#order">Build order</a></nav>
 
 <section>
   <h2 id="watch">Watch it go together</h2>
@@ -127,13 +127,13 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
   <h2 id="full">The full tube, pulled apart</h2>
   <p>Every part of the complete tube, including the turning base from the video. Fifteen parts: six are in the pitch build you already priced (about $164 to $248), and nine are added by the turning version and are not priced.</p>
   <div class="b3">
-    <div id="full3d" class="b3stage" tabindex="0" role="img" aria-label="3D model of the full tube pulled apart into fifteen parts. Drag or use the arrow keys to turn it. Tap a part to see what it is."></div>
+    <div id="fx3d" class="b3stage fxstage" tabindex="0" role="img" aria-label="3D model of the full tube pulled apart into fifteen parts. Drag or use the arrow keys to turn it. Tap a part to see what it is."></div>
     <p id="fxfallback" class="muted" hidden>The 3D view didn't load on this device. Every part is in the list below.</p>
     <div class="fxslide"><span>Together</span><input type="range" id="fxslide" min="0" max="1" step="0.01" value="0.85" aria-label="Pull the tube apart"><span>Apart</span></div>
     <div class="b3bar">
       <button type="button" class="chip" id="fxAll" aria-pressed="true">All 15</button>
-      <button type="button" class="chip" id="fxPitch" aria-pressed="false">Pitch build, 6</button>
-      <button type="button" class="chip" id="fxTurn" aria-pressed="false">Turning adds, 9</button>
+      <button type="button" class="chip" id="fxP" aria-pressed="false">Pitch build, 6</button>
+      <button type="button" class="chip" id="fxX" aria-pressed="false">Turning adds, 9</button>
       <button id="fxin" type="button" aria-label="Zoom in">+</button>
       <button id="fxout" type="button" aria-label="Zoom out">&minus;</button>
     </div>
@@ -141,6 +141,92 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
     <ol class="fxlist" id="fxlist"></ol>
   </div>
   <p class="muted">My own model, built from what the video shows. It is not his design files, and the sizes of the base parts are my guess. Both circuit boards in the video are custom; the stand-ins named here are my picks and have not been tried.</p>
+</section>
+
+<section>
+  <h2 id="fullbox">The full Holo Box, pulled apart</h2>
+  <p>The big display, shown the same way. Fifteen parts: nine are the pitch build, which needs no custom board because your laptop does everything. Six are added by a stand-alone box that runs from one wall plug with no laptop, and that version is where a custom board comes in.</p>
+  <div class="b3">
+    <div id="bx3d" class="b3stage fxstage" tabindex="0" role="img" aria-label="3D model of the full Holo Box pulled apart into fifteen parts. Drag or use the arrow keys to turn it. Tap a part to see what it is."></div>
+    <p id="bxfallback" class="muted" hidden>The 3D view didn't load on this device. Every part is in the list below.</p>
+    <div class="fxslide"><span>Together</span><input type="range" id="bxslide" min="0" max="1" step="0.01" value="0.85" aria-label="Pull the box apart"><span>Apart</span></div>
+    <div class="b3bar">
+      <button type="button" class="chip" id="bxAll" aria-pressed="true">All 15</button>
+      <button type="button" class="chip" id="bxP" aria-pressed="false">Pitch build, 9</button>
+      <button type="button" class="chip" id="bxX" aria-pressed="false">Stand-alone adds, 6</button>
+      <button id="bxin" type="button" aria-label="Zoom in">+</button>
+      <button id="bxout" type="button" aria-label="Zoom out">&minus;</button>
+    </div>
+    <div class="fxinfo" id="bxinfo" aria-live="polite"></div>
+    <ol class="fxlist" id="bxlist"></ol>
+  </div>
+  <p class="muted">My own model. The pitch-build sizes are the ones on this page. The stand-alone parts and where they sit are my proposal; none of it has been built.</p>
+
+  <h3 id="board">The custom control board</h3>
+  <p>In the video, one custom board in the base takes USB-C power and feeds everything else. The box needs the same idea with a bigger power stage and no motor. This is a block plan: it says what the board must carry and what plugs into it. It is not a schematic, and a board maker can't build from it yet.</p>
+  <figure>
+    <div class="plate">
+      <svg viewBox="0 0 440 290" style="min-width:420px" role="img" aria-label="Block plan of the control board: power in, switch and volume wheel along the top, regulator, protection and amplifier in the middle, LED signal and computer header below, five plugs along the bottom edge">
+        <rect x="14" y="14" width="412" height="262" rx="10" fill="#12301f" stroke="#2f8f4e" stroke-width="2"/>
+        <g fill="#0b0b0b" stroke="#cfcac2" stroke-width="1.2">
+          <rect x="28" y="28" width="120" height="44" rx="3"/><rect x="158" y="28" width="96" height="44" rx="3"/>
+          <rect x="28" y="84" width="150" height="56" rx="3"/><rect x="188" y="84" width="104" height="56" rx="3"/><rect x="302" y="96" width="110" height="44" rx="3"/>
+          <rect x="28" y="152" width="150" height="44" rx="3"/><rect x="188" y="152" width="224" height="44" rx="3"/>
+          <circle cx="366" cy="52" r="26"/>
+        </g>
+        <g fill="#e9e6df" stroke="#0b0b0b" stroke-width="1">
+          <rect x="28" y="222" width="70" height="40" rx="2"/><rect x="106" y="222" width="70" height="40" rx="2"/><rect x="184" y="222" width="70" height="40" rx="2"/><rect x="262" y="222" width="70" height="40" rx="2"/><rect x="340" y="222" width="72" height="40" rx="2"/>
+        </g>
+        <g font-size="11" text-anchor="middle">
+          <text x="88" y="46">USB-C power in</text><text x="88" y="61" class="m">65 W</text>
+          <text x="206" y="54">Power switch</text>
+          <text x="366" y="50">Volume</text><text x="366" y="63">wheel</text>
+          <text x="103" y="108">5 V regulator</text><text x="103" y="124" class="m">about 8 A</text>
+          <text x="240" y="108">Fuses and</text><text x="240" y="124">protection</text>
+          <text x="357" y="115">Speaker</text><text x="357" y="130">amplifier</text>
+          <text x="103" y="178">Tube LED signal</text>
+          <text x="300" y="178">Header to the computer</text>
+          <text x="220" y="214" class="m mono" font-size="10">PLUGS ALONG THIS EDGE</text>
+        </g>
+        <g font-size="10" text-anchor="middle" class="mono">
+          <text x="63" y="246" style="fill:#0b0b0b">MONITOR</text><text x="141" y="246" style="fill:#0b0b0b">COMPUTER</text><text x="219" y="246" style="fill:#0b0b0b">TUBE</text><text x="297" y="246" style="fill:#0b0b0b">SPEAKER</text><text x="376" y="246" style="fill:#0b0b0b">MIC</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>About 100 × 60 mm. Layout is illustrative; a real layout comes after the schematic.</figcaption>
+  </figure>
+  <div class="tw"><table>
+    <thead><tr><th>Block or plug</th><th>What it does</th><th>Example part (my pick, not tried)</th></tr></thead>
+    <tbody>
+      <tr><td>USB-C power in</td><td>Asks the charger for 20 volts so one cable can carry enough power.</td><td>A USB-C power-delivery sink chip, such as the CH224K or STUSB4500.</td></tr>
+      <tr><td>5 V regulator</td><td>Turns 20 volts into a steady 5 volts for everything.</td><td>A buck regulator rated 8 A or more.</td></tr>
+      <tr><td>Fuses and protection</td><td>A resettable fuse on each output, so a shorted cable can't take the box down.</td><td>Polyfuses and a reverse-polarity guard.</td></tr>
+      <tr><td>Speaker amplifier</td><td>Takes digital sound from the computer and drives the speaker.</td><td>MAX98357A, about 3 W.</td></tr>
+      <tr><td>Tube LED signal</td><td>Lifts the computer's 3.3-volt signal to the 5 volts the LED strip wants.</td><td>74AHCT125.</td></tr>
+      <tr><td>Header to the computer</td><td>Sound out, microphone in, the LED signal and the volume reading.</td><td>A ribbon to the computer's pin header.</td></tr>
+      <tr><td>MONITOR, COMPUTER</td><td>5 volts out to each.</td><td>USB-C sockets.</td></tr>
+      <tr><td>TUBE</td><td>5 volts and the LED signal in one cable. The tube's picture still goes by HDMI from the computer.</td><td>A 4-pin locking plug.</td></tr>
+      <tr><td>SPEAKER, MIC</td><td>Two wires to the speaker; a small plug for the microphone board.</td><td>JST plugs like the ones on his board.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Power to plan for</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Load</th><th>Watts</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>17.3″ monitor</td><td class="n">about 10</td><td><span class="tag est">Estimate</span> not on the maker's page</td></tr>
+      <tr><td>Single-board computer</td><td class="n">about 15</td><td><span class="tag est">Estimate</span></td></tr>
+      <tr><td>Tube screen</td><td class="n">3.3</td><td><span class="tag pub">Published</span> 650 mA at 5 V</td></tr>
+      <tr><td>Tube LEDs</td><td class="n">1.2</td><td><span class="tag calc">Calculated</span></td></tr>
+      <tr><td>Speaker</td><td class="n">3</td><td><span class="tag est">Estimate</span></td></tr>
+      <tr><td><strong>Total</strong></td><td class="n"><strong>about 33</strong></td><td>A 65 W charger leaves room to spare</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><strong>You can skip the custom board at first.</strong> Each block exists as a small ready-made board. A custom board replaces five loose boards and their wiring with one, which matters once you carry the box to meetings.</li>
+    <li><strong>The computer fixes the two-screen risk.</strong> A board with two HDMI sockets drives the monitor and the tube without depending on your laptop <span class="tag est">Estimate</span>.</li>
+    <li><strong>Next step for the board:</strong> a schematic and a parts list in a free tool such as KiCad or EasyEDA, then a first run of five boards from a board maker. Not priced.</li>
+    <li><strong>Order of work:</strong> the pitch build first. Nothing in the stand-alone version is needed to pitch.</li>
+  </ul>
 </section>
 
 <section>
@@ -476,6 +562,7 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
     <li>Face-tracking USB camera.</li>
     <li>Single-board computer in the base, so the tube runs without the laptop.</li>
     <li>Microphone, speaker and volume knob for spoken requests.</li>
+    <li>Stand-alone box: its own computer, a custom control board, microphone and speaker. Shown in <a href="#fullbox">the full box view</a>.</li>
     <li>LEDs that react to a find (the controller already has a USB link for this).</li>
   </ul>
   <p class="muted">Sources: Arzopa's A1M product page (size, brightness), Waveshare's wiki for the 5.5″ HDMI AMOLED (thickness, brightness, current, screws), your tabletop deck and hologram plan (parts, prices, the mirror's 25% figure). I did not re-check prices.</p>
@@ -624,39 +711,23 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
 })();
 </script>
 <script>
-(function(){
-  /* Full tube, pulled apart. Listed top to bottom. grp: p = pitch build, t = turning version adds. */
-  var PARTS=[
-    {k:'cap',n:'Top cap and camera',g:'t',need:'Print + buy',job:'Closes the tube and holds a small USB camera that finds your face, so the base knows where to turn.',get:'Printed cap. Small USB camera, not priced.'},
-    {k:'tube',n:'Clear tube',g:'p',need:'Buy',job:'The case that makes it look like something lives inside.',get:'4″ clear acrylic tube, $78.42 for a 6-foot length (checked Oct 31).'},
-    {k:'mirror',n:'Two-way mirror',g:'p',need:'Buy',job:'Hides the screen. Only the bright car shows through.',get:'$12.50 at Canal Plastics. Check the price in store.'},
-    {k:'screen',n:'5.5″ OLED screen',g:'p',need:'Buy',job:'Shows the car on pure black, so there is no glowing rectangle.',get:'Waveshare 5.5″ HDMI AMOLED, $46 to $129.99, not checked.'},
-    {k:'sbc',n:'Single-board computer',g:'t',need:'Buy',job:'Runs the camera, the voice and the picture, so no laptop is needed. He uses an Orange Pi 4.',get:'Not priced. In the pitch build your laptop does this job.'},
-    {k:'cover',n:'Light cover',g:'p',need:'Print',job:'The perforated top of the base. Lets the LED light out in a half-circle and hides the boards.',get:'Printed. Not priced.'},
-    {k:'led',n:'LED board',g:'p',need:'Stand-in',job:'Makes the soft glow behind the screen. His is a custom half-moon board; the one he shows carries 15 LEDs.',get:'Stand-in already on your list: NeoPixel strip $16.95 and QT Py controller $9.95.'},
-    {k:'table',n:'Turntable',g:'t',need:'Print',job:'The platform the screen stands on. It turns; the base stays still.',get:'Printed. Not priced.'},
-    {k:'motor',n:'Motor and gears',g:'t',need:'Buy + print',job:'A small geared motor drives a pinion around the ring gear to turn the screen.',get:'Small geared motor and printed gears. Not priced.'},
-    {k:'pot',n:'Angle sensor',g:'t',need:'Buy',job:'A potentiometer on a gear tells the computer which way the screen is facing.',get:'Not priced.'},
-    {k:'bear',n:'Bearing ring',g:'t',need:'Print + buy',job:'Carries the turntable on small ball bearings. He redesigned it with five after one was not smooth enough.',get:'Printed ring and five small bearings. Not priced.'},
-    {k:'ring',n:'Ring gear',g:'t',need:'Print',job:'A fixed toothed ring in the base that the pinion walks around.',get:'Printed. Not priced.'},
-    {k:'main',n:'Main control board',g:'t',need:'Custom or stand-in',job:'His custom half-moon board: USB-C power in, a power switch, a volume wheel, and plugs labelled Motor, POT, LIGHT1, LIGHT2, LEFT, RIGHT and INPUT. I read LEFT and RIGHT as speaker outputs; that is a guess.',get:'Without a custom board: a USB-C power breakout, a small motor driver board, a small audio amplifier board, a thumbwheel volume pot and a slide switch. My picks, not priced, not tried.'},
-    {k:'spk',n:'Speaker',g:'t',need:'Buy',job:'Sits in the bottom of the base and gives it a voice.',get:'Not priced.'},
-    {k:'base',n:'Base shell',g:'p',need:'Print',job:'Holds everything. In the pitch build it only needs the screen frame and a cable exit.',get:'Printed. Not priced.'}
-  ];
-  var host=document.getElementById('full3d'),fb=document.getElementById('fxfallback'),info=document.getElementById('fxinfo'),list=document.getElementById('fxlist'),slide=document.getElementById('fxslide');
+/* Pull-apart showcases. One viewer, two models: the full tube and the full Holo Box. */
+function showcase(o){
+  var PARTS=o.parts,$=function(s){return document.getElementById(o.pre+s)};
+  var host=$('3d'),fb=$('fallback'),info=$('info'),list=$('list'),slide=$('slide');
   var sel=-1,filt='a',redraw=function(){};
-  var rows=PARTS.map(function(p,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.className=p.g==='t'?'turn':'';b.setAttribute('aria-pressed','false');
+  var rows=PARTS.map(function(p,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.className=p.g==='p'?'':'turn';b.setAttribute('aria-pressed','false');
     b.innerHTML='<span class="k">'+(i+1)+'</span><span>'+p.n+'</span><span class="need">'+p.need+'</span>';
     b.addEventListener('click',function(){pick(sel===i?-1:i)});li.appendChild(b);list.appendChild(li);return b});
   function pick(i){sel=i;rows.forEach(function(b,j){b.setAttribute('aria-pressed',j===sel?'true':'false')});
     if(sel<0)info.innerHTML='<h3>Tap a part</h3><p class="muted">Tap the model or a row in the list to see what the part does and what you need to get.</p>';
-    else{var p=PARTS[sel];info.innerHTML='<h3>'+(sel+1)+'. '+p.n+'</h3><p>'+p.job+'</p><p><span class="lab">What you need</span>'+p.get+'</p><p><span class="lab">Used in</span>'+(p.g==='p'?'The pitch build and the turning version':'The turning version only')+'</p>'}
+    else{var p=PARTS[sel];info.innerHTML='<h3>'+(sel+1)+'. '+p.n+'</h3><p>'+p.job+'</p><p><span class="lab">What you need</span>'+p.get+'</p><p><span class="lab">Used in</span>'+o.used[p.g]+'</p>'}
     redraw()}
-  function setFilt(f){filt=f;[['a','fxAll'],['p','fxPitch'],['t','fxTurn']].forEach(function(x){document.getElementById(x[1]).setAttribute('aria-pressed',x[0]===f?'true':'false')});
+  function setFilt(f){filt=f;[['a','All'],['p','P'],['x','X']].forEach(function(x){$(x[1]).setAttribute('aria-pressed',x[0]===f?'true':'false')});
     rows.forEach(function(b,j){b.classList.toggle('dim',f!=='a'&&PARTS[j].g!==f)});redraw()}
-  document.getElementById('fxAll').addEventListener('click',function(){setFilt('a')});
-  document.getElementById('fxPitch').addEventListener('click',function(){setFilt('p')});
-  document.getElementById('fxTurn').addEventListener('click',function(){setFilt('t')});
+  $('All').addEventListener('click',function(){setFilt('a')});
+  $('P').addEventListener('click',function(){setFilt('p')});
+  $('X').addEventListener('click',function(){setFilt('x')});
   pick(-1);
   function fail(){host.hidden=true;fb.hidden=false}
   import('three').then(start,fail);
@@ -665,61 +736,36 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
     try{renderer=new T.WebGLRenderer({antialias:true})}catch(e){fail();return}
     renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));host.appendChild(renderer.domElement);
     var scene=new T.Scene();scene.background=new T.Color(0x0b0b0b);
-    var cam=new T.PerspectiveCamera(32,1,10,8000);
+    var cam=new T.PerspectiveCamera(32,1,10,9000);
     scene.add(new T.AmbientLight(0xffffff,2.2));
     var sun=new T.DirectionalLight(0xffffff,2.4);sun.position.set(300,900,600);scene.add(sun);
     var fill=new T.DirectionalLight(0xffffff,.8);fill.position.set(-500,200,-300);scene.add(fill);
-    var G={},cur=null;
-    function grp(k,dx,dy,dz){var g=new T.Group();g.userData={k:k,ex:[dx,dy,dz],mats:[]};scene.add(g);G[k]=g;cur=g;return g}
-    function mat(c,o){o=o||{};var m=o.basic?new T.MeshBasicMaterial({color:c}):new T.MeshLambertMaterial({color:c,side:o.ds?T.DoubleSide:T.FrontSide});
-      m.userData.op=o.op===undefined?1:o.op;m.transparent=true;m.depthWrite=m.userData.op===1;cur.userData.mats.push(m);return m}
-    function add(geo,m,x,y,z){var o=new T.Mesh(geo,m);o.position.set(x||0,y||0,z||0);cur.add(o);return o}
-    function cyl(r,h,m,x,y,z,seg,open){return add(new T.CylinderGeometry(r,r,h,seg||40,1,!!open),m,x,y,z)}
-    function bx(w,h,d,m,x,y,z){return add(new T.BoxGeometry(w,h,d),m,x,y,z)}
-    function flat(shape,t,m,y){var o=add(new T.ExtrudeGeometry(shape,{depth:t,bevelEnabled:false,curveSegments:40}),m,0,y,0);o.rotation.x=-Math.PI/2;return o}
-    function ringShape(ro,ri){var s=new T.Shape();s.absarc(0,0,ro,0,Math.PI*2,false);var h=new T.Path();h.absarc(0,0,ri,0,Math.PI*2,true);s.holes.push(h);return s}
-    function moon(r){var s=new T.Shape();s.absarc(0,0,r,0,Math.PI,false);s.closePath();return s}
-
-    grp('base',0,0,0);var bm=mat(0x4f4a45,{ds:true});cyl(60,46,bm,0,23,0,48,true);cyl(60,2,bm,0,1,0,48);
-    grp('spk',0,22,0);cyl(24,10,mat(0x1c1c1c),-8,8,22);cyl(15,3,mat(0x4a4a4a),-8,14,22);
-    grp('main',0,80,0);flat(moon(54),1.6,mat(0x2f8f4e),30);
-    var wh=mat(0xe9e6df),bk=mat(0x151515),sv=mat(0xb9bcc0);
-    [[-40,-8],[-24,-22],[-8,-30],[30,-26],[-30,-36],[8,-10],[24,-8]].forEach(function(p){bx(9,6,6,wh,p[0],35,p[1])});
-    bx(10,4,8,sv,6,34,-50);cyl(10,3,bk,26,36,-42,24);bx(8,6,4,mat(0x8a4a2a),-12,35,-46);bx(8,3,12,bk,-14,33,-12);bx(6,3,6,bk,-34,33,-22);bx(7,5,5,mat(0xe0a030),10,34,-22);
-    grp('ring',0,135,0);var rm=mat(0x47423d);flat(ringShape(55,45),6,rm,46);
-    for(var i=0;i<36;i++){var a=i/36*Math.PI*2,t=bx(2.5,6,3,rm,Math.cos(a)*44,49,Math.sin(a)*44);t.rotation.y=-a}
-    grp('bear',0,180,0);flat(ringShape(57,49),5,mat(0xd9534a),54);var bg=mat(0x9a9da1);
-    for(i=0;i<5;i++){a=i/5*Math.PI*2+.3;cyl(6,5,bg,Math.cos(a)*53,61.5,Math.sin(a)*53,20)}
-    grp('pot',0,222,0);cyl(6,9,mat(0x2e6fb5),26,60,-18,20);cyl(9,3,mat(0xe2c23a),26,55,-18,12);
-    grp('motor',0,228,0);bx(12,12,28,mat(0xb9bcc0),-22,60,-6);cyl(11,4,mat(0xe2c23a),-22,54,14,14);cyl(7,4,mat(0xe2c23a),-6,54,22,10);
-    grp('table',0,268,0);cyl(52,4,mat(0x3d3935),0,66,0,48);
-    grp('led',0,305,0);flat(moon(46),1.6,mat(0x2f8f4e),69);var lm=mat(0xffe2b0,{basic:true});
-    [[38,5],[30,5],[20,5]].forEach(function(rr,j){for(var q=0;q<5;q++){var an=Math.PI*(q+.5)/5+j*.12;cyl(2,1.2,lm,Math.cos(an)*rr[0],71.4,-Math.sin(an)*rr[0],8)}});
-    grp('cover',0,335,0);cyl(51,3,mat(0xd8d4cc,{op:.55}),0,74,0,48);
-    grp('sbc',0,372,-75);bx(58,92,2,mat(0x2e6fb5),0,124,-14);var sk=mat(0x151515);bx(14,14,2,sk,0,138,-12.5);bx(16,13,12,mat(0xb9bcc0),-14,88,-9);bx(50,5,3,sk,0,166,-12);
-    grp('screen',0,372,-18);bx(72,136,4,mat(0x151515),0,146,2);
-    var cc=document.createElement('canvas');cc.width=270;cc.height=480;var g2=cc.getContext('2d');g2.fillStyle='#000';g2.fillRect(0,0,270,480);g2.fillStyle='#e9eef3';
-    g2.beginPath();g2.moveTo(40,190);g2.quadraticCurveTo(44,164,70,160);g2.lineTo(96,128);g2.quadraticCurveTo(104,118,118,118);g2.lineTo(164,118);g2.quadraticCurveTo(178,118,187,128);g2.lineTo(214,158);g2.quadraticCurveTo(236,164,238,190);g2.lineTo(238,202);g2.lineTo(40,202);g2.closePath();g2.fill();
-    g2.fillStyle='#000';g2.beginPath();g2.arc(84,202,20,0,7);g2.arc(196,202,20,0,7);g2.fill();
-    g2.fillStyle='#fff';g2.textAlign='center';g2.font='600 54px sans-serif';g2.fillText('ROW B',135,330);g2.fillStyle='#b6c1cc';g2.font='22px sans-serif';g2.fillText('Last seen 7:42 AM',135,400);
-    var tx=new T.CanvasTexture(cc);tx.colorSpace=T.SRGBColorSpace;
-    var cm=new T.MeshBasicMaterial({map:tx,transparent:true,blending:T.AdditiveBlending,depthWrite:false});cm.userData.op=1;cur.userData.mats.push(cm);add(new T.PlaneGeometry(68.5,121.8),cm,0,146,4.2);
-    grp('mirror',0,372,48);bx(84,152,3,mat(0x8fa3b5,{op:.42}),0,150,9);
-    grp('tube',-150,372,0);cyl(50.8,172,mat(0xcfe6f5,{op:.16,ds:true}),0,160,0,56,true);
-    grp('cap',0,470,0);cyl(52,22,mat(0x4f4a45),0,257,0,48);var lens=cyl(5,3,mat(0x0a0a0a),0,257,52,16);lens.rotation.x=Math.PI/2;
+    var G={},cur=null,h={T:T};
+    h.grp=function(k,dx,dy,dz,home,rotx){var g=new T.Group();g.userData={k:k,ex:[dx,dy,dz],home:home||[0,0,0],mats:[]};if(rotx)g.rotation.x=rotx;scene.add(g);G[k]=g;cur=g;return g};
+    h.mat=function(c,q){q=q||{};var m=q.basic?new T.MeshBasicMaterial({color:c}):new T.MeshLambertMaterial({color:c,side:q.ds?T.DoubleSide:T.FrontSide});
+      m.userData.op=q.op===undefined?1:q.op;m.transparent=true;m.depthWrite=m.userData.op===1;cur.userData.mats.push(m);return m};
+    h.glow=function(w,ht,canvas){var tx=new T.CanvasTexture(canvas);tx.colorSpace=T.SRGBColorSpace;var m=new T.MeshBasicMaterial({map:tx,transparent:true,blending:T.AdditiveBlending,depthWrite:false,side:T.DoubleSide});m.userData.op=1;cur.userData.mats.push(m);return new T.Mesh(new T.PlaneGeometry(w,ht),m)};
+    h.add=function(geo,m,x,y,z,parent){var ob=new T.Mesh(geo,m);ob.position.set(x||0,y||0,z||0);(parent||cur).add(ob);return ob};
+    h.cyl=function(r,ht,m,x,y,z,seg,open){return h.add(new T.CylinderGeometry(r,r,ht,seg||40,1,!!open),m,x,y,z)};
+    h.bx=function(w,ht,d,m,x,y,z,parent){return h.add(new T.BoxGeometry(w,ht,d),m,x,y,z,parent)};
+    h.flat=function(shape,t,m,y){var ob=h.add(new T.ExtrudeGeometry(shape,{depth:t,bevelEnabled:false,curveSegments:40}),m,0,y,0);ob.rotation.x=-Math.PI/2;return ob};
+    h.ringShape=function(ro,ri){var s=new T.Shape();s.absarc(0,0,ro,0,Math.PI*2,false);var p=new T.Path();p.absarc(0,0,ri,0,Math.PI*2,true);s.holes.push(p);return s};
+    h.moon=function(r){var s=new T.Shape();s.absarc(0,0,r,0,Math.PI,false);s.closePath();return s};
+    o.build(h);
     var order=PARTS.map(function(p){return G[p.k]});
-    order.forEach(function(g,i){g.traverse(function(o){o.userData.pi=i})});
+    order.forEach(function(g,i){g.traverse(function(ob){ob.userData.pi=i})});
 
-    var ex=+slide.value,az=-.5,el=.22,zoom=1,raf=0,pts=new Map(),pinch=0,moved=0;
+    var ex=+slide.value,az=o.az,el=o.el,zoom=1,raf=0,pts=new Map(),pinch=0,moved=0;
     function draw(){raf=0;
-      order.forEach(function(g,i){var e=g.userData.ex;g.position.set(e[0]*ex,e[1]*ex,e[2]*ex);
+      order.forEach(function(g,i){var e=g.userData.ex,hm=g.userData.home;g.position.set(hm[0]+e[0]*ex,hm[1]+e[1]*ex,hm[2]+e[2]*ex);
         var dim=filt!=='a'&&PARTS[i].g!==filt;if(sel>=0&&sel!==i)dim=true;if(sel===i)dim=false;g.userData.dim=dim;
-        g.userData.mats.forEach(function(m){m.opacity=m.userData.op*(dim?.25:1);m.depthWrite=m.userData.op===1&&!dim;if(m.emissive)m.emissive.setHex(sel===i?0x3a3a3a:0)})});
-      var ty=130+235*ex,rad=(520+940*ex)*zoom;
-      cam.position.set(-40*ex+rad*Math.sin(az)*Math.cos(el),ty+rad*Math.sin(el),rad*Math.cos(az)*Math.cos(el));cam.lookAt(-40*ex,ty,0);
+        g.userData.mats.forEach(function(m){m.opacity=m.userData.op*(dim?.25:1)*(m.userData.fade?Math.max(0,1-ex*5):1);m.depthWrite=m.userData.op===1&&!dim;if(m.emissive)m.emissive.setHex(sel===i?0x3a3a3a:0)});
+        if(g.userData.tick)g.userData.tick(ex)});
+      var c=o.cam(ex),rad=c[3]*zoom*(o.wide?Math.max(1,.95/cam.aspect):1);
+      cam.position.set(c[0]+rad*Math.sin(az)*Math.cos(el),c[1]+rad*Math.sin(el),c[2]+rad*Math.cos(az)*Math.cos(el));cam.lookAt(c[0],c[1],c[2]);
       renderer.render(scene,cam)}
     redraw=function(){if(!raf)raf=requestAnimationFrame(draw)};
-    function size(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();redraw()}
+    function size(){var w=host.clientWidth,ht=host.clientHeight;if(!w||!ht)return;renderer.setSize(w,ht,false);cam.aspect=w/ht;cam.updateProjectionMatrix();redraw()}
     if(window.ResizeObserver)new ResizeObserver(size).observe(host);else window.addEventListener('resize',size);size();
     slide.addEventListener('input',function(){ex=+slide.value;redraw()});
     function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
@@ -731,14 +777,125 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
       redraw()});
     cv.addEventListener('pointerup',function(e){var had=pts.size;pts.delete(e.pointerId);pinch=0;
       if(had===1&&moved<8){var r=cv.getBoundingClientRect();v2.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(v2,cam);
-        var hit=ray.intersectObjects(scene.children,true).filter(function(h){var pi=h.object.userData.pi;return pi!==undefined&&!order[pi].userData.dim})[0];
-        pick(hit&&hit.object.userData.pi!==undefined?(hit.object.userData.pi===sel?-1:hit.object.userData.pi):-1)}});
+        var hit=ray.intersectObjects(scene.children,true).filter(function(x){var pi=x.object.userData.pi,m=x.object.material;return pi!==undefined&&!order[pi].userData.dim&&m&&m.opacity>.02})[0];
+        pick(hit?(hit.object.userData.pi===sel?-1:hit.object.userData.pi):-1)}});
     cv.addEventListener('pointercancel',function(e){pts.delete(e.pointerId);pinch=0});
     host.addEventListener('keydown',function(e){var k=e.key;if(k==='ArrowLeft')az-=.12;else if(k==='ArrowRight')az+=.12;else if(k==='ArrowUp')el=clamp(el+.08,-.2,1.2);else if(k==='ArrowDown')el=clamp(el-.08,-.2,1.2);else return;e.preventDefault();redraw()});
-    document.getElementById('fxin').addEventListener('click',function(){zoom=clamp(zoom*.85,.45,1.6);redraw()});
-    document.getElementById('fxout').addEventListener('click',function(){zoom=clamp(zoom/.85,.45,1.6);redraw()});
+    $('in').addEventListener('click',function(){zoom=clamp(zoom*.85,.45,1.6);redraw()});
+    $('out').addEventListener('click',function(){zoom=clamp(zoom/.85,.45,1.6);redraw()});
     redraw();
   }
-})();
+}
+
+/* ---------- Full tube. Listed top to bottom. p = pitch build, x = turning version adds. ---------- */
+showcase({pre:'fx',az:-.5,el:.22,
+  used:{p:'The pitch build and the turning version',x:'The turning version only'},
+  cam:function(ex){return[-40*ex,130+235*ex,0,520+940*ex]},
+  parts:[
+    {k:'cap',n:'Top cap and camera',g:'x',need:'Print + buy',job:'Closes the tube and holds a small USB camera that finds your face, so the base knows where to turn.',get:'Printed cap. Small USB camera, not priced.'},
+    {k:'tube',n:'Clear tube',g:'p',need:'Buy',job:'The case that makes it look like something lives inside.',get:'4″ clear acrylic tube, $78.42 for a 6-foot length (checked Oct 31).'},
+    {k:'mirror',n:'Two-way mirror',g:'p',need:'Buy',job:'Hides the screen. Only the bright car shows through.',get:'$12.50 at Canal Plastics. Check the price in store.'},
+    {k:'screen',n:'5.5″ OLED screen',g:'p',need:'Buy',job:'Shows the car on pure black, so there is no glowing rectangle.',get:'Waveshare 5.5″ HDMI AMOLED, $46 to $129.99, not checked.'},
+    {k:'sbc',n:'Single-board computer',g:'x',need:'Buy',job:'Runs the camera, the voice and the picture, so no laptop is needed. He uses an Orange Pi 4.',get:'Not priced. In the pitch build your laptop does this job.'},
+    {k:'cover',n:'Light cover',g:'p',need:'Print',job:'The perforated top of the base. Lets the LED light out in a half-circle and hides the boards.',get:'Printed. Not priced.'},
+    {k:'led',n:'LED board',g:'p',need:'Stand-in',job:'Makes the soft glow behind the screen. His is a custom half-moon board; the one he shows carries 15 LEDs.',get:'Stand-in already on your list: NeoPixel strip $16.95 and QT Py controller $9.95.'},
+    {k:'table',n:'Turntable',g:'x',need:'Print',job:'The platform the screen stands on. It turns; the base stays still.',get:'Printed. Not priced.'},
+    {k:'motor',n:'Motor and gears',g:'x',need:'Buy + print',job:'A small geared motor drives a pinion around the ring gear to turn the screen.',get:'Small geared motor and printed gears. Not priced.'},
+    {k:'pot',n:'Angle sensor',g:'x',need:'Buy',job:'A potentiometer on a gear tells the computer which way the screen is facing.',get:'Not priced.'},
+    {k:'bear',n:'Bearing ring',g:'x',need:'Print + buy',job:'Carries the turntable on small ball bearings. He redesigned it with five after one was not smooth enough.',get:'Printed ring and five small bearings. Not priced.'},
+    {k:'ring',n:'Ring gear',g:'x',need:'Print',job:'A fixed toothed ring in the base that the pinion walks around.',get:'Printed. Not priced.'},
+    {k:'main',n:'Main control board',g:'x',need:'Custom board',job:'His custom half-moon board: USB-C power in, a power switch, a volume wheel, and plugs labelled Motor, POT, LIGHT1, LIGHT2, LEFT, RIGHT and INPUT. I read LEFT and RIGHT as speaker outputs; that is a guess.',get:'A custom board like his, or stand-ins: a USB-C power breakout, a small motor driver board, a small audio amplifier board, a thumbwheel volume pot and a slide switch. My picks, not priced, not tried.'},
+    {k:'spk',n:'Speaker',g:'x',need:'Buy',job:'Sits in the bottom of the base and gives it a voice.',get:'Not priced.'},
+    {k:'base',n:'Base shell',g:'p',need:'Print',job:'Holds everything. In the pitch build it only needs the screen frame and a cable exit.',get:'Printed. Not priced.'}
+  ],
+  build:function(h){var T=h.T,grp=h.grp,mat=h.mat,cyl=h.cyl,bx=h.bx,flat=h.flat,i,a;
+    grp('base',0,0,0);var bm=mat(0x4f4a45,{ds:true});cyl(60,46,bm,0,23,0,48,true);cyl(60,2,bm,0,1,0,48);
+    grp('spk',0,22,0);cyl(24,10,mat(0x1c1c1c),-8,8,22);cyl(15,3,mat(0x4a4a4a),-8,14,22);
+    grp('main',0,80,0);flat(h.moon(54),1.6,mat(0x2f8f4e),30);
+    var wh=mat(0xe9e6df),bk=mat(0x151515),sv=mat(0xb9bcc0);
+    [[-40,-8],[-24,-22],[-8,-30],[30,-26],[-30,-36],[8,-10],[24,-8]].forEach(function(p){bx(9,6,6,wh,p[0],35,p[1])});
+    bx(10,4,8,sv,6,34,-50);cyl(10,3,bk,26,36,-42,24);bx(8,6,4,mat(0x8a4a2a),-12,35,-46);bx(8,3,12,bk,-14,33,-12);bx(6,3,6,bk,-34,33,-22);bx(7,5,5,mat(0xe0a030),10,34,-22);
+    grp('ring',0,135,0);var rm=mat(0x47423d);flat(h.ringShape(55,45),6,rm,46);
+    for(i=0;i<36;i++){a=i/36*Math.PI*2;bx(2.5,6,3,rm,Math.cos(a)*44,49,Math.sin(a)*44).rotation.y=-a}
+    grp('bear',0,180,0);flat(h.ringShape(57,49),5,mat(0xd9534a),54);var bg=mat(0x9a9da1);
+    for(i=0;i<5;i++){a=i/5*Math.PI*2+.3;cyl(6,5,bg,Math.cos(a)*53,61.5,Math.sin(a)*53,20)}
+    grp('pot',0,222,0);cyl(6,9,mat(0x2e6fb5),26,60,-18,20);cyl(9,3,mat(0xe2c23a),26,55,-18,12);
+    grp('motor',0,228,0);bx(12,12,28,mat(0xb9bcc0),-22,60,-6);var gy=mat(0xe2c23a);cyl(11,4,gy,-22,54,14,14);cyl(7,4,gy,-6,54,22,10);
+    grp('table',0,268,0);cyl(52,4,mat(0x3d3935),0,66,0,48);
+    grp('led',0,305,0);flat(h.moon(46),1.6,mat(0x2f8f4e),69);var lm=mat(0xffe2b0,{basic:true});
+    [38,30,20].forEach(function(rr,j){for(var q=0;q<5;q++){var an=Math.PI*(q+.5)/5+j*.12;cyl(2,1.2,lm,Math.cos(an)*rr,71.4,-Math.sin(an)*rr,8)}});
+    grp('cover',0,335,0);cyl(51,3,mat(0xd8d4cc,{op:.55}),0,74,0,48);
+    grp('sbc',0,372,-75);bx(58,92,2,mat(0x2e6fb5),0,124,-14);var sk=mat(0x151515);bx(14,14,2,sk,0,138,-12.5);bx(16,13,12,mat(0xb9bcc0),-14,88,-9);bx(50,5,3,sk,0,166,-12);
+    var g=grp('screen',0,372,-18);bx(72,136,4,mat(0x151515),0,146,2);
+    var car=h.glow(68.5,121.8,carCanvas());car.position.set(0,146,4.2);g.add(car);
+    grp('mirror',0,372,48);bx(84,152,3,mat(0x8fa3b5,{op:.42}),0,150,9);
+    grp('tube',-150,372,0);cyl(50.8,172,mat(0xcfe6f5,{op:.16,ds:true}),0,160,0,56,true);
+    grp('cap',0,470,0);cyl(52,22,mat(0x4f4a45),0,257,0,48);cyl(5,3,mat(0x0a0a0a),0,257,52,16).rotation.x=Math.PI/2;
+  }
+});
+
+/* ---------- Full Holo Box. p = pitch build, x = stand-alone version adds. ---------- */
+showcase({pre:'bx',az:-.55,el:.3,wide:true,
+  used:{p:'The pitch build and the stand-alone box',x:'The stand-alone box only'},
+  cam:function(ex){return[40*ex,150+40*ex,0,1250+1150*ex]},
+  parts:[
+    {k:'lid',n:'Lid',g:'p',need:'Cut',job:'Keeps room light off the picture.',get:'5 mm black foam board, 508 × 356 mm, velvet inside.'},
+    {k:'refl',n:'Reflector',g:'p',need:'Buy + cut',job:'Bounces the monitor’s picture toward the audience so it floats near the back wall.',get:'Two-way mirror acrylic, ⅛″, cut to 495 × 305 mm. About $35 to $45 est.'},
+    {k:'rails',n:'Rails',g:'p',need:'Cut',job:'Hold the reflector at exactly 45°.',get:'One 230 mm square of foam board cut corner to corner.'},
+    {k:'sides',n:'Side walls',g:'p',need:'Cut',job:'Block light from the sides and carry the rails.',get:'Two foam-board panels, 356 × 346 mm, velvet inside.'},
+    {k:'back',n:'Back wall',g:'p',need:'Cut',job:'The black velvet background the picture floats in front of.',get:'Foam board, 498 × 346 mm, velvet inside.'},
+    {k:'mon',n:'17.3″ monitor',g:'p',need:'Buy',job:'Lies face up and shows both buildings, drawn upside down so the reflection reads the right way.',get:'Arzopa A1M, $139.99.'},
+    {k:'mic',n:'Microphone',g:'x',need:'Buy',job:'Sits on the front lip and hears the spoken car number.',get:'A small digital microphone board that plugs into the control board. Not priced.'},
+    {k:'lip',n:'Front lip',g:'p',need:'Cut',job:'Hides the monitor’s edge from the audience.',get:'Foam-board strip, 498 × 30 mm.'},
+    {k:'base',n:'Base',g:'p',need:'Cut',job:'The floor of the box. The monitor rests on it.',get:'Foam board, 508 × 356 mm.'},
+    {k:'riser',n:'Front riser',g:'p',need:'Cut',job:'Lifts the front 75 mm so seated people see the whole picture.',get:'Foam-board strip with two feet.'},
+    {k:'sbc',n:'Single-board computer',g:'x',need:'Buy',job:'Replaces the laptop. Runs the relay and both display pages, and drives the monitor and the tube from its two HDMI sockets.',get:'A board with two HDMI outputs, such as a Raspberry Pi 5 class board. Not priced, not tried.'},
+    {k:'pcb',n:'Custom control board',g:'x',need:'Custom board',job:'One wall plug in, everything else out: 5 volts for the computer, the monitor and the tube, the speaker amplifier, the microphone plug, the LED signal for the tube, a power switch and a volume wheel.',get:'A custom board, about 100 × 60 mm. The block plan is below. It is not a schematic yet.'},
+    {k:'spk',n:'Speaker',g:'x',need:'Buy',job:'Says the answer out loud: the building, the floor and the row.',get:'A small 4-ohm speaker, about 3 watts. Not priced.'},
+    {k:'tray',n:'Electronics tray',g:'x',need:'Cut or print',job:'A flat tray in the wedge of space under the raised front. Carries the computer, the control board and the speaker out of sight.',get:'Foam board or a printed tray, about 480 × 260 mm. My proposal, not tried.'},
+    {k:'psu',n:'Power supply',g:'x',need:'Buy',job:'The one cable to the wall.',get:'A 65-watt USB-C charger and cable. Not priced.'}
+  ],
+  build:function(h){var T=h.T,grp=h.grp,mat=h.mat,cyl=h.cyl,bx=h.bx,HOME=[0,0,-178],TILT=-12*Math.PI/180,g;
+    var board=0x59636f;
+    grp('base',0,0,0,HOME,TILT);bx(508,5,356,mat(board),0,2.5,178);
+    g=grp('mon',0,95,0,HOME,TILT);bx(394,9.3,243,mat(0x1d232a),0,9.65,190.5);
+    var scr=h.glow(383,215,boxCanvas(true));scr.rotation.x=-Math.PI/2;scr.position.set(0,14.7,182.5);scr.material.userData.op=.6;g.add(scr);
+    var pic=h.glow(383,215,boxCanvas(false));pic.position.set(0,122,75);pic.material.userData.fade=true;g.add(pic);
+    g=grp('rails',0,190,0,HOME,TILT);var sh=new T.Shape();sh.moveTo(66,5);sh.lineTo(296,5);sh.lineTo(296,235);sh.closePath();var rmm=mat(board);
+    [-244,249].forEach(function(x){var r=h.add(new T.ExtrudeGeometry(sh,{depth:5,bevelEnabled:false}),rmm,x,0,0);r.rotation.y=-Math.PI/2});
+    grp('refl',0,300,0,HOME,TILT);bx(495,3.2,305,mat(0x9fd0ee,{op:.32}),0,122.3,183.3).rotation.x=-Math.PI/4;
+    g=grp('sides',0,0,0,HOME,TILT);var sm=mat(board),L=new T.Group(),R=new T.Group();g.add(L);g.add(R);
+    bx(5,346,356,sm,-251.5,178,178,L);bx(5,346,356,sm,251.5,178,178,R);g.userData.tick=function(ex){L.position.x=-190*ex;R.position.x=190*ex};
+    grp('back',0,0,-230,HOME,TILT);bx(498,346,5,mat(board),0,178,2.5);
+    grp('lip',0,0,130,HOME,TILT);bx(498,30,5,mat(board),0,20,353.5);
+    grp('mic',0,70,190,HOME,TILT);bx(16,3,10,mat(0x2f8f4e),0,36.5,353.5);cyl(3,2,mat(0xc9ccd0),0,39,353.5,12);
+    grp('lid',0,430,0,HOME,TILT);bx(508,5,356,mat(board),0,353.5,178);
+    grp('riser',0,-30,240);var rb=mat(board);bx(508,75,5,rb,0,37.5,165);bx(5,75,120,rb,-200,37.5,165);bx(5,75,120,rb,200,37.5,165);
+    grp('tray',0,-260,0);bx(480,3,260,mat(0x3d3935),0,1.5,25);
+    grp('sbc',0,-150,0);bx(85,1.6,56,mat(0x2e6fb5),-130,8,95);var sv=mat(0xb9bcc0);bx(14,15,17,sv,-160,16,112);bx(14,15,17,sv,-142,16,112);bx(7,3,8,sv,-118,10.5,70);bx(7,3,8,sv,-104,10.5,70);bx(15,2,15,mat(0x151515),-128,10,96);
+    grp('pcb',0,-150,0);bx(100,1.6,60,mat(0x2f8f4e),0,8,95);var wh=mat(0xe9e6df),bk=mat(0x151515),s2=mat(0xb9bcc0);
+    bx(10,4,8,s2,-38,11,68);bx(8,6,4,mat(0x8a4a2a),-20,12,68);cyl(10,3,bk,36,12,74,24);bx(14,8,14,mat(0x6b6f75),-30,13,92);bx(10,3,8,bk,-6,10.5,92);bx(9,3,9,bk,22,10.5,96);bx(7,5,5,mat(0xe0a030),8,11.5,108);
+    [-40,-20,0,20,40].forEach(function(x){bx(12,6,6,wh,x,12,121)});
+    grp('spk',0,-150,0);cyl(26,16,mat(0x1c1c1c),130,11,95);cyl(16,3,mat(0x4a4a4a),130,20.5,95);
+    grp('psu',150,0,0);bx(56,30,56,mat(0xe9e6df),330,15,-120);
+  }
+});
+
+function carCanvas(){var c=document.createElement('canvas');c.width=270;c.height=480;var g=c.getContext('2d');g.fillStyle='#000';g.fillRect(0,0,270,480);g.fillStyle='#e9eef3';
+  g.beginPath();g.moveTo(40,190);g.quadraticCurveTo(44,164,70,160);g.lineTo(96,128);g.quadraticCurveTo(104,118,118,118);g.lineTo(164,118);g.quadraticCurveTo(178,118,187,128);g.lineTo(214,158);g.quadraticCurveTo(236,164,238,190);g.lineTo(238,202);g.lineTo(40,202);g.closePath();g.fill();
+  g.fillStyle='#000';g.beginPath();g.arc(84,202,20,0,7);g.arc(196,202,20,0,7);g.fill();
+  g.fillStyle='#fff';g.textAlign='center';g.font='600 54px sans-serif';g.fillText('ROW B',135,330);g.fillStyle='#b6c1cc';g.font='22px sans-serif';g.fillText('Last seen 7:42 AM',135,400);return c}
+function boxCanvas(flip){var c=document.createElement('canvas');c.width=1024;c.height=576;var g=c.getContext('2d'),r,k;
+  if(flip){g.translate(0,576);g.scale(1,-1)}
+  g.fillStyle='#000';g.fillRect(0,0,1024,576);
+  g.font='600 34px sans-serif';g.fillStyle='#e6ebf0';g.fillText('W 62nd St',40,118);
+  g.font='22px monospace';['L4','L3','L2','LL','B1','B2','B3'].forEach(function(f,i){g.fillStyle=i===5?'#fff':'#6b7683';g.fillText(f,40,186+i*44)});
+  g.strokeStyle='#4a5562';g.lineWidth=2;g.strokeRect(136,206,462,234);
+  for(r=0;r<2;r++)for(k=0;k<8;k++){g.fillStyle=(r===1&&k===5)?'#ff3b30':'#2a333c';g.fillRect(146+k*56,220+r*122,49,84)}
+  g.fillStyle='#ff3b30';g.font='600 40px sans-serif';g.textAlign='center';g.fillText('B2 · B-06',367,506);g.textAlign='left';
+  g.globalAlpha=.4;g.font='600 26px sans-serif';g.fillStyle='#e6ebf0';g.fillText('W 57th St',654,118);
+  g.strokeStyle='#4a5562';g.strokeRect(732,236,266,176);
+  for(r=0;r<2;r++)for(k=0;k<8;k++){g.fillStyle='#2a333c';g.fillRect(740+k*32,250+r*88,25,60)}
+  return c}
 </script>
 </body></html>
