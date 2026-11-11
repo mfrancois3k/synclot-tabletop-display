@@ -70,6 +70,22 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
 .b3 button:disabled{opacity:.45;cursor:default}
 #b3steps button{padding:0;font-family:var(--mono)}
 #b3cap{min-height:3.1em;margin:0}
+#full3d{height:min(78vh,600px)}
+.fxslide{display:flex;align-items:center;gap:10px;font:11px/1 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.fxslide input{flex:1;accent-color:#cfcac2;height:30px}
+.fxinfo{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;display:grid;gap:6px;min-height:8.5em}
+.fxinfo h3{margin:0}.fxinfo p{margin:0}
+.fxinfo .lab{font:500 10.5px/1.6 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.fxlist{display:grid;gap:6px;list-style:none;padding:0;margin:0}
+.fxlist li{margin:0}
+.b3 .fxlist button{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;text-align:left;border-radius:8px;font-size:14px;line-height:1.3;padding:8px 12px}
+.fxlist button .k{font-family:var(--mono);color:var(--muted)}
+.fxlist button .need{font:500 10px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.fxlist button.turn .need{color:var(--est)}
+.b3 .fxlist button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.fxlist button[aria-pressed="true"] .k,.fxlist button[aria-pressed="true"] .need{color:var(--ground)}
+.fxlist button.dim{opacity:.4}
+.b3 button[aria-pressed="true"].chip{background:var(--ink);color:var(--ground);border-color:var(--ink)}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -86,7 +102,7 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
   <span><span class="tag est">Estimate</span> my judgement</span>
   <span><span class="tag unk">Unknown</span> I couldn't find it</span>
 </div>
-<nav class="jump"><a href="./">Back to the deck</a><a href="#watch">3D build</a><a href="#changes">Five changes</a><a href="#risks">Risks</a><a href="#box">Box</a><a href="#tube">Tube</a><a href="#wiring">Wiring</a><a href="#screens">Screens</a><a href="#order">Build order</a></nav>
+<nav class="jump"><a href="./">Back to the deck</a><a href="#watch">3D build</a><a href="#full">Full tube</a><a href="#changes">Five changes</a><a href="#risks">Risks</a><a href="#box">Box</a><a href="#tube">Tube</a><a href="#wiring">Wiring</a><a href="#screens">Screens</a><a href="#order">Build order</a></nav>
 
 <section>
   <h2 id="watch">Watch it go together</h2>
@@ -105,6 +121,26 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
     </div>
   </div>
   <p class="muted">My own model, drawn to the sizes on this page. It has not been built. The pictures on the screens are mock-ups with made-up stalls.</p>
+</section>
+
+<section>
+  <h2 id="full">The full tube, pulled apart</h2>
+  <p>Every part of the complete tube, including the turning base from the video. Fifteen parts: six are in the pitch build you already priced (about $164 to $248), and nine are added by the turning version and are not priced.</p>
+  <div class="b3">
+    <div id="full3d" class="b3stage" tabindex="0" role="img" aria-label="3D model of the full tube pulled apart into fifteen parts. Drag or use the arrow keys to turn it. Tap a part to see what it is."></div>
+    <p id="fxfallback" class="muted" hidden>The 3D view didn't load on this device. Every part is in the list below.</p>
+    <div class="fxslide"><span>Together</span><input type="range" id="fxslide" min="0" max="1" step="0.01" value="0.85" aria-label="Pull the tube apart"><span>Apart</span></div>
+    <div class="b3bar">
+      <button type="button" class="chip" id="fxAll" aria-pressed="true">All 15</button>
+      <button type="button" class="chip" id="fxPitch" aria-pressed="false">Pitch build, 6</button>
+      <button type="button" class="chip" id="fxTurn" aria-pressed="false">Turning adds, 9</button>
+      <button id="fxin" type="button" aria-label="Zoom in">+</button>
+      <button id="fxout" type="button" aria-label="Zoom out">&minus;</button>
+    </div>
+    <div class="fxinfo" id="fxinfo" aria-live="polite"></div>
+    <ol class="fxlist" id="fxlist"></ol>
+  </div>
+  <p class="muted">My own model, built from what the video shows. It is not his design files, and the sizes of the base parts are my guess. Both circuit boards in the video are custom; the stand-ins named here are my picks and have not been tried.</p>
 </section>
 
 <section>
@@ -434,6 +470,7 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
 
 <section>
   <h2>Later, not designed here</h2>
+  <p>These are shown in <a href="#full">the full tube view</a> so you can see what the turning version needs. They have no cut sizes, wiring or prices yet.</p>
   <ul>
     <li>Turning base: geared motor, bearings, angle sensor.</li>
     <li>Face-tracking USB camera.</li>
@@ -584,6 +621,124 @@ svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
   document.getElementById('b3in').addEventListener('click',function(){rad=clamp(rad*.85,700,2600);kick()});
   document.getElementById('b3out').addEventListener('click',function(){rad=clamp(rad/.85,700,2600);kick()});
   kick();}
+})();
+</script>
+<script>
+(function(){
+  /* Full tube, pulled apart. Listed top to bottom. grp: p = pitch build, t = turning version adds. */
+  var PARTS=[
+    {k:'cap',n:'Top cap and camera',g:'t',need:'Print + buy',job:'Closes the tube and holds a small USB camera that finds your face, so the base knows where to turn.',get:'Printed cap. Small USB camera, not priced.'},
+    {k:'tube',n:'Clear tube',g:'p',need:'Buy',job:'The case that makes it look like something lives inside.',get:'4″ clear acrylic tube, $78.42 for a 6-foot length (checked Oct 31).'},
+    {k:'mirror',n:'Two-way mirror',g:'p',need:'Buy',job:'Hides the screen. Only the bright car shows through.',get:'$12.50 at Canal Plastics. Check the price in store.'},
+    {k:'screen',n:'5.5″ OLED screen',g:'p',need:'Buy',job:'Shows the car on pure black, so there is no glowing rectangle.',get:'Waveshare 5.5″ HDMI AMOLED, $46 to $129.99, not checked.'},
+    {k:'sbc',n:'Single-board computer',g:'t',need:'Buy',job:'Runs the camera, the voice and the picture, so no laptop is needed. He uses an Orange Pi 4.',get:'Not priced. In the pitch build your laptop does this job.'},
+    {k:'cover',n:'Light cover',g:'p',need:'Print',job:'The perforated top of the base. Lets the LED light out in a half-circle and hides the boards.',get:'Printed. Not priced.'},
+    {k:'led',n:'LED board',g:'p',need:'Stand-in',job:'Makes the soft glow behind the screen. His is a custom half-moon board; the one he shows carries 15 LEDs.',get:'Stand-in already on your list: NeoPixel strip $16.95 and QT Py controller $9.95.'},
+    {k:'table',n:'Turntable',g:'t',need:'Print',job:'The platform the screen stands on. It turns; the base stays still.',get:'Printed. Not priced.'},
+    {k:'motor',n:'Motor and gears',g:'t',need:'Buy + print',job:'A small geared motor drives a pinion around the ring gear to turn the screen.',get:'Small geared motor and printed gears. Not priced.'},
+    {k:'pot',n:'Angle sensor',g:'t',need:'Buy',job:'A potentiometer on a gear tells the computer which way the screen is facing.',get:'Not priced.'},
+    {k:'bear',n:'Bearing ring',g:'t',need:'Print + buy',job:'Carries the turntable on small ball bearings. He redesigned it with five after one was not smooth enough.',get:'Printed ring and five small bearings. Not priced.'},
+    {k:'ring',n:'Ring gear',g:'t',need:'Print',job:'A fixed toothed ring in the base that the pinion walks around.',get:'Printed. Not priced.'},
+    {k:'main',n:'Main control board',g:'t',need:'Custom or stand-in',job:'His custom half-moon board: USB-C power in, a power switch, a volume wheel, and plugs labelled Motor, POT, LIGHT1, LIGHT2, LEFT, RIGHT and INPUT. I read LEFT and RIGHT as speaker outputs; that is a guess.',get:'Without a custom board: a USB-C power breakout, a small motor driver board, a small audio amplifier board, a thumbwheel volume pot and a slide switch. My picks, not priced, not tried.'},
+    {k:'spk',n:'Speaker',g:'t',need:'Buy',job:'Sits in the bottom of the base and gives it a voice.',get:'Not priced.'},
+    {k:'base',n:'Base shell',g:'p',need:'Print',job:'Holds everything. In the pitch build it only needs the screen frame and a cable exit.',get:'Printed. Not priced.'}
+  ];
+  var host=document.getElementById('full3d'),fb=document.getElementById('fxfallback'),info=document.getElementById('fxinfo'),list=document.getElementById('fxlist'),slide=document.getElementById('fxslide');
+  var sel=-1,filt='a',redraw=function(){};
+  var rows=PARTS.map(function(p,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.className=p.g==='t'?'turn':'';b.setAttribute('aria-pressed','false');
+    b.innerHTML='<span class="k">'+(i+1)+'</span><span>'+p.n+'</span><span class="need">'+p.need+'</span>';
+    b.addEventListener('click',function(){pick(sel===i?-1:i)});li.appendChild(b);list.appendChild(li);return b});
+  function pick(i){sel=i;rows.forEach(function(b,j){b.setAttribute('aria-pressed',j===sel?'true':'false')});
+    if(sel<0)info.innerHTML='<h3>Tap a part</h3><p class="muted">Tap the model or a row in the list to see what the part does and what you need to get.</p>';
+    else{var p=PARTS[sel];info.innerHTML='<h3>'+(sel+1)+'. '+p.n+'</h3><p>'+p.job+'</p><p><span class="lab">What you need</span>'+p.get+'</p><p><span class="lab">Used in</span>'+(p.g==='p'?'The pitch build and the turning version':'The turning version only')+'</p>'}
+    redraw()}
+  function setFilt(f){filt=f;[['a','fxAll'],['p','fxPitch'],['t','fxTurn']].forEach(function(x){document.getElementById(x[1]).setAttribute('aria-pressed',x[0]===f?'true':'false')});
+    rows.forEach(function(b,j){b.classList.toggle('dim',f!=='a'&&PARTS[j].g!==f)});redraw()}
+  document.getElementById('fxAll').addEventListener('click',function(){setFilt('a')});
+  document.getElementById('fxPitch').addEventListener('click',function(){setFilt('p')});
+  document.getElementById('fxTurn').addEventListener('click',function(){setFilt('t')});
+  pick(-1);
+  function fail(){host.hidden=true;fb.hidden=false}
+  import('three').then(start,fail);
+
+  function start(T){var renderer;
+    try{renderer=new T.WebGLRenderer({antialias:true})}catch(e){fail();return}
+    renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));host.appendChild(renderer.domElement);
+    var scene=new T.Scene();scene.background=new T.Color(0x0b0b0b);
+    var cam=new T.PerspectiveCamera(32,1,10,8000);
+    scene.add(new T.AmbientLight(0xffffff,2.2));
+    var sun=new T.DirectionalLight(0xffffff,2.4);sun.position.set(300,900,600);scene.add(sun);
+    var fill=new T.DirectionalLight(0xffffff,.8);fill.position.set(-500,200,-300);scene.add(fill);
+    var G={},cur=null;
+    function grp(k,dx,dy,dz){var g=new T.Group();g.userData={k:k,ex:[dx,dy,dz],mats:[]};scene.add(g);G[k]=g;cur=g;return g}
+    function mat(c,o){o=o||{};var m=o.basic?new T.MeshBasicMaterial({color:c}):new T.MeshLambertMaterial({color:c,side:o.ds?T.DoubleSide:T.FrontSide});
+      m.userData.op=o.op===undefined?1:o.op;m.transparent=true;m.depthWrite=m.userData.op===1;cur.userData.mats.push(m);return m}
+    function add(geo,m,x,y,z){var o=new T.Mesh(geo,m);o.position.set(x||0,y||0,z||0);cur.add(o);return o}
+    function cyl(r,h,m,x,y,z,seg,open){return add(new T.CylinderGeometry(r,r,h,seg||40,1,!!open),m,x,y,z)}
+    function bx(w,h,d,m,x,y,z){return add(new T.BoxGeometry(w,h,d),m,x,y,z)}
+    function flat(shape,t,m,y){var o=add(new T.ExtrudeGeometry(shape,{depth:t,bevelEnabled:false,curveSegments:40}),m,0,y,0);o.rotation.x=-Math.PI/2;return o}
+    function ringShape(ro,ri){var s=new T.Shape();s.absarc(0,0,ro,0,Math.PI*2,false);var h=new T.Path();h.absarc(0,0,ri,0,Math.PI*2,true);s.holes.push(h);return s}
+    function moon(r){var s=new T.Shape();s.absarc(0,0,r,0,Math.PI,false);s.closePath();return s}
+
+    grp('base',0,0,0);var bm=mat(0x4f4a45,{ds:true});cyl(60,46,bm,0,23,0,48,true);cyl(60,2,bm,0,1,0,48);
+    grp('spk',0,22,0);cyl(24,10,mat(0x1c1c1c),-8,8,22);cyl(15,3,mat(0x4a4a4a),-8,14,22);
+    grp('main',0,80,0);flat(moon(54),1.6,mat(0x2f8f4e),30);
+    var wh=mat(0xe9e6df),bk=mat(0x151515),sv=mat(0xb9bcc0);
+    [[-40,-8],[-24,-22],[-8,-30],[30,-26],[-30,-36],[8,-10],[24,-8]].forEach(function(p){bx(9,6,6,wh,p[0],35,p[1])});
+    bx(10,4,8,sv,6,34,-50);cyl(10,3,bk,26,36,-42,24);bx(8,6,4,mat(0x8a4a2a),-12,35,-46);bx(8,3,12,bk,-14,33,-12);bx(6,3,6,bk,-34,33,-22);bx(7,5,5,mat(0xe0a030),10,34,-22);
+    grp('ring',0,135,0);var rm=mat(0x47423d);flat(ringShape(55,45),6,rm,46);
+    for(var i=0;i<36;i++){var a=i/36*Math.PI*2,t=bx(2.5,6,3,rm,Math.cos(a)*44,49,Math.sin(a)*44);t.rotation.y=-a}
+    grp('bear',0,180,0);flat(ringShape(57,49),5,mat(0xd9534a),54);var bg=mat(0x9a9da1);
+    for(i=0;i<5;i++){a=i/5*Math.PI*2+.3;cyl(6,5,bg,Math.cos(a)*53,61.5,Math.sin(a)*53,20)}
+    grp('pot',0,222,0);cyl(6,9,mat(0x2e6fb5),26,60,-18,20);cyl(9,3,mat(0xe2c23a),26,55,-18,12);
+    grp('motor',0,228,0);bx(12,12,28,mat(0xb9bcc0),-22,60,-6);cyl(11,4,mat(0xe2c23a),-22,54,14,14);cyl(7,4,mat(0xe2c23a),-6,54,22,10);
+    grp('table',0,268,0);cyl(52,4,mat(0x3d3935),0,66,0,48);
+    grp('led',0,305,0);flat(moon(46),1.6,mat(0x2f8f4e),69);var lm=mat(0xffe2b0,{basic:true});
+    [[38,5],[30,5],[20,5]].forEach(function(rr,j){for(var q=0;q<5;q++){var an=Math.PI*(q+.5)/5+j*.12;cyl(2,1.2,lm,Math.cos(an)*rr[0],71.4,-Math.sin(an)*rr[0],8)}});
+    grp('cover',0,335,0);cyl(51,3,mat(0xd8d4cc,{op:.55}),0,74,0,48);
+    grp('sbc',0,372,-75);bx(58,92,2,mat(0x2e6fb5),0,124,-14);var sk=mat(0x151515);bx(14,14,2,sk,0,138,-12.5);bx(16,13,12,mat(0xb9bcc0),-14,88,-9);bx(50,5,3,sk,0,166,-12);
+    grp('screen',0,372,-18);bx(72,136,4,mat(0x151515),0,146,2);
+    var cc=document.createElement('canvas');cc.width=270;cc.height=480;var g2=cc.getContext('2d');g2.fillStyle='#000';g2.fillRect(0,0,270,480);g2.fillStyle='#e9eef3';
+    g2.beginPath();g2.moveTo(40,190);g2.quadraticCurveTo(44,164,70,160);g2.lineTo(96,128);g2.quadraticCurveTo(104,118,118,118);g2.lineTo(164,118);g2.quadraticCurveTo(178,118,187,128);g2.lineTo(214,158);g2.quadraticCurveTo(236,164,238,190);g2.lineTo(238,202);g2.lineTo(40,202);g2.closePath();g2.fill();
+    g2.fillStyle='#000';g2.beginPath();g2.arc(84,202,20,0,7);g2.arc(196,202,20,0,7);g2.fill();
+    g2.fillStyle='#fff';g2.textAlign='center';g2.font='600 54px sans-serif';g2.fillText('ROW B',135,330);g2.fillStyle='#b6c1cc';g2.font='22px sans-serif';g2.fillText('Last seen 7:42 AM',135,400);
+    var tx=new T.CanvasTexture(cc);tx.colorSpace=T.SRGBColorSpace;
+    var cm=new T.MeshBasicMaterial({map:tx,transparent:true,blending:T.AdditiveBlending,depthWrite:false});cm.userData.op=1;cur.userData.mats.push(cm);add(new T.PlaneGeometry(68.5,121.8),cm,0,146,4.2);
+    grp('mirror',0,372,48);bx(84,152,3,mat(0x8fa3b5,{op:.42}),0,150,9);
+    grp('tube',-150,372,0);cyl(50.8,172,mat(0xcfe6f5,{op:.16,ds:true}),0,160,0,56,true);
+    grp('cap',0,470,0);cyl(52,22,mat(0x4f4a45),0,257,0,48);var lens=cyl(5,3,mat(0x0a0a0a),0,257,52,16);lens.rotation.x=Math.PI/2;
+    var order=PARTS.map(function(p){return G[p.k]});
+    order.forEach(function(g,i){g.traverse(function(o){o.userData.pi=i})});
+
+    var ex=+slide.value,az=-.5,el=.22,zoom=1,raf=0,pts=new Map(),pinch=0,moved=0;
+    function draw(){raf=0;
+      order.forEach(function(g,i){var e=g.userData.ex;g.position.set(e[0]*ex,e[1]*ex,e[2]*ex);
+        var dim=filt!=='a'&&PARTS[i].g!==filt;if(sel>=0&&sel!==i)dim=true;if(sel===i)dim=false;g.userData.dim=dim;
+        g.userData.mats.forEach(function(m){m.opacity=m.userData.op*(dim?.25:1);m.depthWrite=m.userData.op===1&&!dim;if(m.emissive)m.emissive.setHex(sel===i?0x3a3a3a:0)})});
+      var ty=130+235*ex,rad=(520+940*ex)*zoom;
+      cam.position.set(-40*ex+rad*Math.sin(az)*Math.cos(el),ty+rad*Math.sin(el),rad*Math.cos(az)*Math.cos(el));cam.lookAt(-40*ex,ty,0);
+      renderer.render(scene,cam)}
+    redraw=function(){if(!raf)raf=requestAnimationFrame(draw)};
+    function size(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();redraw()}
+    if(window.ResizeObserver)new ResizeObserver(size).observe(host);else window.addEventListener('resize',size);size();
+    slide.addEventListener('input',function(){ex=+slide.value;redraw()});
+    function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+    var cv=renderer.domElement,ray=new T.Raycaster(),v2=new T.Vector2();
+    cv.addEventListener('pointerdown',function(e){pts.set(e.pointerId,[e.clientX,e.clientY]);moved=0;try{cv.setPointerCapture(e.pointerId)}catch(x){}});
+    cv.addEventListener('pointermove',function(e){var p=pts.get(e.pointerId);if(!p)return;var dx=e.clientX-p[0],dy=e.clientY-p[1];moved+=Math.abs(dx)+Math.abs(dy);pts.set(e.pointerId,[e.clientX,e.clientY]);
+      if(pts.size===1){az-=dx*.008;if(e.pointerType==='mouse')el=clamp(el+dy*.006,-.2,1.2)}
+      else if(pts.size===2){var a=Array.from(pts.values()),d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);if(pinch&&d)zoom=clamp(zoom*pinch/d,.45,1.6);pinch=d}
+      redraw()});
+    cv.addEventListener('pointerup',function(e){var had=pts.size;pts.delete(e.pointerId);pinch=0;
+      if(had===1&&moved<8){var r=cv.getBoundingClientRect();v2.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(v2,cam);
+        var hit=ray.intersectObjects(scene.children,true).filter(function(h){var pi=h.object.userData.pi;return pi!==undefined&&!order[pi].userData.dim})[0];
+        pick(hit&&hit.object.userData.pi!==undefined?(hit.object.userData.pi===sel?-1:hit.object.userData.pi):-1)}});
+    cv.addEventListener('pointercancel',function(e){pts.delete(e.pointerId);pinch=0});
+    host.addEventListener('keydown',function(e){var k=e.key;if(k==='ArrowLeft')az-=.12;else if(k==='ArrowRight')az+=.12;else if(k==='ArrowUp')el=clamp(el+.08,-.2,1.2);else if(k==='ArrowDown')el=clamp(el-.08,-.2,1.2);else return;e.preventDefault();redraw()});
+    document.getElementById('fxin').addEventListener('click',function(){zoom=clamp(zoom*.85,.45,1.6);redraw()});
+    document.getElementById('fxout').addEventListener('click',function(){zoom=clamp(zoom/.85,.45,1.6);redraw()});
+    redraw();
+  }
 })();
 </script>
 </body></html>
