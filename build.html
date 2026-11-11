@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sync Lot: Holo Box build sheet</title>
+<meta name="description" content="Cut sizes, wiring, screen layouts, message format, build order and risks for the Sync Lot Holo Box and tube.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+/* Same tokens and type as index.html (the deck is dark only). */
+:root{--ground:#0F0F0F;--card:#171717;--ink:#F1F0EE;--muted:#9C9994;--rule:#2A2A2A;color-scheme:dark;
+--serif:"Source Serif 4",Georgia,serif;--sans:"ABC Diatype",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--mono:"ABC Diatype Semi-Mono",ui-monospace,Menlo,monospace;
+--bg:var(--ground);--plate:var(--card);--fg:var(--ink);--line:var(--rule);--body:var(--sans);--accent:#cfcac2;--found:#ff5a5f;
+--pub:#9fcfb4;--calc:#cfcac2;--est:#c98a2b;--unk:#b9a3d6}
+@font-face{font-family:"ABC Diatype";src:url(https://www.sesame.com/fonts/diatype/ABCDiatypeVariable.woff2) format("woff2");font-weight:300 700;font-display:swap}
+@font-face{font-family:"ABC Diatype Semi-Mono";src:url(https://www.sesame.com/fonts/diatype/ABCDiatypeSemi-Mono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font:15px/1.5 var(--sans);padding:0 16px 64px}
+.wrap{max-width:680px;margin:0 auto}
+.masthead{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.masthead::before{content:"";display:block;width:74px;height:12px;background:var(--ink);-webkit-mask:url(https://app.sesame.com/brand/sesame-wordmark.svg) left center/contain no-repeat;mask:url(https://app.sesame.com/brand/sesame-wordmark.svg) left center/contain no-repeat}
+h1{font:400 clamp(34px,8vw,48px)/1.05 var(--serif);letter-spacing:-.01em;margin:28px 0 8px}
+h1,h2,h3,p,li{text-wrap:pretty}
+h2{font:400 26px/1.15 var(--serif);margin:36px 0 10px}
+h3{font:600 17px/1.3 var(--sans);margin:18px 0 5px}
+.kicker{font:13px/1.4 var(--sans);color:var(--muted);margin:0 0 2px}
+.updated{font:11px/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:6px 0 14px}
+.lede{font:400 21px/1.35 var(--sans);margin:22px 0 16px}
+p{margin:0 0 10px}
+a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px}
+a:focus-visible,button:focus-visible,.b3stage:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+ul,ol{padding-left:18px;margin:0 0 10px}li{margin:0 0 6px}
+nav.jump{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 26px}
+nav.jump a{font:13px/1 var(--sans);text-decoration:none;background:var(--card);border:1px solid var(--rule);border-radius:999px;padding:9px 13px}
+.muted,figcaption{color:var(--muted)}
+figcaption{font-size:13px;margin:4px 0 14px}
+figure{margin:10px 0}
+.num,td.n,code,pre{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font:500 10px/1.4 var(--mono);letter-spacing:.05em;text-transform:uppercase;border:1px solid currentColor;border-radius:999px;padding:1px 7px;vertical-align:2px;white-space:nowrap}
+.pub{color:var(--pub)}.calc{color:var(--calc)}.est{color:var(--est)}.unk{color:var(--unk)}
+.key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.plate{background:#0b0b0b;border:1px solid var(--rule);border-radius:8px;padding:10px;overflow-x:auto}
+.plate svg{display:block;width:100%;height:auto;margin:0 auto}
+.tw{overflow-x:auto;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font:500 11px/1.4 var(--mono);letter-spacing:.04em;color:var(--muted);padding:6px 10px 6px 0;border-bottom:1px solid var(--ink)}
+td{padding:9px 10px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n{white-space:nowrap}
+.risk{padding:14px 0;border-bottom:1px solid var(--rule)}
+.risk h3{margin-top:0}
+.risk dl{margin:0;display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:5px 12px;font-size:14px}
+.risk dt{font:500 10.5px/1.6 var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.risk dd{margin:0;min-width:0}
+pre{background:var(--card);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;font-size:12px;line-height:1.55;overflow-x:auto;margin:8px 0 14px}
+ol.bsteps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.bsteps>li{counter-increment:s;display:grid;grid-template-columns:32px minmax(0,1fr);gap:0 10px;padding:12px 0;margin:0}
+ol.bsteps>li::before{content:counter(s);font:14px/1.6 var(--mono);color:var(--muted)}
+ol.bsteps>li>div{border-bottom:1px solid var(--rule);padding-bottom:12px;min-width:0;display:grid;gap:4px}
+.pass{font-size:14px;color:var(--muted)}.pass b{color:var(--ink)}.fail b{color:var(--found)}
+.mocks{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start}
+.mocks figure{flex:1 1 16rem;min-width:0}
+.mocks figure.tube{flex:0 1 10rem}
+svg text{font-family:var(--sans);fill:var(--ink)}
+svg .m{fill:var(--muted)}svg .mono{font-family:var(--mono)}
+.b3{display:grid;gap:10px;min-width:0}
+.b3stage{width:100%;height:min(64vh,460px);background:#0b0b0b;border:1px solid var(--rule);border-radius:8px;overflow:hidden;touch-action:pan-y;cursor:grab}
+.b3stage canvas{display:block;width:100%;height:100%}
+.b3bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.b3 button{font:13px/1 var(--sans);border:1px solid var(--rule);background:var(--card);color:var(--ink);border-radius:999px;min-height:44px;min-width:44px;padding:9px 13px;cursor:pointer}
+.b3 button[aria-current="step"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.b3 button.done{border-color:#5d5a55}
+.b3 button:disabled{opacity:.45;cursor:default}
+#b3steps button{padding:0;font-family:var(--mono)}
+#b3cap{min-height:3.1em;margin:0}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="masthead" aria-label="Sesame"></div>
+<h1>Holo Box and tube: the build sheet</h1>
+<p class="kicker">Sync Lot Tech tabletop display, the design on paper</p>
+<p class="updated">Added Nov 11, 2026</p>
+<p class="lede">The design works on paper, with five changes to the deck. Nothing here has been built or tested, so every number carries one of four labels.</p>
+<div class="key">
+  <span><span class="tag pub">Published</span> the maker's own figure</span>
+  <span><span class="tag calc">Calculated</span> worked out from published sizes</span>
+  <span><span class="tag est">Estimate</span> my judgement</span>
+  <span><span class="tag unk">Unknown</span> I couldn't find it</span>
+</div>
+<nav class="jump"><a href="./">Back to the deck</a><a href="#watch">3D build</a><a href="#changes">Five changes</a><a href="#risks">Risks</a><a href="#box">Box</a><a href="#tube">Tube</a><a href="#wiring">Wiring</a><a href="#screens">Screens</a><a href="#order">Build order</a></nav>
+
+<section>
+  <h2 id="watch">Watch it go together</h2>
+  <div class="b3">
+    <div id="build3d" class="b3stage" tabindex="0" role="img" aria-label="3D model of the box and tube going together step by step. Drag or use the arrow keys to turn it."></div>
+    <p id="b3fallback" class="muted" hidden>The 3D view didn't load on this device. The steps and the drawings below cover the same build.</p>
+    <div id="b3steps" class="b3bar"></div>
+    <p id="b3cap" aria-live="polite"></p>
+    <div class="b3bar">
+      <button id="b3play" type="button">Play the build</button>
+      <button id="b3prev" type="button">Back</button>
+      <button id="b3next" type="button">Next</button>
+      <button id="b3in" type="button" aria-label="Zoom in">+</button>
+      <button id="b3out" type="button" aria-label="Zoom out">&minus;</button>
+      <span class="muted">Drag to turn</span>
+    </div>
+  </div>
+  <p class="muted">My own model, drawn to the sizes on this page. It has not been built. The pictures on the screens are mock-ups with made-up stalls.</p>
+</section>
+
+<section>
+  <h2 id="changes">Five changes to the deck</h2>
+  <ol>
+    <li><strong>Raise the front of the box about 75 mm (3″).</strong> With the monitor face up, anyone whose eyes are higher than the top of the reflector loses the top of the picture: about 13% for someone seated 2 m away and about 30% at 1 m. Tilting the box back 12° fixes it for seated people. Someone standing close will still see mostly lid. <span class="tag calc">Calculated</span></li>
+    <li><strong>Cut the reflector to 19½ × 12″.</strong> A 24″ sheet doesn't fit a 22″ bag, and the box only needs 19½″. <span class="tag calc">Calculated</span></li>
+    <li><strong>Build the box from 5 mm foam board.</strong> In ¼″ plywood the kit comes to about 6.4 kg, over your 4.5 kg limit. In foam board it's about 3.8 kg with the tube. <span class="tag est">Estimate</span></li>
+    <li><strong>Draw the box page upside down.</strong> The reflection flips it top to bottom. One line of CSS, plus a test card to confirm. <span class="tag calc">Calculated</span></li>
+    <li><strong>Make each screen its own page on one local link.</strong> If your laptop can't drive two screens, any second device with HDMI can run the tube.</li>
+  </ol>
+  <p class="muted">Two things you should also know. The tube is readable from 2 m for one short line only (for example "ROW B"); the rest is for the person sitting in front of it. And your hologram plan says not to build the tube before the pilot locks on December 13.</p>
+</section>
+
+<section>
+  <h2 id="risks">Risks first</h2>
+  <div>
+    <div class="risk">
+      <h3>1. Brightness with the lights on</h3>
+      <dl>
+        <dt>Numbers</dt><dd>The monitor is 300 nits <span class="tag pub">Published</span>. Two-way mirror should return roughly 60 to 70% of that, so white lands near 180 to 210 nits and a pure red stall near 40 <span class="tag est">Estimate</span>. Clear acrylic returns far less, and how much depends on which way the monitor's light is polarised: anywhere from about 1% to 18% <span class="tag calc">Calculated</span>. So clear acrylic can look fine one way round and almost vanish when the monitor is turned 90°.</dd>
+        <dt>Tube</dt><dd>The AMOLED tops out at 310 nits <span class="tag pub">Published</span> and Canal's mirror lets 25% through <span class="tag pub">Published</span>, so the car is about 78 nits at best <span class="tag calc">Calculated</span>. A bright shirt reflected in the mirror can match that. The tube is the piece most likely to wash out.</dd>
+        <dt>Cheapest test</dt><dd>Free tonight: picture-frame glass at 45° over your laptop, lights on, sitting down. Then the $12.50 mirror over your phone for the tube, and the $21 mirror sample against clear acrylic for the box. With clear acrylic, try the screen both ways round.</dd>
+        <dt>Pass</dt><dd>A stranger names the building and finds the red stall in about 3 seconds from 2 m, lights on.</dd>
+      </dl>
+    </div>
+    <div class="risk">
+      <h3>2. Does the AMOLED fit the tube?</h3>
+      <dl>
+        <dt>Numbers</dt><dd>The screen itself should fit. It is 4.8 mm thick, or 11 mm with its HDMI holder <span class="tag pub">Published</span>, and a board up to about 90 mm wide clears a 95 mm tube when it sits near the middle <span class="tag calc">Calculated</span>. The cables are the real question: I couldn't confirm which edge the HDMI and USB sockets are on, or the board's exact outline <span class="tag unk">Unknown</span>. A plug sticking out sideways would not fit.</dd>
+        <dt>Cheapest test</dt><dd>Free: cut a 95 mm (3¾″) hole in cardboard. When the screen arrives, plug both cables in and pass it through the hole. Do this before ordering the $78 tube.</dd>
+        <dt>Pass</dt><dd>Screen and plugged-in cables pass through without bending a plug. If not: right-angle adapters, then a 6″ tube.</dd>
+      </dl>
+    </div>
+    <div class="risk">
+      <h3>3. Can one laptop drive both screens?</h3>
+      <dl>
+        <dt>Numbers</dt><dd>It depends on the laptop, and I don't know yours <span class="tag unk">Unknown</span>. Some thin laptops run only one outside screen; several MacBook Air models are like that (check Apple's page for your exact model). The laptop also needs one USB-C port that carries video, one HDMI, and two USB ports, so expect to need a small hub.</dd>
+        <dt>Cheapest test</dt><dd>Free: plug in any two screens you own (a TV and a monitor) and try to show a different window on each.</dd>
+        <dt>Pass</dt><dd>Three different pictures: laptop, screen A, screen B. If it fails, run the tube page from a second device with HDMI. The design below already allows for that.</dd>
+      </dl>
+    </div>
+    <div class="risk">
+      <h3>4. The top of the picture gets cut off (found while drawing)</h3>
+      <dl>
+        <dt>Numbers</dt><dd>The reflector's top edge is only about 23 cm above the table. Seated eyes are about 45 cm above it. Looking down over that edge hides the top of the picture <span class="tag calc">Calculated</span>.</dd>
+        <dt>Cheapest test</dt><dd>Same picture-frame test, sitting at normal height 2 m away. Then prop the laptop's front edge up 3″ and look again.</dd>
+        <dt>Pass</dt><dd>The whole test card shows from every seat. If the tilt looks odd, the other fix is the monitor in the lid facing down; that is a different box.</dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 id="box">The Holo Box</h2>
+  <p>Outside 20 × 14 × 14″ (508 × 356 × 356 mm). The picture stands upright 70 mm in front of the velvet back wall, 383 mm wide and 215 mm tall <span class="tag calc">Calculated</span>.</p>
+  <figure>
+    <div class="plate">
+      <svg viewBox="0 0 460 440" role="img" aria-label="Side view of the box: monitor face up on the floor, reflector rising at 45 degrees from the back of the monitor to the front, picture appearing upright near the back wall">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>
+        <rect x="40" y="34" width="356" height="5" fill="var(--fg)"/>
+        <rect x="40" y="385" width="356" height="5" fill="var(--fg)"/>
+        <rect x="40" y="39" width="5" height="346" fill="var(--fg)"/>
+        <polygon points="106,385 336,385 336,155" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <rect x="109" y="375.7" width="243" height="9.3" fill="var(--muted)"/>
+        <rect x="115" y="374.2" width="215" height="2" fill="var(--accent)"/>
+        <rect x="104" y="380" width="5" height="5" fill="var(--fg)"/>
+        <rect x="391" y="355" width="5" height="30" fill="var(--fg)"/>
+        <line x1="115.5" y1="375.5" x2="331" y2="160" stroke="var(--fg)" stroke-width="3"/>
+        <line x1="115" y1="374" x2="115" y2="160" stroke="var(--found)" stroke-width="3" stroke-dasharray="7 4"/>
+        <line x1="265" y1="372" x2="265" y2="230" stroke="var(--accent)" stroke-width="1.5"/>
+        <line x1="265" y1="226" x2="444" y2="226" stroke="var(--accent)" stroke-width="1.5" marker-end="url(#ah)"/>
+        <line x1="261" y1="226" x2="119" y2="226" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <text x="218" y="26" font-size="12" text-anchor="middle">Lid, velvet inside</text>
+        <text x="30" y="212" font-size="12" text-anchor="middle" transform="rotate(-90 30 212)">Velvet back wall</text>
+        <text x="103" y="268" font-size="12" text-anchor="middle" transform="rotate(-90 103 268)" style="fill:var(--found)">Floating picture</text>
+        <text x="80" y="366" font-size="11" text-anchor="middle" class="m mono">70</text>
+        <text x="156" y="309" font-size="12" text-anchor="middle" transform="rotate(-45 156 309)">Reflector, 45°</text>
+        <text x="444" y="218" font-size="12" text-anchor="end">To the audience</text>
+        <text x="400" y="348" font-size="12">Lip 30</text>
+        <text x="230" y="408" font-size="12" text-anchor="middle">17.3″ monitor, face up, chin to the front</text>
+        <text x="230" y="426" font-size="11" text-anchor="middle" class="m mono">inside: 351 deep × 346 high × 498 wide (mm)</text>
+      </svg>
+    </div>
+    <figcaption>Side view, drawn to scale, before the front is raised. The dashed triangle is the rail on each side wall. The red dashed line is where the picture appears.</figcaption>
+  </figure>
+
+  <h3>Cut list, 5 mm black foam board (three 20 × 30″ sheets)</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Piece</th><th>Qty</th><th>mm</th><th>inches</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Base and lid</td><td class="n">2</td><td class="n">508 × 356</td><td class="n">20 × 14</td><td>Identical. Three 60 × 5 mm notches on each side edge and the back edge.</td></tr>
+      <tr><td>Sides</td><td class="n">2</td><td class="n">356 × 346</td><td class="n">14 × 13⅝</td><td>Plus 60 × 5 mm tabs top and bottom to match the notches.</td></tr>
+      <tr><td>Back</td><td class="n">1</td><td class="n">498 × 346</td><td class="n">19⅝ × 13⅝</td><td>Fits between the sides. Tabs top and bottom.</td></tr>
+      <tr><td>Rails</td><td class="n">1 → 2</td><td class="n">230 × 230</td><td class="n">9 × 9</td><td>Cut one square corner to corner. Each half is an exact 45° rail, no protractor.</td></tr>
+      <tr><td>Front lip</td><td class="n">1</td><td class="n">498 × 30</td><td class="n">19⅝ × 1³⁄₁₆</td><td>Stands at the front edge. Trim after the seated test.</td></tr>
+      <tr><td>Monitor stop</td><td class="n">1</td><td class="n">394 × 15</td><td class="n">15½ × ⅝</td><td>Flat on the base, 59 mm from the back wall. Stops the monitor sliding when tilted.</td></tr>
+      <tr><td>Front riser</td><td class="n">1 + 2</td><td class="n">508 × 75, feet 120 × 75</td><td class="n">20 × 3, feet 4¾ × 3</td><td>Strip on edge with two cross-slotted feet. Sits under the front of the box.</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><strong>Reflector:</strong> two-way mirror acrylic, ⅛″, cut to <span class="num">495 × 305 mm</span> (19½ × 12″). Mirror coating faces down toward the monitor. It rests on the two rails with its lower edge on the monitor's top bezel.</li>
+    <li><strong>Rails:</strong> one on each side wall, long edge sloping up toward the front. Low corner on the base 61 mm from the back wall, square corner at the front.</li>
+    <li><strong>Monitor:</strong> 394 × 243 × 9.3 mm <span class="tag pub">Published</span>. Centred, top edge against the stop, chin under the lip. There is 52 mm each side for the cable, so use a right-angle USB-C plug <span class="tag est">Estimate</span>.</li>
+    <li><strong>Lining:</strong> stick-on black velvet on the back, sides, lid and the strip of base in front of the monitor.</li>
+    <li><strong>Holding it together:</strong> tabs in notches, plus one luggage strap around the box. Foam-board tabs are weak, so treat the strap as part of the design <span class="tag est">Estimate</span>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="tube">The tube</h2>
+  <figure>
+    <div class="plate">
+      <svg viewBox="0 0 420 300" role="img" aria-label="Top view of the tube: mirror across the front, screen behind it, LED half-ring at the back">
+        <circle cx="150" cy="150" r="101.6" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+        <circle cx="150" cy="150" r="95.2" fill="none" stroke="var(--fg)" stroke-width="1.5"/>
+        <path d="M75 123A80 80 0 0 1 225 123" fill="none" stroke="var(--est)" stroke-width="6" stroke-linecap="round"/>
+        <rect x="120" y="148" width="60" height="12.4" fill="var(--muted)"/>
+        <rect x="71" y="160.4" width="158" height="9.6" fill="var(--accent)"/>
+        <rect x="59" y="170" width="182" height="6" fill="var(--fg)"/>
+        <g stroke="var(--muted)" stroke-width="1" fill="none">
+          <line x1="207" y1="94" x2="264" y2="70"/><line x1="230" y1="164" x2="264" y2="128"/>
+          <line x1="242" y1="174" x2="264" y2="186"/><line x1="228" y1="215" x2="264" y2="240"/>
+        </g>
+        <text font-size="12"><tspan x="268" y="68">LED half-ring behind</tspan><tspan x="268" dy="15">a diffuser (my guess)</tspan></text>
+        <text font-size="12"><tspan x="268" y="126">Screen, 11 mm deep</tspan><tspan x="268" dy="15">with HDMI holder</tspan></text>
+        <text font-size="12"><tspan x="268" y="184">Two-way mirror,</tspan><tspan x="268" dy="15">3 mm, full width</tspan></text>
+        <text font-size="12"><tspan x="268" y="238">Clear tube, 95 mm</tspan><tspan x="268" dy="15">inside, 3 mm wall</tspan></text>
+        <text x="150" y="282" font-size="12" text-anchor="middle" class="m">Front: the audience side</text>
+      </svg>
+    </div>
+    <figcaption>Looking down into the tube, to scale. The screen width shown (79 mm) is from memory, not a published figure; measure yours.</figcaption>
+  </figure>
+  <div class="tw"><table>
+    <thead><tr><th>Piece</th><th>Size</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>Tube</td><td class="n">200 mm (8″) long</td><td>4″ outside, 3.75″ inside <span class="tag pub">Published</span>. Ask the seller to cut it; you get several spares from one 6-foot length.</td></tr>
+      <tr><td>Mirror</td><td class="n">92 × 190 mm</td><td>Stands 10 mm in front of the tube's centre line and fills the tube side to side, so no screen edge shows.</td></tr>
+      <tr><td>Black mask</td><td class="n">92 × 190 mm card</td><td>Behind the mirror, with a window the size of the lit area: 68.5 × 121.8 mm <span class="tag calc">Calculated</span>.</td></tr>
+      <tr><td>Printed base</td><td class="n">120 mm across, 60 mm tall, hollow</td><td>Ring groove for the tube wall: 94.6 mm inside, 102.3 mm outside, 8 mm deep. Slot for the mirror: 92.5 × 3.6 × 8 mm. Cable exit 30 × 15 mm at the back. Pocket 23 × 19 × 8 mm for the LED controller.</td></tr>
+      <tr><td>Printed screen frame</td><td class="n">about 82 × 156 × 3 mm</td><td>Four 2.8 mm holes for M2.5 screws <span class="tag pub">Published</span>. Hole spacing <span class="tag unk">Unknown</span>: measure the board, then print. Holds the glass against the back of the mirror.</td></tr>
+      <tr><td>LED arc</td><td class="n">40 mm radius, 140°</td><td>3 or 4 pixels of the 30-per-metre strip fit <span class="tag calc">Calculated</span>. Clips on, so you can move it. Diffuser at least 15 mm from the LEDs or you'll see dots <span class="tag est">Estimate</span>.</td></tr>
+      <tr><td>Top cap</td><td class="n">102 mm black disc</td><td>Keeps ceiling light off the mirror.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">The base is 60 mm tall and hollow on purpose: until the socket positions are known, it leaves room for a plug to point down or sideways.</p>
+</section>
+
+<section>
+  <h2 id="wiring">Wiring</h2>
+  <figure>
+    <div class="plate">
+      <svg viewBox="0 0 440 425" role="img" aria-label="Wiring: phone to laptop over Wi-Fi; laptop to monitor by USB-C, to AMOLED by HDMI and USB, to the LED controller by USB; controller to LED strip by three wires">
+        <g fill="var(--bg)" stroke="var(--fg)" stroke-width="1.5">
+          <rect x="140" y="10" width="160" height="44" rx="3"/><rect x="120" y="110" width="200" height="50" rx="3"/>
+          <rect x="10" y="250" width="125" height="54" rx="3"/><rect x="157" y="250" width="125" height="54" rx="3"/>
+          <rect x="305" y="250" width="125" height="54" rx="3"/><rect x="255" y="360" width="175" height="54" rx="3"/>
+        </g>
+        <g fill="none" stroke="var(--accent)" stroke-width="1.5">
+          <line x1="220" y1="54" x2="220" y2="110" stroke-dasharray="4 4"/>
+          <path d="M160 160V205H72V250"/><path d="M220 160V250"/><path d="M280 160V205H367V250"/>
+          <path d="M335 304V360M367 304V360M400 304V360"/>
+        </g>
+        <g font-size="13" text-anchor="middle" font-weight="600">
+          <text x="220" y="37">Phone (remote)</text><text x="220" y="140">Laptop</text>
+          <text x="72" y="273">17.3″ monitor</text><text x="220" y="273">5.5″ AMOLED</text>
+          <text x="367" y="273">QT Py RP2040</text><text x="342" y="383">LED half-ring</text>
+        </g>
+        <g font-size="11" text-anchor="middle" class="m">
+          <text x="72" y="291" class="m">USB-C, one cable</text><text x="220" y="291" class="m">HDMI + USB power</text>
+          <text x="367" y="291" class="m">USB</text><text x="342" y="401" class="m">3 or 4 pixels</text>
+        </g>
+        <text x="230" y="86" font-size="11" class="m">Wi-Fi, phone hotspot</text>
+        <g font-size="11" text-anchor="end" class="mono">
+          <text x="322" y="322" class="m mono">5V → 5V</text><text x="322" y="337" class="m mono">GND → GND</text>
+          <text x="322" y="352" class="m mono">A3 → 470 Ω → DIN</text>
+        </g>
+      </svg>
+    </div>
+    <figcaption>Everything hangs off the laptop. Nothing in the box or tube has its own computer.</figcaption>
+  </figure>
+  <ul>
+    <li><strong>Monitor:</strong> one USB-C cable carries picture and power <span class="tag pub">Published</span>, if the laptop's port supports video.</li>
+    <li><strong>AMOLED:</strong> draws up to 650 mA at 5 V on a white screen <span class="tag pub">Published</span>. That is more than an old-style USB port gives, so use a blue USB 3 port or a 5 V 2 A wall plug.</li>
+    <li><strong>LEDs:</strong> four pixels need at most about 240 mA, so the controller's 5V pin can feed them <span class="tag calc">Calculated</span>. The controller signals at 3.3 V into a 5 V strip. That usually works on a short wire; if the LEDs flicker, add a 74AHCT125 level shifter <span class="tag est">Estimate</span>.</li>
+    <li><strong>LED behaviour:</strong> start with a steady soft white glow that needs no link to the laptop. Never red: red is reserved for the found stall.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="screens">What each screen shows</h2>
+  <div class="mocks">
+    <figure>
+      <div class="plate">
+        <svg viewBox="0 0 420 236" role="img" aria-label="Box screen after a find: W 62nd St enlarged on the left with one red stall, W 57th St dimmed on the right">
+          <defs>
+            <g id="r8"><rect width="20" height="34"/><rect x="23" width="20" height="34"/><rect x="46" width="20" height="34"/><rect x="69" width="20" height="34"/><rect x="92" width="20" height="34"/><rect x="115" width="20" height="34"/><rect x="138" width="20" height="34"/><rect x="161" width="20" height="34"/></g>
+            <g id="r8s"><rect width="10" height="24"/><rect x="13" width="10" height="24"/><rect x="26" width="10" height="24"/><rect x="39" width="10" height="24"/><rect x="52" width="10" height="24"/><rect x="65" width="10" height="24"/><rect x="78" width="10" height="24"/><rect x="91" width="10" height="24"/></g>
+          </defs>
+          <rect width="420" height="236" fill="#000"/>
+          <line x1="0" y1="24" x2="420" y2="24" stroke="#39424c" stroke-dasharray="4 4"/>
+          <text x="410" y="16" font-size="9" text-anchor="end" style="fill:#7d8894">top 10% stays black</text>
+          <text x="16" y="48" font-size="13" font-weight="600" style="fill:#d8dde2">W 62nd St</text>
+          <g font-size="10" style="fill:#5a6470" class="mono"><text x="16" y="76" style="fill:#5a6470">L4</text><text x="16" y="94" style="fill:#5a6470">L3</text><text x="16" y="112" style="fill:#5a6470">L2</text><text x="16" y="130" style="fill:#5a6470">LL</text><text x="16" y="148" style="fill:#5a6470">B1</text><text x="16" y="166" font-weight="600" style="fill:#fff">B2</text><text x="16" y="184" style="fill:#5a6470">B3</text></g>
+          <rect x="56" y="84" width="189" height="96" fill="#0c1014" stroke="#39424c"/>
+          <use href="#r8" x="60" y="90" fill="#232b33"/><use href="#r8" x="60" y="140" fill="#232b33"/>
+          <rect x="175" y="140" width="20" height="34" fill="#ff3b30"/>
+          <text x="150" y="206" font-size="15" font-weight="600" text-anchor="middle" style="fill:#ff3b30">B2 · B-06</text>
+          <g opacity=".35">
+            <text x="268" y="48" font-size="11" font-weight="600" style="fill:#d8dde2">W 57th St</text>
+            <rect x="300" y="96" width="109" height="72" fill="#0c1014" stroke="#39424c"/>
+            <use href="#r8s" x="304" y="102" fill="#232b33"/><use href="#r8s" x="304" y="138" fill="#232b33"/>
+            <g font-size="8" class="mono"><text x="268" y="104" style="fill:#5a6470">L4</text><text x="268" y="116" style="fill:#5a6470">L3</text><text x="268" y="128" style="fill:#5a6470">L2</text><text x="268" y="140" style="fill:#5a6470">LL</text><text x="268" y="152" style="fill:#5a6470">B1</text><text x="268" y="164" style="fill:#5a6470">B2</text><text x="268" y="176" style="fill:#5a6470">B3</text></g>
+          </g>
+        </svg>
+      </div>
+      <figcaption>Box page, 1920 × 1080, after a find. Sketch with made-up stalls.</figcaption>
+    </figure>
+    <figure class="tube">
+      <div class="plate">
+        <svg viewBox="0 0 160 284" role="img" aria-label="Tube screen: a glowing car on black with ROW B in large letters and last seen time below">
+          <rect width="160" height="284" fill="#000"/>
+          <ellipse cx="80" cy="118" rx="58" ry="8" fill="#1b2430"/>
+          <path d="M26 108q2-14 16-16l14-18q4-5 12-5h26q8 0 13 5l15 17q12 3 13 17v6H26z" fill="#e9eef3"/>
+          <path d="M62 76h16v15H50zM83 76h14l12 15H83z" fill="#000"/>
+          <circle cx="50" cy="114" r="10" fill="#000" stroke="#e9eef3" stroke-width="3"/><circle cx="112" cy="114" r="10" fill="#000" stroke="#e9eef3" stroke-width="3"/>
+          <text x="80" y="160" font-size="10" text-anchor="middle" style="fill:#9aa8b5">X5 · Carbon Black</text>
+          <text x="80" y="204" font-size="30" font-weight="600" text-anchor="middle" style="fill:#fff">ROW B</text>
+          <text x="80" y="228" font-size="11" text-anchor="middle" style="fill:#d8dde2">W62 · B2</text>
+          <text x="80" y="256" font-size="10" text-anchor="middle" style="fill:#9aa8b5">Last seen 7:42 AM</text>
+        </svg>
+      </div>
+      <figcaption>Tube page, 1080 × 1920.</figcaption>
+    </figure>
+  </div>
+  <ul>
+    <li><strong>Box page:</strong> pure black, no buttons. W62 left, W57 right, each with its floor ladder. On a find, the found building takes 60% of the width, the other drops to about a third brightness, the floor slides forward and one stall turns red.</li>
+    <li><strong>Sizes for 2 m:</strong> labels at least 80 px tall (16 mm on this monitor) and the red stall at least 115 px wide (23 mm) <span class="tag calc">Calculated</span>.</li>
+    <li><strong>Flip:</strong> the page is drawn with <code>transform: scaleY(-1)</code>. Left and right stay as they are. Keep the top 10% black as a margin.</li>
+    <li><strong>Test card:</strong> press <code>T</code> for a card with the word TOP, "W62 left", a border at the screen edge and one red square. Press <code>V</code> or <code>H</code> to flip if it reads wrong.</li>
+    <li><strong>Tube page:</strong> the car, one large line (160 px, readable at 2 m), then building, floor and "last seen" for the person in front. "Last seen" is the time Sync Lot last recorded the car. It is not live tracking.</li>
+    <li><strong>Stall or row:</strong> the box lights a stall, as in your deck. Your app rule says porters see a row. The message carries both, so either screen can show either.</li>
+  </ul>
+
+  <h3>Phone-to-laptop message</h3>
+  <p>A small relay runs on the laptop. The phone, the box page and the tube page each connect to it over a local WebSocket and say who they are. The phone sends one short JSON message per tap.</p>
+<pre>// phone → relay → both screens
+{ "v": 1, "type": "find", "seq": 42,
+  "building": "W62", "floor": "B2",
+  "place": "B-06", "row": "B",
+  "car": { "id": "6062641", "label": "X5 · Carbon Black" },
+  "lastSeen": "2026-11-11T07:42:00-05:00" }
+
+{ "v": 1, "type": "show",  "seq": 43, "building": "W57", "floor": "L2" }
+{ "v": 1, "type": "clear", "seq": 44 }
+
+// relay → phone, after every message
+{ "v": 1, "type": "state", "ack": 42,
+  "showing": { "building": "W62", "floor": "B2", "place": "B-06" },
+  "screens": { "box": true, "tube": false } }
+
+// first message from every client
+{ "v": 1, "type": "hello", "role": "remote" }   // or "box", "tube"</pre>
+  <ul>
+    <li>The highest <code>seq</code> wins. A new message interrupts the running animation from where it is; nothing queues up.</li>
+    <li>If no <code>state</code> comes back within a second, the phone says "Box not connected" and carries on as the normal app. On reconnect it resends its last message.</li>
+    <li>An unknown building, floor or place lights nothing and returns <code>"type": "error"</code>. The box never shows a red stall it can't place.</li>
+    <li>Use your phone's hotspot with the laptop joined to it. Guest Wi-Fi in offices often blocks one device from reaching another <span class="tag est">Estimate</span>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 id="order">Build order</h2>
+  <p>Free tests come first. Stop at any fail.</p>
+  <ol class="bsteps">
+    <li><div><strong>Picture-frame test, free.</strong> Glass at 45° over the laptop, lights on, seated 2 m away, then with the front propped up 3″.
+      <span class="pass"><b>Pass:</b> the whole test card shows and TOP reads the right way after the flip.</span></div></li>
+    <li><div><strong>Two-screen test, free.</strong> Any two screens on your laptop.
+      <span class="pass"><b>Pass:</b> a different window on each. <span class="fail"><b>Fail:</b></span> plan a second device for the tube.</span></div></li>
+    <li><div><strong>Pages and phone link, free.</strong> Build both pages and the relay; test on any screen over your hotspot.
+      <span class="pass"><b>Pass:</b> switch buildings 10 times fast and the last tap always wins. Turn the hotspot off and on: the phone says so, then recovers.</span></div></li>
+    <li><div><strong>Mirror samples, about $34.</strong> $12.50 Canal piece over your phone; $21 sample against clear acrylic.
+      <span class="pass"><b>Pass:</b> the red square reads from 2 m with the lights on.</span></div></li>
+    <li><div><strong>Monitor and ugly rig, $139.99.</strong> Monitor flat, sheet on books at 45°, split view.
+      <span class="pass"><b>Pass:</b> a stranger names the building and the red stall in about 3 seconds. <span class="fail"><b>Fail:</b></span> go to the fallbacks.</span></div></li>
+    <li><div><strong>Cut and assemble the box.</strong>
+      <span class="pass"><b>Pass:</b> the reflector's top edge is as high above the monitor as it is forward of its bottom edge (that is 45°), nothing wobbles, and it comes apart flat.</span></div></li>
+    <li><div><strong>Cardboard-hole test, then the tube.</strong> Only after December 13, and only after the screen and its cables pass through a 95 mm hole.
+      <span class="pass"><b>Pass:</b> no screen edge visible; the car reads as floating from 1 m in front with the lights on.</span></div></li>
+    <li><div><strong>Wire the LEDs.</strong>
+      <span class="pass"><b>Pass:</b> a steady glow for 10 minutes with the screen on full white, no flicker, no visible dots.</span></div></li>
+    <li><div><strong>Pack and time it.</strong>
+      <span class="pass"><b>Pass:</b> one bag, 4.5 kg or less on a luggage scale, set up in 10 minutes without tools.</span></div></li>
+    <li><div><strong>Dress rehearsal.</strong> Three finds in each building, then pull the hotspot mid-demo.
+      <span class="pass"><b>Pass:</b> every find lands in the right building and the link recovers without touching the laptop.</span></div></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Fallbacks</h2>
+  <ol>
+    <li><strong>Building toggle.</strong> Same box, same page, one building full screen. Send <code>show</code> to switch. The red stall doubles in size. The room no longer sees both buildings at once.</li>
+    <li><strong>Phone AR over a printed plan.</strong> One printed plan per building, a red marker pinned on it through the phone camera. One viewer at a time. It lives in the bag as the backup that needs no box.</li>
+    <li><strong>The phone.</strong> If everything else fails, hand them the app.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Weight, bag and cost</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th>Weight</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td>Monitor</td><td class="n">about 1.1 kg</td><td><span class="tag est">Estimate</span> check the box</td></tr>
+      <tr><td>Reflector, 495 × 305 × 3.2 mm</td><td class="n">0.57 kg</td><td><span class="tag calc">Calculated</span></td></tr>
+      <tr><td>Foam-board panels</td><td class="n">about 0.6 kg</td><td><span class="tag est">Estimate</span></td></tr>
+      <tr><td>Velvet, strap, cables</td><td class="n">about 0.3 kg</td><td><span class="tag est">Estimate</span></td></tr>
+      <tr><td>Padded bag</td><td class="n">about 0.7 kg</td><td><span class="tag est">Estimate</span></td></tr>
+      <tr><td>Tube, base and screen</td><td class="n">about 0.5 kg</td><td><span class="tag est">Estimate</span></td></tr>
+      <tr><td><strong>Total</strong></td><td class="n"><strong>about 3.8 kg</strong></td><td>Inside your 3.5 to 4.5 kg range</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li><strong>Bag:</strong> the largest panel is 20 × 14″ and the reflector is 19½ × 12″, so both fit 22 × 16″. The tube is 4¾″ across at its base, so the bag won't lie flat with it inside. Carry the tube in your laptop bag.</li>
+    <li><strong>Cost:</strong> the chosen parts stay inside your targets. Extras I added: three foam boards, stick-on velvet, a strap, a right-angle USB-C cable, one resistor, perhaps a USB hub. About $40 to $70 <span class="tag est">Estimate</span>.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Later, not designed here</h2>
+  <ul>
+    <li>Turning base: geared motor, bearings, angle sensor.</li>
+    <li>Face-tracking USB camera.</li>
+    <li>Single-board computer in the base, so the tube runs without the laptop.</li>
+    <li>Microphone, speaker and volume knob for spoken requests.</li>
+    <li>LEDs that react to a find (the controller already has a USB link for this).</li>
+  </ul>
+  <p class="muted">Sources: Arzopa's A1M product page (size, brightness), Waveshare's wiki for the 5.5″ HDMI AMOLED (thickness, brightness, current, screws), your tabletop deck and hologram plan (parts, prices, the mirror's 25% figure). I did not re-check prices.</p>
+</section>
+</div>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script>
+(function(){
+  var STEPS=[
+    ['Base','The base panel lies flat. The thin strip near the back stops the monitor sliding.'],
+    ['Back and sides','Three velvet-lined walls slot into the base. The front stays open.'],
+    ['Monitor','The 17.3″ monitor lies face up against the stop, chin toward the audience.'],
+    ['Rails','One square of foam board, cut corner to corner, makes two exact 45° rails.'],
+    ['Reflector','The two-way mirror sheet rests on the rails, top edge at the front.'],
+    ['Lip and lid','The front lip hides the monitor edge. The lid keeps room light out.'],
+    ['Raise the front','A 3″ riser tilts the box back 12° so seated people see the whole picture.'],
+    ['Tube','Printed base, screen behind its mirror, LED half-ring, clear tube and cap.'],
+    ['Switch on','Both buildings float near the back wall. One stall is red. The tube shows the car.']
+  ];
+  var N=STEPS.length, step=N, timer=0;
+  var host=document.getElementById('build3d'), fb=document.getElementById('b3fallback'), cap=document.getElementById('b3cap');
+  var bar=document.getElementById('b3steps'), prev=document.getElementById('b3prev'), next=document.getElementById('b3next'), play=document.getElementById('b3play');
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var chips=STEPS.map(function(s,i){var b=document.createElement('button');b.type='button';b.textContent=i+1;b.setAttribute('aria-label','Step '+(i+1)+': '+s[0]);b.addEventListener('click',function(){stop();setStep(i+1)});bar.appendChild(b);return b});
+  var kick=function(){};
+  function setStep(n){step=Math.max(1,Math.min(N,n));
+    chips.forEach(function(b,i){if(i+1===step)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');b.className=i+1<step?'done':''});
+    cap.innerHTML='<strong>'+step+' of '+N+' · '+STEPS[step-1][0]+'.</strong> '+STEPS[step-1][1];
+    prev.disabled=step===1;next.disabled=step===N;kick()}
+  function stop(){if(timer){clearInterval(timer);timer=0;play.textContent='Play the build'}}
+  prev.addEventListener('click',function(){stop();setStep(step-1)});
+  next.addEventListener('click',function(){stop();setStep(step+1)});
+  var reset=function(){};
+  play.addEventListener('click',function(){if(timer){stop();return}
+    reset();setStep(1);play.textContent='Pause';
+    timer=setInterval(function(){if(step>=N){stop();return}setStep(step+1)},1300)});
+  setStep(N);
+
+  function fail(){host.hidden=true;fb.hidden=false}
+  import('three').then(start,fail);
+  function start(T){var renderer;
+  try{renderer=new T.WebGLRenderer({antialias:true})}catch(e){fail();return}
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+  host.appendChild(renderer.domElement);
+  var scene=new T.Scene();scene.background=new T.Color(0x0d1218);
+  var cam=new T.PerspectiveCamera(34,4/3,10,6000);
+  scene.add(new T.AmbientLight(0xffffff,2.3));
+  var sun=new T.DirectionalLight(0xffffff,2.2);sun.position.set(400,900,700);scene.add(sun);
+  var table=new T.Mesh(new T.PlaneGeometry(2600,1800),new T.MeshLambertMaterial({color:0x1a222b}));table.rotation.x=-Math.PI/2;table.position.y=-.5;scene.add(table);
+
+  var parts=[],fades=[];
+  var M={board:new T.MeshLambertMaterial({color:0x4a5562}),mon:new T.MeshLambertMaterial({color:0x1d232a}),
+    print:new T.MeshLambertMaterial({color:0x2f3842}),
+    glass:new T.MeshLambertMaterial({color:0x9fd0ee,transparent:true,opacity:.3,depthWrite:false}),
+    mirror:new T.MeshLambertMaterial({color:0x7c93a8,transparent:true,opacity:.5,depthWrite:false}),
+    tube:new T.MeshLambertMaterial({color:0xcfe6f5,transparent:true,opacity:.16,side:T.DoubleSide,depthWrite:false}),
+    led:new T.MeshBasicMaterial({color:0xffe2b0})};
+  var edgeMat=new T.LineBasicMaterial({color:0x8b98a6});
+  function reg(o,parent,s,ox,oy,oz){parent.add(o);parts.push({o:o,step:s,x:o.position.x,y:o.position.y,z:o.position.z,ox:ox||0,oy:oy===undefined?260:oy,oz:oz||0,t:1});return o}
+  function edged(m){m.add(new T.LineSegments(new T.EdgesGeometry(m.geometry,30),edgeMat));return m}
+  function box(w,h,d,x,y,z,mat){var m=new T.Mesh(new T.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);return edged(m)}
+
+  /* Box: mm units. Group pivots on its back bottom edge so it can tilt. zb = distance from the back outside face. */
+  var G=new T.Group();G.position.z=-178;scene.add(G);
+  reg(box(508,5,356,0,2.5,178,M.board),G,1);
+  reg(box(394,5,15,0,7.5,61.5,M.board),G,1);
+  reg(box(498,346,5,0,178,2.5,M.board),G,2,0,0,-260);
+  reg(box(5,346,356,-251.5,178,178,M.board),G,2,-260,0,0);
+  reg(box(5,346,356,251.5,178,178,M.board),G,2,260,0,0);
+  reg(box(394,9.3,243,0,9.65,190.5,M.mon),G,3);
+  var sh=new T.Shape();sh.moveTo(66,5);sh.lineTo(296,5);sh.lineTo(296,235);sh.closePath();
+  [-244,249].forEach(function(x){var r=new T.Mesh(new T.ExtrudeGeometry(sh,{depth:5,bevelEnabled:false}),M.board);r.rotation.y=-Math.PI/2;r.position.x=x;reg(edged(r),G,4)});
+  var refl=box(495,3.2,305,0,122.3,183.3,M.glass);refl.rotation.x=-Math.PI/4;reg(refl,G,5);
+  reg(box(498,30,5,0,20,353.5,M.board),G,6,0,0,260);
+  reg(box(508,5,356,0,353.5,178,M.board),G,6);
+
+  function boxCanvas(flip){var c=document.createElement('canvas');c.width=1024;c.height=576;var g=c.getContext('2d');
+    if(flip){g.translate(0,576);g.scale(1,-1)}
+    g.fillStyle='#000';g.fillRect(0,0,1024,576);
+    g.font='600 34px sans-serif';g.fillStyle='#e6ebf0';g.fillText('W 62nd St',40,118);
+    g.font='22px monospace';['L4','L3','L2','LL','B1','B2','B3'].forEach(function(f,i){g.fillStyle=i===5?'#fff':'#6b7683';g.fillText(f,40,186+i*44)});
+    g.strokeStyle='#4a5562';g.lineWidth=2;g.strokeRect(136,206,462,234);
+    for(var r=0;r<2;r++)for(var k=0;k<8;k++){g.fillStyle=(r===1&&k===5)?'#ff3b30':'#2a333c';g.fillRect(146+k*56,220+r*122,49,84)}
+    g.fillStyle='#ff3b30';g.font='600 40px sans-serif';g.textAlign='center';g.fillText('B2 · B-06',367,506);g.textAlign='left';
+    g.globalAlpha=.4;g.font='600 26px sans-serif';g.fillStyle='#e6ebf0';g.fillText('W 57th St',654,118);
+    g.strokeStyle='#4a5562';g.strokeRect(732,236,266,176);
+    for(r=0;r<2;r++)for(k=0;k<8;k++){g.fillStyle='#2a333c';g.fillRect(740+k*32,250+r*88,25,60)}
+    g.font='18px monospace';g.fillStyle='#6b7683';['L4','L3','L2','LL','B1','B2','B3'].forEach(function(f,i){g.fillText(f,654,250+i*27)});
+    var tx=new T.CanvasTexture(c);tx.colorSpace=T.SRGBColorSpace;return tx}
+  function glow(w,h,tex,max){var m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshBasicMaterial({map:tex,transparent:true,opacity:0,blending:T.AdditiveBlending,depthWrite:false,side:T.DoubleSide}));fades.push({m:m,max:max,t:1});return m}
+  var pic=glow(383,215,boxCanvas(false),1);pic.position.set(0,122,75);G.add(pic);
+  var scr=glow(383,215,boxCanvas(true),.55);scr.rotation.x=-Math.PI/2;scr.position.set(0,14.7,182.5);G.add(scr);
+
+  /* Riser: outside the tilting group */
+  reg(box(508,75,5,0,37.5,-12,M.board),scene,7,0,0,300);
+  [-150,150].forEach(function(x){reg(box(5,75,120,x,37.5,-12,M.board),scene,7,0,0,300)});
+  parts.slice(-3).forEach(function(p){p.z=165;p.o.position.z=165;p.oy=0});
+
+  /* Tube */
+  var U=new T.Group();U.position.set(390,0,150);scene.add(U);
+  var base=new T.Mesh(new T.CylinderGeometry(60,60,60,40),M.print);base.position.y=30;reg(edged(base),U,8);
+  reg(box(79,152,5,0,140,5.5,M.mon),U,8);
+  reg(box(92,190,3.2,0,155,10,M.mirror),U,8);
+  var led=new T.Mesh(new T.TorusGeometry(40,3,8,28,Math.PI*140/180),M.led);led.rotation.set(-Math.PI/2,0,Math.PI*20/180);led.position.y=68;reg(led,U,8);
+  var tb=new T.Mesh(new T.CylinderGeometry(50.8,50.8,200,48,1,true),M.tube);tb.position.y=152;reg(tb,U,8);
+  var capm=new T.Mesh(new T.CylinderGeometry(51.5,51.5,4,40),M.print);capm.position.y=254;reg(capm,U,8);
+  var cc=document.createElement('canvas');cc.width=270;cc.height=480;var g2=cc.getContext('2d');
+  g2.fillStyle='#000';g2.fillRect(0,0,270,480);g2.fillStyle='#e9eef3';
+  g2.beginPath();g2.moveTo(40,190);g2.quadraticCurveTo(44,164,70,160);g2.lineTo(96,128);g2.quadraticCurveTo(104,118,118,118);g2.lineTo(164,118);g2.quadraticCurveTo(178,118,187,128);g2.lineTo(214,158);g2.quadraticCurveTo(236,164,238,190);g2.lineTo(238,202);g2.lineTo(40,202);g2.closePath();g2.fill();
+  g2.fillStyle='#000';g2.beginPath();g2.arc(84,202,20,0,7);g2.arc(196,202,20,0,7);g2.fill();
+  g2.strokeStyle='#e9eef3';g2.lineWidth=6;g2.beginPath();g2.arc(84,202,16,0,7);g2.stroke();g2.beginPath();g2.arc(196,202,16,0,7);g2.stroke();
+  g2.fillStyle='#fff';g2.textAlign='center';g2.font='600 54px sans-serif';g2.fillText('ROW B',135,330);
+  g2.fillStyle='#b6c1cc';g2.font='22px sans-serif';g2.fillText('W62 · B2',135,372);g2.fillText('Last seen 7:42 AM',135,420);
+  var ctx=new T.CanvasTexture(cc);ctx.colorSpace=T.SRGBColorSpace;var car=glow(68.5,121.8,ctx,1);car.position.set(0,140,12.5);U.add(car);
+
+  var tiltT=1,az=-.62,el=.3,rad=1500,target=new T.Vector3(70,150,0),raf=0,last=0;
+  function ease(t){return 1-Math.pow(1-t,3)}
+  function toward(v,goal,dt,dur){if(v===goal)return v;if(rm)return goal;return goal>v?Math.min(goal,v+dt/dur):Math.max(goal,v-dt/dur)}
+  reset=function(){parts.forEach(function(p){if(p.step>1)p.t=0});fades.forEach(function(f){f.t=0});tiltT=0};
+  function frame(now){raf=0;var dt=Math.min(.05,(now-last)/1000);last=now;var moving=false;
+    parts.forEach(function(p){var goal=step>=p.step?1:0;if(p.t!==goal){p.t=toward(p.t,goal,dt,.6);moving=true}
+      var e=1-ease(p.t);p.o.visible=p.t>0;p.o.position.set(p.x+p.ox*e,p.y+p.oy*e,p.z+p.oz*e)});
+    var tg=step>=7?1:0;if(tiltT!==tg){tiltT=toward(tiltT,tg,dt,.7);moving=true}
+    G.rotation.x=-12*Math.PI/180*ease(tiltT);
+    fades.forEach(function(f){var goal=step>=N?1:0;if(f.t!==goal){f.t=toward(f.t,goal,dt,.5);moving=true}f.m.material.opacity=f.max*f.t;f.m.visible=f.t>0});
+    cam.position.set(target.x+rad*Math.sin(az)*Math.cos(el),target.y+rad*Math.sin(el),target.z+rad*Math.cos(az)*Math.cos(el));cam.lookAt(target);
+    renderer.render(scene,cam);if(moving||pts.size)kick()}
+  kick=function(){if(!raf){last=performance.now();raf=requestAnimationFrame(frame)}};
+
+  function size(){var w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();kick()}
+  if(window.ResizeObserver)new ResizeObserver(size).observe(host);else window.addEventListener('resize',size);size();
+
+  var pts=new Map(),pinch=0,cv=renderer.domElement;
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+  cv.addEventListener('pointerdown',function(e){pts.set(e.pointerId,[e.clientX,e.clientY]);try{cv.setPointerCapture(e.pointerId)}catch(x){}host.style.cursor='grabbing'});
+  cv.addEventListener('pointermove',function(e){var p=pts.get(e.pointerId);if(!p)return;var dx=e.clientX-p[0],dy=e.clientY-p[1];pts.set(e.pointerId,[e.clientX,e.clientY]);
+    if(pts.size===1){az-=dx*.008;if(e.pointerType==='mouse')el=clamp(el+dy*.006,.05,1.25)}
+    else if(pts.size===2){var a=Array.from(pts.values()),d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);if(pinch&&d)rad=clamp(rad*pinch/d,700,2600);pinch=d}
+    kick()});
+  function up(e){pts.delete(e.pointerId);pinch=0;host.style.cursor=''}
+  cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+  host.addEventListener('keydown',function(e){var k=e.key;if(k==='ArrowLeft')az-=.12;else if(k==='ArrowRight')az+=.12;else if(k==='ArrowUp')el=clamp(el+.08,.05,1.25);else if(k==='ArrowDown')el=clamp(el-.08,.05,1.25);else return;e.preventDefault();kick()});
+  document.getElementById('b3in').addEventListener('click',function(){rad=clamp(rad*.85,700,2600);kick()});
+  document.getElementById('b3out').addEventListener('click',function(){rad=clamp(rad/.85,700,2600);kick()});
+  kick();}
+})();
+</script>
+</body></html>
